@@ -1,0 +1,23 @@
+moonBook 0.1.0
+==============
+
+* new function "ORplot" which draw odds ratio plot with an object of class glm
+
+* new function "HRplot" which draw hazard ratio plot with an object of class coxph or a resultant data.frame of function "mycph"
+
+* new function "mycph" which perform coxph of individual expecting variables from formula parameter
+
+* new function "mytable" which automatically produce a table for descriptive
+  analysis easily. It is most useful to make a table to describe baseline
+  charateristics common in medical research papers. An object of class
+  "cbind.mytable" or "mytable" will be made by this function
+
+* new function "mylatex" makes a latex table with an object of class "cbind.mytable" or "mytable" made by function "mytable"
+
+* new function "densityplot" which draw Kernel density plot from formula
+
+* new function "rank2group" which rank a numeric vector and returns a new ordinal vector
+
+* new data "radial" added
+
+* new data "acs" added
