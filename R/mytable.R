@@ -14,15 +14,19 @@ my.t.test=function(y,x){
     }
     else if(xlev==2) {
         #browser()
-        out3=var.test(x~y)
-        out4=t.test(x~y,na.rm=T)
-        out5=t.test(x~y,var.equal=TRUE)
+        out=lm(x~y)
+        if(sum(result)<=5000) out3=shapiro.test(resid(out))
+        else out3=nortest::ad.test(resid(out))
+        out1=var.test(x~y)
+        if(out1$p.value<0.05) out4=t.test(x~y,na.rm=T)
+        else out4=t.test(x~y,var.equal=TRUE)
+        out5=kruskal.test(as.numeric(x),factor(y))
         p=c(out3$p.value,out4$p.value,out5$p.value)
     }
     else{
         out3=lm(x~y)
         if(sum(result)<=5000) out4=shapiro.test(resid(out3))
-        else out4=DescTools::AndersonDarlingTest(resid(out3),"pnorm")
+        else out4=nortest::ad.test(resid(out))
         out5=kruskal.test(as.numeric(x),factor(y))
         p=c(out4$p.value,anova(out3)$Pr[1],out5$p.value)
     }
@@ -110,11 +114,12 @@ num_summary <-function(x){
 #'
 mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE){
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
-    #cat("\n Call:",call,"\n\n")
+    # cat("\n Call:",call,"\n\n")
     f=formula
     myt=terms(f,data=data)
     y=as.character(f[[2]])
-    #cat("Grouping variables :",y, ",class: ",class(data[[y]]),"\n")
+    res=unlist(strsplit(deparse(formula),"~",fixed=TRUE))
+
     y=unlist(strsplit(y,"+",fixed=TRUE))
     if(length(y)>1) {
         result=mytable2(formula,data,max.ylev,digits,method,show.all)
@@ -126,12 +131,11 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE){
         return(invisible())
     }
     if(!identical(y,y1)) {
-        cat("\n","'",y,
-            "' is an invalid column name: Instead '",y1,"' is used\n")
-        s=paste(y1,as.character(f[[3]]),sep="~")
+        cat("\n","'",y,"' is an invalid column name: Instead '",y1,"' is used\n")
+        s=paste(y1,res[2],sep="~")
         result=mytable(as.formula(s),data,max.ylev,digits,method,show.all)
         return(result)
-    }    
+    }
     t=table(data[[y1]])
     result=list(y=y1,length=length(t),names=names(t),count=unname(t),method=method,show.all=show.all)
     x=labels(myt)
@@ -145,18 +149,18 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE){
 }
 
 
-#' Find valid string among character vecter from approximate string 
+#' Find valid string among character vecter from approximate string
 #'
 #' @param pattern character string to be matched in the given character
 #' @param x a character vecter where matches are sought
-#' 
+#'
 #' @return returns NA in case of no matched string found
-#'         or a character string in string vecter x 
+#'         or a character string in string vecter x
 #' @examples
 #' a="dx"
 #' b=c("Age","Sex","Dx")
 #' validColname(a,b)
-#' 
+#'
 validColname=function(pattern,x) {
     result=which(grepl(pattern,x,ignore.case=TRUE))
     if(length(result)<1) return(NA)
@@ -204,7 +208,7 @@ mytable.sub=function(y,x,data,max.ylev,method){
         #        a=list(count=count,ratio=ratio)
         #        #subgroup[[i]]=a
         #    }
-        #}    
+        #}
         names(subgroup)=rownames(result)
         ## for statistical
         p=my.chisq.test(x,y,mydata)
@@ -651,10 +655,11 @@ summary.cbind.mytable=function(object,...) {
 #' @return An object of class "cbind.mytable"
 mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE){
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
-    #cat("\n Call:",call,"\n\n")
+    # cat("\n Call:",call,"\n\n")
     f=formula
     myt=terms(f,data=data)
     y=as.character(f[[2]])
+    res=unlist(strsplit(deparse(formula),"~",fixed=TRUE))
     recall=0
     final=NA
     #cat("Grouping variables :",y, ",class: ",class(data[[y]]),"\n")
@@ -667,26 +672,26 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE){
     validy1=validColname(y[1],colnames(data))
     validy2=validColname(y[2],colnames(data))
     if(is.na(validy1)) {
-        cat("\n","There is no column named '",y[1],"' in data ","\n") 
+        cat("\n","There is no column named '",y[1],"' in data ","\n")
         return(invisible())
     }
     if(!identical(y[1],validy1)) {
         cat("\n","'",y[1],
             "' is an invalid column name: Instead '",validy1,"' is used\n")
         recall=1
-    }    
+    }
     if(is.na(validy2)) {
-        cat("\n","There is no column named '",y[2],"' in data ","\n") 
+        cat("\n","There is no column named '",y[2],"' in data ","\n")
         return(invisible())
     }
     if(!identical(y[2],validy2)) {
         cat("\n","'",y[2],
             "' is an invalid column name: Instead '",validy2,"' is used\n")
-        recall=1 
+        recall=1
     }
     if(recall==1) {
         s=paste(validy1,validy2,sep="+")
-        s=paste(s,as.character(f[[3]]),sep="~")
+        s=paste(s,res[2],sep="~")
         result=mytable2(as.formula(s),data,max.ylev,digits,method,show.all)
         return(result)
     }
@@ -703,7 +708,7 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE){
         for(j in 1:length(x)) {
             if((length(unique(mydata[[x[j]]]))<=max.ylev) & (!is.factor(mydata[[x[j]]]))){
                 #cat("x[j]=",x[j],"\n")
-                data[[x[j]]]=factor(data[[x[j]]])   
+                data[[x[j]]]=factor(data[[x[j]]])
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
             out=mytable.sub(validy2,x[j],mydata,max.ylev)
@@ -728,21 +733,21 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE){
 
 
 #' rank a numeric vector and returns a new ordinal vector
-#'  
+#'
 #' @param y a numeric vector
 #' @param k a integer specifies how many groups you want to classifiy.
-#'            default value is 4  
-#' 
+#'            default value is 4
+#'
 #' @return a ordinal vector(numeric) with the same length of y
-#' 
+#'
 #' @examples
-#' 
+#'
 #' require(ggplot2)
 #' data(diamonds)
 #' diamonds$PriceGroup=rank2group(diamonds$price,4)
 #' table(diamonds$PriceGroup)
 #' aggregate(price~PriceGroup,data=diamonds,range)
-#' 
+#'
 #' diamonds$PriceGroup3=rank2group(diamonds$price,3)
 #' table(diamonds$PriceGroup3)
 #' aggregate(price~PriceGroup3,data=diamonds,range)

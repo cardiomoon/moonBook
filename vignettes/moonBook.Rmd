@@ -14,7 +14,7 @@ vignette: >
 
 ```{r,fig.height=5,fig.width=6}
 library(moonBook)
-densityplot(Height~sex,data=acs)
+densityplot(age~sex,data=acs)
 densityplot(age~Dx,data=acs)
 ```
 
@@ -115,14 +115,32 @@ mytable(sex+DM~.,data=acs)
 
 ```
 
+## For more beautiful output : myhtml
+
+If you want more beautiful table in your R markdown file, you can use myhtml function.
+
+```{r,results='asis'}
+out=mytable(Dx~.,data=acs)
+myhtml(out)
+out1=mytable(sex+DM~.,data=acs)
+myhtml(out1)
+```
 
 ## For more beautiful output : mylatex 
 
 If you want more beautiful table, you can use mylatex function.
 
 ```{r,results='asis',warning=FALSE}
-out=mytable(Dx~.,data=acs)
 mylatex(out)
-out1=mytable(sex+DM~.,data=acs)
 mylatex(out1)
 ```
+
+## Export to csv file : mycsv
+
+If you want to export your table into csv file format, you can use mycsv function.
+
+```{r,eval=FALSE}
+mycsv(out,file="test.csv")
+mycsv(out1,fil="test1.csv")
+```
+

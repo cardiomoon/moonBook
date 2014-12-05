@@ -1,3 +1,14 @@
+moonBook 0.1.1
+==============
+(2014-Dec-5)
+
+* new function "mycsv" makes a csv file with an object of class "cbind.mytable" or "mytable" made by function "mytable"
+
+* new function "myhtml" makes a html table with an object of class "cbind.mytable" or "mytable" made by function "mytable"
+
+* Bug fixed
+
+
 moonBook 0.1.0
 ==============
 
