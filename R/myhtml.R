@@ -1,23 +1,31 @@
-#' Export to html file for class "mytable" or "cbind.mytable"
+#' Export to html file for class "mytable" or "cbind.mytable" of "data.frame"
 #'
 #' @param x An object of class "mytable" or "cbind.mytable"
 #' @param caption A character
+#' @param rownames A logical value wheher or not include rownames in table
 #' @examples
 #' require(moonBook)
 #' res=mytable(sex~age+Dx,data=acs)
 #' myhtml(res)
-myhtml=function(x,caption=NULL) UseMethod("myhtml")
+#' res1=mytable(sex+Dx~.,data=acs)
+#' myhtml(res1)
+#' x=head(iris)
+#' myhtml(x)
+#' myhtml(x,caption="Table 1. mylatex Test")
+#' myhtml(x,caption="Table 1. mylatex Test",rownames=FALSE)
+myhtml=function(x,caption=NULL,rownames=TRUE) UseMethod("myhtml")
 
 
-#' Export to html file for class "mytable" or "cbind.mytable"
+#' @describeIn myhtml
 #'
-#' @param x An object of class "mytable" or "cbind.mytable"
-#' @param caption A character
-#' @examples
-#' require(moonBook)
-#' res=mytable(sex~age+Dx,data=acs)
-#' myhtml(res)
-myhtml.mytable=function(x,caption=NULL){
+myhtml.default=function(x,caption=NULL,rownames=TRUE){
+    cat("myhtml function only applicable to data.frame, mytable or cbind.mytable\n")
+}
+
+
+#' @describeIn myhtml
+#'
+myhtml.mytable=function(x,caption=NULL,rownames=TRUE){
     out=mytable2html(x)
     if(is.null(caption))
         caption=paste("Descriptive Statistics by '",colnames(out)[1],"'",sep="")
@@ -40,15 +48,9 @@ myhtml.mytable=function(x,caption=NULL){
 }
 
 
-#' Export to html file for class "mytable" or "cbind.mytable"
+#' @describeIn myhtml
 #'
-#' @param x An object of class "mytable" or "cbind.mytable"
-#' @param caption A character
-#' @examples
-#' require(moonBook)
-#' res=mytable(sex~age+Dx,data=acs)
-#' myhtml(res)
-myhtml.cbind.mytable=function(x,caption=NULL){
+myhtml.cbind.mytable=function(x,caption=NULL,rownames=TRUE){
     myobj=x
     tcount=length(myobj) # number of tables
     tnames=unlist(attr(myobj,"caption"))

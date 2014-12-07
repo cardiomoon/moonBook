@@ -1,3 +1,12 @@
+moonBook 0.1.2
+==============
+(2014-Dec-7)
+
+* new S3 method for class "data.frame" added to function "mylatex" and "myhtml"
+
+* more option to function "mylatex" to adjust caption placement and position
+
+
 moonBook 0.1.1
 ==============
 (2014-Dec-5)

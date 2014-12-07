@@ -58,29 +58,53 @@ NULL
 
 
 
-#' Exporting "cbind.mytable","mytable" table to LaTeX format
+#' Exporting "cbind.mytable","mytable","data.frame" to LaTeX format
 #'
-#' @param myobj An Object of class ""cbind.mytable" or "mytable"
-#' @param size An integer indicating font size, defaulting is 5.
-#' @param caption A character
-#' @examples
-#' out=mytable(am~.,data=mtcars)
-#' mylatex(out)
-#' out1=mytable(am+cyl~.,data=mtcars)
-#' mylatex(out1)
-mylatex=function(myobj,size=5,caption=NULL) UseMethod("mylatex")
-
-#'Exporting "mytable" table to LaTeX format
-#'
-#'This function takes the result of mytable and exports the tables to LaTeX format.
-#'
+#' Exporting "cbind.mytable","mytable","data.frame" to LaTeX format
 #'@param myobj An object of class 'mytable'
 #'@param size An integer indicating font size, defaulting is 5.
 #'@param caption A character
+#'@param rownames A logical value wheher or not include rownames in table
+#'@param caption.placement The caption will be have placed at the top of the table
+#'        if caption.placement is "top" and at the bottom of the table
+#'        if it equals "bottom". Default value is "top".
+#'@param caption.position The caption will be have placed at the center of the table
+#'        if caption.position is "center" or "c", and at the left side of the table
+#'        if it equals "left" or "l", and at the right side of the table
+#'        if it equals "right" or "r". Default value is "center".
+#'@param align Character vector : nchar equal to the number of columns of the
+#'       resulting table indicating the alignment of the corresponding columns.
+#'@param digits Numeric vector of length equal to one (in which case it will be
+#'       replicated as necessary) or to the number of columns of the resulting table
 #'@examples
-#'out=mytable(am~.,data=mtcars)
-#'mylatex(out)
-mylatex.mytable=function(myobj,size=5,caption=NULL) {
+#' require(moonBook)
+#' out=mytable(sex~.,data=acs)
+#' mylatex(out)
+#' out1=mytable(sex+Dx~.,data=acs)
+#' mylatex(out1,size=6)
+#' x=head(iris)
+#' mylatex(x,size=3,caption="Table 1. mylatex Test")
+#' mylatex(x,size=7,caption="Table 1. mylatex Test",caption.position="l")
+#' mylatex(x,size=7,caption="Table 1. mylatex Test",caption.placement="bottom",
+#'       caption.position="l")
+mylatex=function(myobj,size=5,caption=NULL,rownames=TRUE,
+                 caption.placement="top",caption.position="c",
+                 align=NULL,digits=NULL) UseMethod("mylatex")
+
+
+#'@describeIn mylatex
+mylatex.default=function(myobj,size=5,caption=NULL,rownames=TRUE,
+                 caption.placement="top",caption.position="c",
+                 align=NULL,digits=NULL) {
+
+    cat("mylatex function only applicable to data.frame, mytable or cbind.mytable\n")
+}
+
+
+#'@describeIn mylatex
+mylatex.mytable=function(myobj,size=5,caption=NULL,rownames=TRUE,
+                         caption.placement="top",caption.position="c",
+                         align=NULL,digits=NULL) {
 
     ## Generate latex table for class mytable
     result=obj2linecount(myobj)
@@ -90,24 +114,31 @@ mylatex.mytable=function(myobj,size=5,caption=NULL) {
     ncount=result$ncount
     col.length=result$col.length
     linelength=result$linelength
+
+    if(identical(caption.placement,"bottom") | identical(caption.placement,"b"))
+            caption.placement="bottom"
+    else caption.placement="top"
+    if(identical(caption.position,"left")|identical(caption.position,"l"))
+            caption.position="l"
+    else if(identical(caption.position,"right")|identical(caption.position,"r"))
+            caption.position="r"
+    else caption.position="c"
+
     if(!is.numeric(size)) size=5
     else if(size<0 | size>10) size=5
-    captionsize=size
-    if(size==1) captionsize=2
-    if(size>7) captionsize=7
     Fontsize=c("tiny","scriptsize","footnotesize","small","normalsize",
                "large","Large","LARGE","huge","Huge")
     cat("\\begin{table}[!hbp]\n")
 
     cat(paste("\\begin{",Fontsize[size],"}\n",sep=""))
-    cat(paste("\\captionsetup{font=",Fontsize[captionsize],"}\n",sep=""))
-
-    if(is.null(caption)) caption= paste("Descriptive Statistics by ",y,sep="")
-    cat(paste("\\caption*{",caption,"} \n",sep=""))
     head=c("\\begin{tabular}{l")
     for(i in 2 : length(cn)) { head=paste(head,"c",sep="")}
     head=paste(head,"}\n",sep="")
     cat(head)
+    if(is.null(caption)) caption= paste("Descriptive Statistics by ",y,sep="")
+    if(caption.placement=="top")
+        cat(paste("\\multicolumn{",length(cn),"}{",
+                  caption.position,"}{",caption,"}\\\\ \n",sep=""))
     cat("\\hline\n")
     firstrow=cn[1]
     for(i in 2:length(ncount)) { firstrow=paste(firstrow,cn[i],sep=" & ")}
@@ -134,10 +165,12 @@ mylatex.mytable=function(myobj,size=5,caption=NULL) {
         cat(paste(temp,"\\\\ \n",sep=""))
     }
     cat("\\hline\n")
+    if(caption.placement=="bottom")
+        cat(paste("\\multicolumn{",length(cn),"}{",
+                  caption.position,"}{",caption,"}\\\\ \n",sep=""))
     cat("\\end{tabular}\n")
     cat(paste("\\end{",Fontsize[size],"}\n",sep=""))
     cat("\\end{table}\n")
-
 }
 
 #'Subfunction used in mylatex
@@ -148,17 +181,10 @@ r=function(string) {
     string
 }
 
-
-#'Exporting "cbind.mytable" table to LaTeX format
-#'
-#'This function takes the result of mytable and exports the tables to LaTeX format.
-#'@param myobj An object of class 'cbind.mytable'
-#'@param size An integer indicating font size, defaulting is 5.
-#'@param caption A character
-#'@examples
-#'out=mytable(am+cyl~.,data=mtcars)
-#'mylatex(out)
-mylatex.cbind.mytable=function(myobj,size=5,caption=NULL){
+#'@describeIn mylatex
+mylatex.cbind.mytable=function(myobj,size=5,caption=NULL,rownames=TRUE,
+                               caption.placement="top",caption.position="c",
+                               align=NULL,digits=NULL){
     ## Generate latex table for cbind.mytable
 
     tcount=length(myobj) # number of tables
@@ -169,20 +195,26 @@ mylatex.cbind.mytable=function(myobj,size=5,caption=NULL){
     for(i in 1:tcount) result[[i]]=obj2linecount(myobj[[i]])
     if(!is.numeric(size)) size=5
     else if(size<0 | size>10) size=5
-    captionsize=size
-    if(size==1) captionsize=2
-    if(size>7) captionsize=7
+
     Fontsize=c("tiny","scriptsize","footnotesize","small","normalsize",
                "large","Large","LARGE","huge","Huge")
     cat("\\begin{table}[!hbp]\n")
     cat(paste("\\begin{",Fontsize[size],"}\n",sep=""))
-    cat(paste("\\captionsetup{font=",Fontsize[captionsize],"}\n",sep=""))
     cat("\\centering\n")
     if(is.null(caption)) {
         caption=paste("Descriptive Statistics stratified by ",group[1],sep="")
         for(i in 2:tcount) caption=paste(caption," and ",group[i],sep="")
     }
-    cat(paste("\\caption*{",caption,"} \n",sep=""))
+
+    if(identical(caption.placement,"bottom") | identical(caption.placement,"b"))
+        caption.placement="bottom"
+    else caption.placement="top"
+    if(identical(caption.position,"left")|identical(caption.position,"l"))
+        caption.position="l"
+    else if(identical(caption.position,"right")|identical(caption.position,"r"))
+        caption.position="r"
+    else caption.position="c"
+
     colno=length(result[[1]]$cn)
     # number of total column
     tcn=colno*tcount
@@ -191,7 +223,9 @@ mylatex.cbind.mytable=function(myobj,size=5,caption=NULL){
     for(i in 2 : tcn) { head=paste(head,"c",sep="")}
     head=paste(head,"}\n",sep="")
     cat(head)
-
+    if(caption.placement=="top")
+        cat(paste("\\multicolumn{",tcn,"}{",
+                  caption.position,"}{",caption,"}\\\\ \n",sep=""))
     cat("\\hline\n")
 
     temp=paste(" & \\multicolumn{",colno-1,"}{c}{",
@@ -253,6 +287,9 @@ mylatex.cbind.mytable=function(myobj,size=5,caption=NULL){
         cat(temp,"\\\\ \n")
     }
     cat("\\hline\n")
+    if(caption.placement=="bottom")
+        cat(paste("\\multicolumn{",tcn,"}{",
+                  caption.position,"}{",caption,"}\\\\ \n",sep=""))
     cat("\\end{tabular}\n")
     cat(paste("\\end{",Fontsize[size],"}\n",sep=""))
     cat("\\end{table}\n")

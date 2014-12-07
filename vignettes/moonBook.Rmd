@@ -10,40 +10,6 @@ vignette: >
 ---
 
 
-## densityplot
-
-```{r,fig.height=5,fig.width=6}
-library(moonBook)
-densityplot(age~sex,data=acs)
-densityplot(age~Dx,data=acs)
-```
-
-## Plot for odds ratios of a glm object
-
-```{r,fig.width=6,fig.height=6}
-require(survival)
-data(colon)
-out1=glm(status~sex+age+rx+obstruct+node4,data=colon)
-out2=glm(status~rx+node4,data=colon)
-ORplot(out1,type=2,show.CI=TRUE,xlab="This is xlab",main="Odds Ratio")
-ORplot(out2,type=1)
-ORplot(out1,type=1,show.CI=TRUE,col=c("blue","red"))
-ORplot(out1,type=4,show.CI=TRUE,sig.level=0.05)
-ORplot(out1,type=1,show.CI=TRUE,main="Odds Ratio",sig.level=0.05,
-        pch=1,cex=2,lwd=4,col=c("red","blue"))
-```
-
-## For automation of cox's proportional hazard model
-
-```{r,fig.width=6,fig.height=6}
-attach(colon)
-colon$TS=Surv(time,status==1)
-out=mycph(TS~.,data=colon)
-out
-HRplot(out,type=2,show.CI=TRUE,pch=2,cex=2,
-       main="Hazard ratios of all individual variables")
-```
-
 ## Function "mytable"
 
 Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline charateristics common in medical research papers. 
@@ -51,6 +17,7 @@ Function "mytable"" produce table for descriptive analysis easily. It is most us
 ## Basic Usage
 
 ```{r,comment=NA}
+require(moonBook)
 data(acs)
 mytable(Dx~.,data=acs)
 ```
@@ -130,10 +97,20 @@ myhtml(out1)
 
 If you want more beautiful table, you can use mylatex function.
 
-```{r,results='asis',warning=FALSE}
-mylatex(out)
-mylatex(out1)
+```{r,eval=FALSE}
+mylatex(mytable(sex+DM~age+Dx,data=acs))
 ```
+
+![latextest.png](figure/latextest2.png)
+
+You can adjust font size of latex table by using parameter size from 1 to 10.
+```{r,eval=FALSE}
+out=mytable(sex~age+Dx,data=acs)
+for(i in c(3,5)) 
+    mylatex(out,size=i,caption=paste("Table ",i,". Fontsize=",i,sep=""))
+```
+
+![latextest2.png](figure/latextest.png)
 
 ## Export to csv file : mycsv
 
@@ -144,3 +121,40 @@ mycsv(out,file="test.csv")
 mycsv(out1,fil="test1.csv")
 ```
 
+Following figure is a screen-shot in which test.csv and test1.csv files are opened with Numbers. 
+
+![csvtest.png](figure/csvtest.png)
+
+## densityplot
+
+```{r,fig.height=5,fig.width=6}
+library(moonBook)
+densityplot(age~sex,data=acs)
+densityplot(age~Dx,data=acs)
+```
+
+## Plot for odds ratios of a glm object
+
+```{r,fig.width=6,fig.height=6,comment=NA}
+require(survival)
+data(colon)
+out1=glm(status~sex+age+rx+obstruct+node4,data=colon)
+out2=glm(status~rx+node4,data=colon)
+ORplot(out1,type=2,show.CI=TRUE,xlab="This is xlab",main="Odds Ratio")
+ORplot(out2,type=1)
+ORplot(out1,type=1,show.CI=TRUE,col=c("blue","red"))
+ORplot(out1,type=4,show.CI=TRUE,sig.level=0.05)
+ORplot(out1,type=1,show.CI=TRUE,main="Odds Ratio",sig.level=0.05,
+        pch=1,cex=2,lwd=4,col=c("red","blue"))
+```
+
+## For automation of cox's proportional hazard model
+
+```{r,fig.width=6,fig.height=6,comment=NA}
+attach(colon)
+colon$TS=Surv(time,status==1)
+out=mycph(TS~.,data=colon)
+out
+HRplot(out,type=2,show.CI=TRUE,cex=2,sig=0.05,
+       main="Hazard ratios of all individual variables")
+```
