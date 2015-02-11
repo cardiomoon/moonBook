@@ -72,8 +72,8 @@ myhtml.cbind.mytable=function(x,caption=NULL,rownames=TRUE){
         for(i in 2:length(group)) caption=paste(caption," and ",group[i],sep="")
     }
     myhtmlHead()
-    cat("<table cellpadding=5 cellspacing=5>")
-    cat(paste("<caption>",caption,"</caption>",sep=""))
+    cat("<table cellpadding=5 cellspacing=5>\n")
+    cat(paste("<caption>",caption,"</caption>\n",sep=""))
     cat("<tr>\n")
     cat(paste("<th>",group[1],"</th>",sep=""))
     for(i in 1:tcount) {
@@ -127,6 +127,6 @@ myhtmlHead=function(){
         table, th, td {
         border: 1px solid #bcbcbc;
     } </style>")
-    cat("</head>")
+    cat("</head>\n")
 }
 

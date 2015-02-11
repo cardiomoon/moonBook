@@ -58,13 +58,12 @@ NULL
 
 
 
-#' Exporting "cbind.mytable","mytable","data.frame" to LaTeX format
+#' Exporting "cbind.mytable","mytable" to LaTeX format
 #'
-#' Exporting "cbind.mytable","mytable","data.frame" to LaTeX format
+#' Exporting "cbind.mytable","mytable" to LaTeX format
 #'@param myobj An object of class 'mytable'
 #'@param size An integer indicating font size, defaulting is 5.
 #'@param caption A character
-#'@param rownames A logical value wheher or not include rownames in table
 #'@param caption.placement The caption will be have placed at the top of the table
 #'        if caption.placement is "top" and at the bottom of the table
 #'        if it equals "bottom". Default value is "top".
@@ -72,39 +71,27 @@ NULL
 #'        if caption.position is "center" or "c", and at the left side of the table
 #'        if it equals "left" or "l", and at the right side of the table
 #'        if it equals "right" or "r". Default value is "center".
-#'@param align Character vector : nchar equal to the number of columns of the
-#'       resulting table indicating the alignment of the corresponding columns.
-#'@param digits Numeric vector of length equal to one (in which case it will be
-#'       replicated as necessary) or to the number of columns of the resulting table
 #'@examples
 #' require(moonBook)
 #' out=mytable(sex~.,data=acs)
 #' mylatex(out)
 #' out1=mytable(sex+Dx~.,data=acs)
 #' mylatex(out1,size=6)
-#' x=head(iris)
-#' mylatex(x,size=3,caption="Table 1. mylatex Test")
-#' mylatex(x,size=7,caption="Table 1. mylatex Test",caption.position="l")
-#' mylatex(x,size=7,caption="Table 1. mylatex Test",caption.placement="bottom",
-#'       caption.position="l")
-mylatex=function(myobj,size=5,caption=NULL,rownames=TRUE,
-                 caption.placement="top",caption.position="c",
-                 align=NULL,digits=NULL) UseMethod("mylatex")
+mylatex=function(myobj,size=5,caption=NULL,caption.placement="top",
+                 caption.position="c") UseMethod("mylatex")
 
 
 #'@describeIn mylatex
-mylatex.default=function(myobj,size=5,caption=NULL,rownames=TRUE,
-                 caption.placement="top",caption.position="c",
-                 align=NULL,digits=NULL) {
+mylatex.default=function(myobj,size=5,caption=NULL,caption.placement="top",
+                         caption.position="c") {
 
     cat("mylatex function only applicable to data.frame, mytable or cbind.mytable\n")
 }
 
 
 #'@describeIn mylatex
-mylatex.mytable=function(myobj,size=5,caption=NULL,rownames=TRUE,
-                         caption.placement="top",caption.position="c",
-                         align=NULL,digits=NULL) {
+mylatex.mytable=function(myobj,size=5,caption=NULL,caption.placement="top",
+                         caption.position="c") {
 
     ## Generate latex table for class mytable
     result=obj2linecount(myobj)
@@ -182,9 +169,8 @@ r=function(string) {
 }
 
 #'@describeIn mylatex
-mylatex.cbind.mytable=function(myobj,size=5,caption=NULL,rownames=TRUE,
-                               caption.placement="top",caption.position="c",
-                               align=NULL,digits=NULL){
+mylatex.cbind.mytable=function(myobj,size=5,caption=NULL,
+                               caption.placement="top",caption.position="c"){
     ## Generate latex table for cbind.mytable
 
     tcount=length(myobj) # number of tables
