@@ -41,7 +41,7 @@ res1=mytable(sex+Dx~.,data=acs)
 myhtml(res1)
 x=head(iris)
 myhtml(x)
-myhtml(x,caption="Table 1. mylatex Test")
-myhtml(x,caption="Table 1. mylatex Test",rownames=FALSE)
+myhtml(x,caption="Table 1. myhtml Test")
+myhtml(x,caption="Table 1. myhtml Test",rownames=FALSE)
 }
 

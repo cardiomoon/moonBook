@@ -1,6 +1,6 @@
 Package: moonBook
 Title: Functions and Datasets for the Book by Keon-Woong Moon
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: "Keon-Woong Moon <cardiomoon@gmail.com> [aut, cre]"
 Description: Several analysis-related functions for the book entitled "R
     statistics and graph for medical articles" (written in Korean), version 1,

@@ -336,10 +336,10 @@ printmytable2=function(obj,digits=1){
         res=data.frame(res,desc[,j])
         #colnames(res)[length(res)]=obj$names[j]
     }
-    sp1=sapply(p1,function(x) ifelse(is.na(x),"     ",sprintf("%.3f",x)))
-    sp2=sapply(p2,function(x) ifelse(is.na(x),"     ",sprintf("%.3f",x)))
-    sp3=sapply(p3,function(x) ifelse(is.na(x),"     ",sprintf("%.3f",x)))
-    sp4=sapply(p4,function(x) ifelse(is.na(x),"     ",sprintf("%.3f",x)))
+    sp1=sapply(p1,function(x) ifelse(is.na(x),"",sprintf("%.3f",x)))
+    sp2=sapply(p2,function(x) ifelse(is.na(x),"",sprintf("%.3f",x)))
+    sp3=sapply(p3,function(x) ifelse(is.na(x),"",sprintf("%.3f",x)))
+    sp4=sapply(p4,function(x) ifelse(is.na(x),"",sprintf("%.3f",x)))
     sig=sapply(p4,p2sig)
     res=data.frame(res,p=sp4,sig,p1=sp1,p2=sp2,p3=sp3,class=unlist(cl),ptest=ptest,N=unlist(N))
     #rownames(res)=names(obj)[4:length(obj)]

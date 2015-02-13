@@ -11,8 +11,8 @@
 #' myhtml(res1)
 #' x=head(iris)
 #' myhtml(x)
-#' myhtml(x,caption="Table 1. mylatex Test")
-#' myhtml(x,caption="Table 1. mylatex Test",rownames=FALSE)
+#' myhtml(x,caption="Table 1. myhtml Test")
+#' myhtml(x,caption="Table 1. myhtml Test",rownames=FALSE)
 myhtml=function(x,caption=NULL,rownames=TRUE) UseMethod("myhtml")
 
 
@@ -40,8 +40,12 @@ myhtml.mytable=function(x,caption=NULL,rownames=TRUE){
     cat("</tr>\n")
     for(j in 1:nrow(out)){
         cat("<tr>")
-        cat(paste("<td>",out[j,1],"</td>",sep=""))
-        for(i in 2:ncol(out)) cat(paste("<td>",out[j,i],"</td>",sep=""))
+        temp=gsub(" -","&nbsp;&nbsp;&nbsp;",out[j,1],fixed=TRUE)
+        cat(paste("<td>",temp,"</td>",sep=""))
+        for(i in 2:ncol(out)) {
+            temp=gsub(" -","&nbsp;&nbsp;&nbsp;",out[j,i],fixed=TRUE)
+            cat(paste("<td>",temp,"</td>",sep=""))
+        }
         cat("</tr>\n")
     }
     cat("</table>\n")
@@ -87,7 +91,10 @@ myhtml.cbind.mytable=function(x,caption=NULL,rownames=TRUE){
     cat("</tr>\n")
     for(j in 1:nrow(result)){
         cat("<tr>")
-        for(i in 1:ncol(result)) cat(paste("<td>",result[j,i],"</td>",sep=""))
+        for(i in 1:ncol(result)) {
+            temp=gsub(" -","&nbsp;&nbsp;&nbsp;",result[j,i],fixed=TRUE)
+            cat(paste("<td>",temp,"</td>",sep=""))
+        }
         cat("</tr>\n")
     }
     cat("</table>\n")
