@@ -1,1 +1,16 @@
 exportPattern("^[^\\.]")
+
+S3method(mycsv,cbind.mytable)
+S3method(mycsv,mytable)
+S3method(myhtml,cbind.mytable)
+S3method(myhtml,default)
+S3method(myhtml,mytable)
+S3method(mylatex,cbind.mytable)
+S3method(mylatex,mytable)
+S3method(mylatex,default)
+S3method(print,cbind.mytable)
+S3method(print,mytable)
+S3method(summary,cbind.mytable)
+S3method(summary,mytable)
+
+

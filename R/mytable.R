@@ -303,7 +303,8 @@ printmytable2=function(obj,digits=1){
 
             p1=c(p1,obj[[i]]$p[1])
             p2=c(p2,obj[[i]]$p[2])
-            p3=c(p3,NA)
+            p3=c(p3,length(obj[[i]]$subgroup))
+            #p3=c(p3,NA)
             p4=c(p4,obj[[i]]$p[1])
             ptest=c(ptest,"chisq.test")
             for(k in 1:length(obj[[i]]$subgroup)){
