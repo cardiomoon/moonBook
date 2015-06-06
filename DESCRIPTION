@@ -1,6 +1,6 @@
 Package: moonBook
 Title: Functions and Datasets for the Book by Keon-Woong Moon
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
     role=c("aut", "cre"))
 Description: Several analysis-related functions for the book entitled "R
@@ -8,7 +8,7 @@ Description: Several analysis-related functions for the book entitled "R
     by Keon-Woong Moon with Korean demographic data with several plot
     functions.
 Depends:
-    R (>= 3.1.2)
+    R (>= 3.2.0)
 License: GPL-2
 LazyData: true
 Imports:
