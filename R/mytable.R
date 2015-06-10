@@ -17,11 +17,15 @@ my.t.test=function(y,x){
         out=lm(x~y)
         if(sum(result)<=5000) out3=shapiro.test(resid(out))
         else out3=nortest::ad.test(resid(out))
-        out1=var.test(x~y)
-        if(out1$p.value<0.05) out4=t.test(x~y,na.rm=T)
-        else out4=t.test(x~y,var.equal=TRUE)
-        out5=kruskal.test(as.numeric(x),factor(y))
-        p=c(out3$p.value,out4$p.value,out5$p.value)
+        out1=try(var.test(x~y))
+        if(class(out1)!="htest") p=c(NA,NA,NA)
+        else{
+            if(out1$p.value<0.05) out4=t.test(x~y,na.rm=T)
+            else out4=t.test(x~y,var.equal=TRUE)
+            out5=kruskal.test(as.numeric(x),factor(y))
+            p=c(out3$p.value,out4$p.value,out5$p.value)
+        }
+
     }
     else{
         out3=lm(x~y)
@@ -159,12 +163,19 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=
     }
     result=list(y=y1,length=length(t),names=names(t),count=unname(t),method=method,show.all=show.all)
     x=labels(myt)
+    error=c()
     for(i in 1:length(x)) {
-        out=mytable.sub(y1,x[i],data,max.ylev,show.total=show.total)
+
+        out<-mytable.sub(y1,x[i],data,max.ylev,show.total=show.total)
+        if(length(out)!=4) {
+            error=c(error,x[i])
+            next
+        }
         result[[x[i]]]=out
     }
     out=printmytable2(result,digits)
     class(out)=c("mytable")
+    attr(out,"error")=error
     out
 }
 
@@ -200,7 +211,10 @@ validColname=function(pattern,x) {
 #' @param show.total a logical value
 mytable.sub=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
-    mydata=data.frame(y=data[[y]],x=data[[x]])
+
+    mydata=try(data.frame(y=data[[y]],x=data[[x]]))
+
+    if(class(mydata)!="data.frame") return(-1)
     result=table(mydata$x,mydata$y)
 
     result1=addmargins(result,2)
