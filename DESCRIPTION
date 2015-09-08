@@ -8,7 +8,7 @@ Description: Several analysis-related functions for the book entitled "R
     by Keon-Woong Moon with Korean demographic data with several plot
     functions.
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.1.2)
 License: GPL-2
 LazyData: true
 Imports:
