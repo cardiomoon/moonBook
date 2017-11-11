@@ -1,3 +1,10 @@
+moonBook 0.1.6
+==============
+(2016-Nov-11)
+
+* Bug fixed
+
+* default method for compute confidence interval for glm model changed from confint to confint.default
 
 
 moonBook 0.1.4

@@ -1,6 +1,6 @@
 Package: moonBook
 Title: Functions and Datasets for the Book by Keon-Woong Moon
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
     role=c("aut", "cre"))
 Description: Several analysis-related functions for the book entitled "R
@@ -19,3 +19,4 @@ Suggests:
     knitr,
     ggplot2
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1

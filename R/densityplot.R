@@ -1,15 +1,20 @@
 #' Make Kernel density plot
-#' 
-#' @param formula an R model formula, of the form ~ variable to estimate the 
-#'     unconditional density of variable, or variable ~ factor to estimate the 
+#'
+#' @param formula an R model formula, of the form ~ variable to estimate the
+#'     unconditional density of variable, or variable ~ factor to estimate the
 #'     density of variable within each level of factor.
-#' @param data an optional data frame containing the data.   
-#' @param main main title of plot 
-#' @param xlab label for the horizontal-axis; defaults to the name of the 
-#'             variable x. 
-#' @param ylab label for the vertical axis; defaults to "Density".             
+#' @param data an optional data frame containing the data.
+#' @param main main title of plot
+#' @param xlab label for the horizontal-axis; defaults to the name of the
+#'             variable x.
+#' @param ylab label for the vertical axis; defaults to "Density".
 #' @param ... arguments to be passed to plot
 #' @return This function return NULL invisibly and draw graphs.
+#'
+#' @importFrom grDevices rainbow
+#' @importFrom stats terms as.formula density
+#' @importFrom graphics lines legend
+#' @export
 #' @examples
 #'   require(moonBook)
 #'   data(acs)
@@ -38,7 +43,7 @@ densityplot=function(formula,data,main="",xlab="",ylab="",...){
             s=paste(as.character(f[[2]]),y1,sep="~")
             result=densityplot(as.formula(s),data)
             return(invisible())
-        } 
+        }
         x=as.character(f[[2]])
         x1=validColname(x,colnames(data))
         if(is.na(x1)) {
@@ -52,7 +57,7 @@ densityplot=function(formula,data,main="",xlab="",ylab="",...){
             s=paste(x1,as.character(f[[3]]),sep="~")
             result=densityplot(as.formula(s),data)
             return(invisible())
-        } 
+        }
         if(is.factor(data[[y1]])) group=data[[y1]]
         else group=factor(data[[y1]])
         count=length(levels(group))
@@ -67,7 +72,7 @@ densityplot=function(formula,data,main="",xlab="",ylab="",...){
             subdata=subset(data,data[[y]]==levels(group)[i])
             d=density(subdata[[x]],na.rm=T)
             maxy=max(maxy,max(d$y))
-            dl[[i]]=d  
+            dl[[i]]=d
         }
         plot(c(xrange[1]*0.85,xrange[2]*1.1),c(0,maxy*1.1),
              main=main,xlab=xlab,ylab=ylab,type="n",...)

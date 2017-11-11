@@ -4,6 +4,7 @@
 #' These are not to be called by the user
 #' @param y a vector
 #' @param x a numeric vector
+#' @importFrom stats lm shapiro.test resid var.test t.test kruskal.test anova
 my.t.test=function(y,x){
 
     result=table(y,x)
@@ -44,6 +45,7 @@ my.t.test=function(y,x){
 #' @param x a vector
 #' @param y a vector
 #' @param mydata a data.frame
+#' @importFrom stats chisq.test fisher.test xtabs
 my.chisq.test=function(x,y,mydata)
 {
 
@@ -72,6 +74,7 @@ my.chisq.test=function(x,y,mydata)
 #' Internal mytable functions
 #' These are not to be called by the user
 #' @param x a numeric vector
+#' @importFrom stats sd median mad IQR fivenum
 num_summary <-function(x){
     if(all(is.na(x))){
        result=list(NA,NA,NA,NA,NA,list(NA,NA,NA,NA,NA))
@@ -118,6 +121,8 @@ num_summary <-function(x){
 #'      'print' returns a table for descriptive statistics.
 #'      'summary' returns a table with all statistical values.
 #'
+#' @importFrom stats addmargins
+#' @export
 #' @examples
 #' data(acs)
 #' mytable(Dx~.,data=acs)
@@ -187,6 +192,7 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=
 #'
 #' @return returns NA in case of no matched string found
 #'         or a character string in string vecter x
+#' @export
 #' @examples
 #' a="dx"
 #' b=c("Age","Sex","Dx")
@@ -209,6 +215,8 @@ validColname=function(pattern,x) {
 #' @param max.ylev an integer
 #' @param method an integer
 #' @param show.total a logical value
+#' @importFrom stats na.omit
+#' @export
 mytable.sub=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
 
@@ -305,6 +313,7 @@ mytable.sub=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
 #' These are not to be called by the user
 #' @param obj an object
 #' @param digits an integer
+#' @export
 printmytable2=function(obj,digits=1){
     plusminus="\u00b1"
     cl=c()
@@ -514,6 +523,7 @@ obj2linecount=function(myobj){
 #' @param x An object of class "mytable", a result of a call to \code{\link{mytable}}
 #' @param ... further arguments passed to or from other methods.
 #'
+#' @export
 print.mytable=function(x,...) {
 
     myobj=x
@@ -556,6 +566,7 @@ print.mytable=function(x,...) {
 #' @param caption  Unique values of grouping vaiabled used for column name of table
 #' @param y        Names of grouping variables used for caption of table
 #'
+#' @export
 cbind.mytable=function (..., caption,y=NULL)
 {
     cl <- match.call()
@@ -606,6 +617,7 @@ cbind.mytable=function (..., caption,y=NULL)
 #' @param x   an object of class "cbind.mytable", a result of a call to \code{\link{cbind.mytable}}
 #' @param ...  further arguments passed to or from other methods.
 #'
+#' @export
 print.cbind.mytable=function(x,...) {
     myobj=x
     tcount=length(myobj) # number of tables
@@ -682,9 +694,11 @@ print.cbind.mytable=function(x,...) {
 #' @param object An object of class "mytable", a result of a call \code{\link{mytable}}
 #' @param ... further arguments passed to or from other methods.
 #'
+#' @export
 #' @examples
 #' out=mytable(am~.,data=mtcars)
 #' summary(out)
+#'
 summary.mytable=function(object,...) {
     object$show.all=TRUE
     object
@@ -694,6 +708,7 @@ summary.mytable=function(object,...) {
 #'
 #' @param object An object of class "cbind.mytable", a result of a call \code{\link{mytable}}
 #' @param ... further arguments passed to or from other methods.
+#' @export
 #' @examples
 #' out=mytable(am+cyl~.,data=mtcars)
 #' summary(out)
@@ -735,6 +750,7 @@ summary.cbind.mytable=function(object,...) {
 #'             parameter. If true, only exact column name permitted.Default value is FALSE.
 #' @param show.total A logical value indicating whether or not show total group value.
 #'                 Default value is FALSE.
+#' @export
 #' @return An object of class "cbind.mytable"
 mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
@@ -852,6 +868,7 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact
 #'
 #' @return a ordinal vector(numeric) with the same length of y
 #'
+#' @export
 #' @examples
 #'
 #' require(ggplot2)
@@ -868,7 +885,9 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact
 #' table(diamonds$PriceGroup5)
 #' aggregate(price~PriceGroup5,data=diamonds,range)
 rank2group <- function (y,k=4){
-    count=length(y)
-    z=rank(y,ties.method="min")
-    return(floor((z-1)/(count/k))+1)
+    x=y[!is.na(y)]
+    count = length(x)
+    z = rank(x, ties.method = "min")
+    y[!is.na(y)]=(floor((z - 1)/(count/k)) + 1)
+    y
 }

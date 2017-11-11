@@ -4,7 +4,7 @@ author: "Keon-Woong Moon"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{package moonBook}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -101,7 +101,7 @@ If you want more beautiful table, you can use mylatex function.
 mylatex(mytable(sex+DM~age+Dx,data=acs))
 ```
 
-![latextest.png](figure/latextest2.png)
+![latextest.png](../inst/extdata/latextest.png)
 
 You can adjust font size of latex table by using parameter size from 1 to 10.
 ```{r,eval=FALSE}
@@ -110,7 +110,7 @@ for(i in c(3,5))
     mylatex(out,size=i,caption=paste("Table ",i,". Fontsize=",i,sep=""))
 ```
 
-![latextest2.png](figure/latextest.png)
+![latextest2.png](../inst/extdata/latextest.png)
 
 ## Export to csv file : mycsv
 
@@ -123,7 +123,7 @@ mycsv(out1,fil="test1.csv")
 
 Following figure is a screen-shot in which test.csv and test1.csv files are opened with Numbers. 
 
-![csvtest.png](figure/csvtest.png)
+![csvtest.png](../inst/extdata/csvtest.png)
 
 ## densityplot
 

@@ -5,6 +5,7 @@
 #'                  are to be written along with x, or a character vector of
 #'                  row names to be written.
 #' @param ... further arguments passed to or from other methods.
+#' @export
 #' @examples
 #' require(moonBook)
 #' res=mytable(sex~age+DM,data=acs)
@@ -20,6 +21,8 @@ mycsv=function(x,row.names=FALSE,...) UseMethod("mycsv")
 #'                  are to be written along with x, or a character vector of
 #'                  row names to be written.
 #' @param ... further arguments passed to or from other methods.
+#' @importFrom utils write.csv
+#' @export
 #' @examples
 #' require(moonBook)
 #' res=mytable(sex~age+DM,data=acs)
@@ -38,6 +41,8 @@ mycsv.mytable=function(x,row.names=FALSE,...) {
 #'                  are to be written along with x, or a character vector of
 #'                  row names to be written.
 #' @param ... further arguments passed to or from other methods.
+#' @importFrom utils write.table
+#' @export
 #' @examples
 #' require(moonBook)
 #' res1=mytable(sex+Dx~age+DM,data=acs)
@@ -74,6 +79,7 @@ mycsv.cbind.mytable=function(x,row.names=FALSE,...) {
 #'Add N number into data.frame
 #' @param x An object of class "mytable" a result of a call to \code{\link{mytable}}
 #'
+#' @export
 #' @return a data.frame with N number
 mytable2df=function(x){
     if(x$show.all==TRUE) out=x$res

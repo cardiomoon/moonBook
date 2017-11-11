@@ -71,6 +71,7 @@ NULL
 #'        if caption.position is "center" or "c", and at the left side of the table
 #'        if it equals "left" or "l", and at the right side of the table
 #'        if it equals "right" or "r". Default value is "center".
+#' @export
 #'@examples
 #' require(moonBook)
 #' out=mytable(sex~.,data=acs)
@@ -81,7 +82,8 @@ mylatex=function(myobj,size=5,caption=NULL,caption.placement="top",
                  caption.position="c") UseMethod("mylatex")
 
 
-#'@describeIn mylatex
+#'@describeIn mylatex Exporting "cbind.mytable","mytable" to LaTeX format
+#' @export
 mylatex.default=function(myobj,size=5,caption=NULL,caption.placement="top",
                          caption.position="c") {
 
@@ -89,7 +91,8 @@ mylatex.default=function(myobj,size=5,caption=NULL,caption.placement="top",
 }
 
 
-#'@describeIn mylatex
+#'@describeIn mylatex Exporting "cbind.mytable","mytable" to LaTeX format
+#' @export
 mylatex.mytable=function(myobj,size=5,caption=NULL,caption.placement="top",
                          caption.position="c") {
 
@@ -168,7 +171,8 @@ r=function(string) {
     string
 }
 
-#'@describeIn mylatex
+#'@describeIn mylatex Exporting "cbind.mytable","mytable" to LaTeX format
+#' @export
 mylatex.cbind.mytable=function(myobj,size=5,caption=NULL,
                                caption.placement="top",caption.position="c"){
     ## Generate latex table for cbind.mytable

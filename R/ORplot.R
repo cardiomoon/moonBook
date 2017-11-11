@@ -4,10 +4,13 @@
 #' @param x A S3 object of glm
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits (signif) to be used. Default value is 2.
+#' @param method Method to compute confidence interval. Choices are one of c("default","LRT").
+#' @importFrom stats confint confint.default coef
 #' @return A data.frame consist of odds ratios and 95% confidence interval and
 #'         p values
-extractOR=function(x,digits=2){
-    suppressMessages(a<-confint(x))
+extractOR=function(x,digits=2,method="default"){
+    if(method=="default") suppressMessages(a<-confint.default(x))
+    else suppressMessages(a<-confint(x))
     result=data.frame(exp(coef(x)),exp(a))
     result=round(result,digits)
     result=cbind(result,round(summary(x)$coefficient[,4],4))
@@ -35,6 +38,7 @@ extractOR=function(x,digits=2){
 #' @param col A specification for the default plotting color.
 #' @param ... arguments to be passed to plot
 #' @return This function return NULL invisibly and draw graphs
+#' @export
 #' @examples
 #' require(survival)
 #' data(colon)
@@ -70,6 +74,8 @@ ORplot=function(x,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
 #'           to be used as the default in plotting OR/HR points.
 #' @param col A specification for the default plotting color.
 #' @param ... Further arguments to be passed to plot
+#'
+#' @importFrom graphics par plot rect abline text segments points
 #' @return This function return NULL invisibly and draw graphs
 ORplot.sub=function(result,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
                     sig.level=1,cex=1.2,lwd=2,pch=18,col=NULL,...){

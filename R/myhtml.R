@@ -3,6 +3,7 @@
 #' @param x An object of class "mytable" or "cbind.mytable"
 #' @param caption A character
 #' @param rownames A logical value wheher or not include rownames in table
+#' @export
 #' @examples
 #' require(moonBook)
 #' res=mytable(sex~age+Dx,data=acs)
@@ -18,6 +19,7 @@ myhtml=function(x,caption=NULL,rownames=TRUE) UseMethod("myhtml")
 
 #' @describeIn myhtml
 #'
+#' @export
 myhtml.default=function(x,caption=NULL,rownames=TRUE){
     cat("myhtml function only applicable to data.frame, mytable or cbind.mytable\n")
 }
@@ -25,6 +27,7 @@ myhtml.default=function(x,caption=NULL,rownames=TRUE){
 
 #' @describeIn myhtml
 #'
+#' @export
 myhtml.mytable=function(x,caption=NULL,rownames=TRUE){
     out=mytable2html(x)
     if(is.null(caption))
@@ -54,6 +57,7 @@ myhtml.mytable=function(x,caption=NULL,rownames=TRUE){
 
 #' @describeIn myhtml
 #'
+#' @export
 myhtml.cbind.mytable=function(x,caption=NULL,rownames=TRUE){
     myobj=x
     tcount=length(myobj) # number of tables
@@ -106,6 +110,7 @@ myhtml.cbind.mytable=function(x,caption=NULL,rownames=TRUE){
 #' Add N number into data.frame
 #' @param x An object of class "mytable" a result of a call to \code{\link{mytable}}
 #'
+#' @export
 #' @return a data.frame with N number
 mytable2html=function(x){
     if(x$show.all==TRUE) out=x$res
@@ -120,6 +125,7 @@ mytable2html=function(x){
     for(i in 1:ncount+1) colnames(out)[i]=newcolnames[i]
     out
 }
+
 
 
 #' Print my html style
