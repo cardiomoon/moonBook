@@ -6,6 +6,7 @@
 #'               significant digits (signif) to be used. Default value is 2.
 #' @param method Method to compute confidence interval. Choices are one of c("default","LRT").
 #' @importFrom stats confint confint.default coef
+#' @export
 #' @return A data.frame consist of odds ratios and 95% confidence interval and
 #'         p values
 extractOR=function(x,digits=2,method="default"){
@@ -76,6 +77,7 @@ ORplot=function(x,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
 #' @param ... Further arguments to be passed to plot
 #'
 #' @importFrom graphics par plot rect abline text segments points
+#' @export
 #' @return This function return NULL invisibly and draw graphs
 ORplot.sub=function(result,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
                     sig.level=1,cex=1.2,lwd=2,pch=18,col=NULL,...){
