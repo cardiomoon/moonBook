@@ -433,13 +433,6 @@ densityplot(age~Dx,data=acs)
 
 ```r
 require(survival)
-```
-
-```
-Loading required package: survival
-```
-
-```r
 data(colon)
 out1=glm(status~sex+age+rx+obstruct+node4,data=colon)
 out2=glm(status~rx+node4,data=colon)
@@ -478,6 +471,16 @@ ORplot(out1,type=1,show.CI=TRUE,main="Odds Ratio",sig.level=0.05,
 
 ```r
 attach(colon)
+```
+
+```
+The following objects are masked from colon (pos = 4):
+
+    adhere, age, differ, etype, extent, id, node4, nodes,
+    obstruct, perfor, rx, sex, status, study, surg, time
+```
+
+```r
 colon$TS=Surv(time,status==1)
 out=mycph(TS~.,data=colon)
 ```
