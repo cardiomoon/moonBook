@@ -1,6 +1,6 @@
 Package: moonBook
 Title: Functions and Datasets for the Book by Keon-Woong Moon
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
     role=c("aut", "cre"))
 Description: Several analysis-related functions for the book entitled "R

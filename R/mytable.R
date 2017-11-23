@@ -23,7 +23,10 @@ my.t.test=function(y,x){
         else{
             if(out1$p.value<0.05) out4=t.test(x~y,na.rm=T)
             else out4=t.test(x~y,var.equal=TRUE)
-            out5=kruskal.test(as.numeric(x),factor(y))
+            #out5=wilcox.test(x~y,exact=FALSE)
+            options(warn=-1)
+            out5<-wilcox.test(x~y)
+            options(warn=0)
             p=c(out3$p.value,out4$p.value,out5$p.value)
         }
 
