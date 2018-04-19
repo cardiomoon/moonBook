@@ -4,7 +4,7 @@
 #' These are not to be called by the user
 #' @param y a vector
 #' @param x a numeric vector
-#' @importFrom stats lm shapiro.test resid var.test t.test kruskal.test anova
+#' @importFrom stats lm shapiro.test resid var.test t.test kruskal.test anova wilcox.test
 my.t.test=function(y,x){
 
     result=table(y,x)

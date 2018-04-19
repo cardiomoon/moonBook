@@ -3,6 +3,8 @@ Title: Functions and Datasets for the Book by Keon-Woong Moon
 Version: 0.1.7
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
     role=c("aut", "cre"))
+URL: https://github.com/cardiomoon/moonBook
+BugReports: https://github.com/cardiomoon/moonBook/issues
 Description: Several analysis-related functions for the book entitled "R
     statistics and graph for medical articles" (written in Korean), version 1,
     by Keon-Woong Moon with Korean demographic data with several plot
