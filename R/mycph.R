@@ -5,7 +5,7 @@
 #'                variables in an additive way.
 #' @param data  A data.frame contains data for analysis.
 #' @param digits An integer indicating the number of decimal places (round) or
-#'               significant digits (signif) to be used. Default value is 2.
+#'               significant digits to be used. Default value is 2.
 #' @export
 #' @return a data.frame consist of hazard ratio and 95\% confidence intervals and
 #'         the p values.
@@ -60,7 +60,7 @@ mycph=function(formula,data,digits=2){
 #'
 #' @param x an object of class coxph
 #' @param digits An integer indicating the number of decimal places (round) or
-#'               significant digits (signif) to be used. Default value is 2.
+#'               significant digits to be used. Default value is 2.
 #' @export
 #' @return a data.frame consist of hazard ratio and 95% confidence intervals and
 #'         the p values.

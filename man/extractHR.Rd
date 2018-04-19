@@ -10,7 +10,7 @@ extractHR(x, digits = 2)
 \item{x}{an object of class coxph}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
-significant digits (signif) to be used. Default value is 2.}
+significant digits to be used. Default value is 2.}
 }
 \value{
 a data.frame consist of hazard ratio and 95% confidence intervals and

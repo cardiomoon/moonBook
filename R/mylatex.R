@@ -1,6 +1,6 @@
 #'Demographic data of 857 patients with ACS
 #'
-#'A dataset containing demographic data and laboratory data of 857 pateints with
+#'A dataset containing demographic data and laboratory data of 857 patients with
 #'acute coronary syndrome(ACS).
 #'
 #'
@@ -30,7 +30,7 @@ NULL
 #'Demographic data of 115 patients performing IVUS(intravascular ultrasound)
 #'examination of a radial artery.
 #'
-#'A dataset containing demographic data and laboratory data of 115 pateints performing IVUS(intravascular ultrasound)
+#'A dataset containing demographic data and laboratory data of 115 patients performing IVUS(intravascular ultrasound)
 #'examination of a radial artery after tansradial coronary angiography.
 #'
 #'

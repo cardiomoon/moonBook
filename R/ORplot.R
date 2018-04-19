@@ -3,7 +3,7 @@
 #' Extract the odds ratios from a S3 object of glm
 #' @param x A S3 object of glm
 #' @param digits An integer indicating the number of decimal places (round) or
-#'               significant digits (signif) to be used. Default value is 2.
+#'               significant digits to be used. Default value is 2.
 #' @param method Method to compute confidence interval. Choices are one of c("default","LRT").
 #' @importFrom stats confint confint.default coef
 #' @export
@@ -58,7 +58,7 @@ ORplot=function(x,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
                cex=cex,lwd=lwd,pch=pch,col=col,...)
 }
 
-#' A sub function for ORplot anf HRplot
+#' A sub function for ORplot and HRplot
 #'
 #' Plot for odds ratios for a S3 object of glm
 #' @param result A resultant data.frame of function extractOR

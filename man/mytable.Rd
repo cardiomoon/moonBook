@@ -20,14 +20,14 @@ variable ('y'). If a colummn have unique values less than max.ylev
 it is treated as a categorical variable. Default value is 5.}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
-significant digits (signif) to be used. Default value is 1.}
+significant digits to be used. Default value is 1.}
 
 \item{method}{An integer indicating methods for continuous variables.
 Possible values in methods are
 \describe{
    \item{1}{forces analysis as normal-distributed}
    \item{2}{forces analysis as continuous non-normal}
-   \item{3}{performs a Shapiro-Wilks test to decide between
+   \item{3}{performs a Shapiro-Wilk test to decide between
            normal or non-normal}
 }
 Default value is 1.}

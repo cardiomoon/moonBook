@@ -2,7 +2,7 @@
 #'
 #' @param x An object of class "mytable" or "cbind.mytable"
 #' @param caption A character
-#' @param rownames A logical value wheher or not include rownames in table
+#' @param rownames A logical value whether or not include rownames in table
 #' @export
 #' @examples
 #' require(moonBook)

@@ -10,7 +10,7 @@ extractOR(x, digits = 2, method = "default")
 \item{x}{A S3 object of glm}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
-significant digits (signif) to be used. Default value is 2.}
+significant digits to be used. Default value is 2.}
 
 \item{method}{Method to compute confidence interval. Choices are one of c("default","LRT").}
 }

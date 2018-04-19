@@ -20,7 +20,7 @@ myhtml(x, caption = NULL, rownames = TRUE)
 
 \item{caption}{A character}
 
-\item{rownames}{A logical value wheher or not include rownames in table}
+\item{rownames}{A logical value whether or not include rownames in table}
 }
 \description{
 Export to html file for class "mytable" or "cbind.mytable" of "data.frame"

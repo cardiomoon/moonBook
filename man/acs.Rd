@@ -24,6 +24,6 @@
  \item{smoking}{history of smoking, One of the followings : "Never","Ex-smoker","Smoker"}
 }}
 \description{
-A dataset containing demographic data and laboratory data of 857 pateints with
+A dataset containing demographic data and laboratory data of 857 patients with
 acute coronary syndrome(ACS).
 }

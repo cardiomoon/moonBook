@@ -7,7 +7,7 @@
 reprint(x, times)
 }
 \arguments{
-\item{x}{a chearacter vector}
+\item{x}{a character vector}
 
 \item{times}{an integer}
 }

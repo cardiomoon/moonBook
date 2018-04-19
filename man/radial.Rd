@@ -23,6 +23,6 @@ examination of a radial artery.}
  \item{sex}{Factor with two levels; "Male" or "Female"}
 }}
 \description{
-A dataset containing demographic data and laboratory data of 115 pateints performing IVUS(intravascular ultrasound)
+A dataset containing demographic data and laboratory data of 115 patients performing IVUS(intravascular ultrasound)
 examination of a radial artery after tansradial coronary angiography.
 }

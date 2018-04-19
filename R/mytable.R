@@ -104,13 +104,13 @@ num_summary <-function(x){
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
 #' @param digits An integer indicating the number of decimal places (round) or
-#'               significant digits (signif) to be used. Default value is 1.
+#'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
 #'               Possible values in methods are
 #'               \describe{
 #'                  \item{1}{forces analysis as normal-distributed}
 #'                  \item{2}{forces analysis as continuous non-normal}
-#'                  \item{3}{performs a Shapiro-Wilks test to decide between
+#'                  \item{3}{performs a Shapiro-Wilk test to decide between
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.
@@ -188,13 +188,13 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=
 }
 
 
-#' Find valid string among character vecter from approximate string
+#' Find valid string among character vector from approximate string
 #'
 #' @param pattern character string to be matched in the given character
-#' @param x a character vecter where matches are sought
+#' @param x a character vector where matches are sought
 #'
 #' @return returns NA in case of no matched string found
-#'         or a character string in string vecter x
+#'         or a character string in string vector x
 #' @export
 #' @examples
 #' a="dx"
@@ -460,7 +460,7 @@ p2sig=function(value){
 #' These are not to be called by the user
 #' @param x a character vector
 #' @param ...  further arguments passed to or from other methods.
-#' @param width an interger
+#' @param width an integer
 centerprint=function(x,...,width=10){
 
         mwidth=max(nchar(x),width)
@@ -488,7 +488,7 @@ space=function(num){
 #'
 #' Internal mytable functions
 #' These are not to be called by the user
-#' @param x a chearacter vector
+#' @param x a character vector
 #' @param times an integer
 reprint=function(x,times){
     ret=x
@@ -566,7 +566,7 @@ print.mytable=function(x,...) {
 #' cbind function for class "mytable"
 #'
 #' @param ...      Objects of class "mytable", a result of a call to \code{\link{mytable}}
-#' @param caption  Unique values of grouping vaiabled used for column name of table
+#' @param caption  Unique values of grouping variables used for column name of table
 #' @param y        Names of grouping variables used for caption of table
 #'
 #' @export
@@ -723,7 +723,7 @@ summary.cbind.mytable=function(object,...) {
     object
 }
 
-#' Produce combind table for descriptive statistics
+#' Produce combined table for descriptive statistics
 #'
 #' Produce table for descriptive statistics by two grouping variables for several variables easily.
 #' Depending on  the nature of these variables, different descriptive statistical
@@ -737,13 +737,13 @@ summary.cbind.mytable=function(object,...) {
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
 #' @param digits An integer indicating the number of decimal places (round) or
-#'               significant digits (signif) to be used. Default value is 1.
+#'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
 #'               Possible values in methods are
 #'               \describe{
 #'                  \item{1}{forces analysis as normal-distributed}
 #'                  \item{2}{forces analysis as continuous non-normal}
-#'                  \item{3}{performs a Shapiro-Wilks test to decide between
+#'                  \item{3}{performs a Shapiro-Wilk test to decide between
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.

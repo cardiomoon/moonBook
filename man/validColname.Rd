@@ -2,21 +2,21 @@
 % Please edit documentation in R/mytable.R
 \name{validColname}
 \alias{validColname}
-\title{Find valid string among character vecter from approximate string}
+\title{Find valid string among character vector from approximate string}
 \usage{
 validColname(pattern, x)
 }
 \arguments{
 \item{pattern}{character string to be matched in the given character}
 
-\item{x}{a character vecter where matches are sought}
+\item{x}{a character vector where matches are sought}
 }
 \value{
 returns NA in case of no matched string found
-        or a character string in string vecter x
+        or a character string in string vector x
 }
 \description{
-Find valid string among character vecter from approximate string
+Find valid string among character vector from approximate string
 }
 \examples{
 a="dx"

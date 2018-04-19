@@ -14,7 +14,7 @@ variables in an additive way.}
 \item{data}{A data.frame contains data for analysis.}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
-significant digits (signif) to be used. Default value is 2.}
+significant digits to be used. Default value is 2.}
 }
 \value{
 a data.frame consist of hazard ratio and 95\% confidence intervals and

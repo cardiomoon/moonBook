@@ -9,7 +9,7 @@
 \arguments{
 \item{...}{Objects of class "mytable", a result of a call to \code{\link{mytable}}}
 
-\item{caption}{Unique values of grouping vaiabled used for column name of table}
+\item{caption}{Unique values of grouping variables used for column name of table}
 
 \item{y}{Names of grouping variables used for caption of table}
 }

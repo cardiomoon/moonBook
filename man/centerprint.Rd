@@ -11,7 +11,7 @@ centerprint(x, ..., width = 10)
 
 \item{...}{further arguments passed to or from other methods.}
 
-\item{width}{an interger}
+\item{width}{an integer}
 }
 \description{
 Internal mytable functions
