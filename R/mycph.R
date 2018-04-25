@@ -42,6 +42,10 @@ mycph=function(formula,data,digits=2){
             cat(dimnames(out$conf.int)[[1]]," was excluded : NaN\n")
             next
         }
+        if(any(is.na(out$coef))){
+            cat(dimnames(out$conf.int)[[1]]," was excluded : NA\n")
+            next
+        }
         var=c(var,dimnames(out$conf.int)[[1]])
         HR=c(HR,out$coef[,2])
         lcl=c(lcl,out$conf.int[,3])
