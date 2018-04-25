@@ -9,7 +9,7 @@ rank2group(y, k = 4)
 \arguments{
 \item{y}{a numeric vector}
 
-\item{k}{a integer specifies how many groups you want to classifiy.
+\item{k}{a integer specifies how many groups you want to classify.
 default value is 4}
 }
 \value{

@@ -866,7 +866,7 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact
 #' rank a numeric vector and returns a new ordinal vector
 #'
 #' @param y a numeric vector
-#' @param k a integer specifies how many groups you want to classifiy.
+#' @param k a integer specifies how many groups you want to classify.
 #'            default value is 4
 #'
 #' @return a ordinal vector(numeric) with the same length of y
