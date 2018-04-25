@@ -420,13 +420,13 @@ library(moonBook)
 densityplot(age~sex,data=acs)
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-13](man/figures/unnamed-chunk-13-1.png)
 
 ```r
 densityplot(age~Dx,data=acs)
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-2.png)
+![plot of chunk unnamed-chunk-13](man/figures/unnamed-chunk-13-2.png)
 
 ## Plot for odds ratios of a glm object
 
@@ -439,32 +439,32 @@ out2=glm(status~rx+node4,data=colon)
 ORplot(out1,type=2,show.CI=TRUE,xlab="This is xlab",main="Odds Ratio")
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-14](man/figures/unnamed-chunk-14-1.png)
 
 ```r
 ORplot(out2,type=1)
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-2.png)
+![plot of chunk unnamed-chunk-14](man/figures/unnamed-chunk-14-2.png)
 
 ```r
 ORplot(out1,type=1,show.CI=TRUE,col=c("blue","red"))
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-3.png)
+![plot of chunk unnamed-chunk-14](man/figures/unnamed-chunk-14-3.png)
 
 ```r
 ORplot(out1,type=4,show.CI=TRUE,sig.level=0.05)
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-4.png)
+![plot of chunk unnamed-chunk-14](man/figures/unnamed-chunk-14-4.png)
 
 ```r
 ORplot(out1,type=1,show.CI=TRUE,main="Odds Ratio",sig.level=0.05,
         pch=1,cex=2,lwd=4,col=c("red","blue"))
 ```
 
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-5.png)
+![plot of chunk unnamed-chunk-14](man/figures/unnamed-chunk-14-5.png)
 
 ## For automation of cox's proportional hazard model
 
@@ -523,4 +523,4 @@ HRplot(out,type=2,show.CI=TRUE,cex=2,sig=0.05,
        main="Hazard ratios of all individual variables")
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-15](man/figures/unnamed-chunk-15-1.png)
