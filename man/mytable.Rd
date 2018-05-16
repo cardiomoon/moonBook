@@ -24,8 +24,19 @@ methods were used(t-test, ANOVA,Kruskal-Wallis, chisq, Fisher,...)
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: Formula method of ztable
+\item \code{formula}: S3 method for formula
 
 \item \code{data.frame}: S3 method for data.frame
 }}
 
+\examples{
+mytable(acs)
+mytable(~age+sex,data=acs)
+mytable(Dx~age+sex+height+weight+TC+TG+HDLC,data=acs,method=3,digits=2)
+mytable(am+cyl~.,data=mtcars)
+out=mytable(sex~.,data=acs)
+out
+summary(out)
+require(ztable)
+ztable(out)
+}

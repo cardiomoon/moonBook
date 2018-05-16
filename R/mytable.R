@@ -101,10 +101,20 @@ num_summary <-function(x){
 #' @param x An R object, formula or data.frame
 #' @param ... arguments to be passed to \code{\link{mytable_sub}}
 #' @export
+#' @examples
+#' mytable(acs)
+#' mytable(~age+sex,data=acs)
+#' mytable(Dx~age+sex+height+weight+TC+TG+HDLC,data=acs,method=3,digits=2)
+#' mytable(am+cyl~.,data=mtcars)
+#' out=mytable(sex~.,data=acs)
+#' out
+#' summary(out)
+#' require(ztable)
+#' ztable(out)
 mytable=function(x,...)  UseMethod("mytable")
 
 
-#'@describeIn mytable Formula method of ztable
+#'@describeIn mytable S3 method for formula
 #'@export
 mytable.formula=function(x,...) {
     mytable_sub(x,...)
@@ -148,15 +158,6 @@ mytable.formula=function(x,...) {
 #'
 #' @importFrom stats addmargins
 #' @export
-#' @examples
-#' mytable(acs)
-#' mytable(~age+sex,data=acs)
-#' mytable(Dx~age+sex+height+weight+TC+TG+HDLC,data=acs,method=3,digits=2)
-#' mytable(am+cyl~.,data=mtcars)
-#' out=mytable(sex~.,data=acs)
-#' out
-#' summary(out)
-#' mylatex(out)
 mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
     # x=~.
     # data=acs

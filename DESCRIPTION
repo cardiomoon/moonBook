@@ -19,6 +19,7 @@ Imports:
 Suggests:
     testthat,
     knitr,
-    ggplot2
+    ggplot2,
+    ztable
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
