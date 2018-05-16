@@ -27,7 +27,9 @@ mytable.data.frame=function(x,...){
 #' @export
 mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 
+
     name=c()
+    no=c()
     out1=c()
     out2=c()
     out3=c()
@@ -39,6 +41,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 
         xname=colnames(x)[i]
         y=x[[xname]]
+
         if(is.numeric(y)){
             xlev=length(unique(y))
             kind=ifelse(xlev<=max.ylev,"categorical","numeric")
@@ -46,6 +49,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
             kind="categorical"
         }
         if(kind=="numeric") {
+
             temp=unlist(num_summary(y))
 
             if(method==3){
@@ -63,6 +67,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
             }
             form=paste0("%0.",digits,"f")
             name=c(name,xname)
+            no=c(no,length(y)-sum(is.na(y)))
             if(statmethod==1) {
 
                 out1=c(out1,sprintf(form,temp[1]))
@@ -77,8 +82,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 
 
 
-        }
-        else {
+        } else {
             res1=table(y)
             res2=prop.table(res1)*100
             res=rbind(res1,res2)
@@ -87,12 +91,14 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
             colnames(res)=c("Freq","Ratio")
             res$Ratio=paste0("(",sprintf(form,res$Ratio),"%)")
             name=c(name,xname)
+            no=c(no,length(y)-sum(is.na(y)))
             out1=c(out1,"")
             out2=c(out2,"")
             out3=c(out3,"")
             p=c(p,"")
             for(j in 1:nrow(res)){
                 name=c(name,paste0("  - ",rownames(res)[j]))
+                no=c(no,"")
                 out1=c(out1,res$Freq[j])
                 out2=c(out2,"")
                 out3=c(out3,res$Ratio[j])
@@ -103,13 +109,14 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
         }
 
     }
+    stats=paste(out1,out2,out3)
+    result=data.frame(name=name,N=no,stats=stats,p=p,stringsAsFactors = FALSE)
 
-    result=data.frame(name=name,out1=out1,out2=out2,out3=out3,p=p)
     fmt=paste0("%-",max(nchar(result$name)),"s")
     result$name=sprintf(fmt,result$name)
     if(show.all==FALSE) result=result[-ncol(result)]
     class(result)=c("mytable.df","data.frame")
-    attr(result,"name")=substitute(x)
+    #attr(result,"name")=substitute(x)
     result
 
 }
@@ -117,36 +124,23 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 #' Print an object of mytable.df
 #' @param x An onject of class mytable.df
 #' @param ... Further arguments
-#' @importFrom stringr str_dup str_pad
 #' @export
 print.mytable.df=function(x,...){
 
     result<-x
-    string=list()
-    len1=0
-    if(length(result$out1[result$out2!=""])>0) {
-        len1=max(nchar(result$out1[result$out2!=""]),na.rm=TRUE)
-    }
 
-    if(len1>0) result$out1[result$out2!=""]=str_pad(result$out1[result$out2!=""],
-                                         len1,side="left")
-    result$out1[result$out2==""]=str_pad(result$out1[result$out2==""],
-                                         len1,side="left")
-
-    result$out3[result$out2==""]=str_pad(result$out3[result$out2==""],
-                                         max(nchar(result$out3[result$out2==""])),side="left")
-    if(len1>0) result$out3[result$out2!=""]=str_pad(result$out3[result$out2!=""],
-                                         max(nchar(result$out3[result$out2!=""])),side="left")
-    temp=paste(result$out1,result$out2,result$out3)
-    temp
-    #result[]=lapply(result,function(x) {str_pad(x,width=max(nchar(x)),side="left")})
-    for(i in 1:nrow(result)){
-        string[[i]]=paste(result$name[i],temp[i],"\n")
-    }
-
-    len=max(nchar(string))
-    cat(paste0("\nDescriptive Statistics of data '",attr(result,"name"),"'\n\n"))
-    cat(str_dup("-",len),"\n")
-    lapply(string,cat)
-    cat(str_dup("-",len),"\n")
+    length=apply(x,2,function(y){max(nchar(as.character(y)),na.rm=TRUE)})
+    fmt=paste0("%",length+1,"s")
+    fmt
+    string=paste(sprintf(fmt[1],result$name),sprintf(fmt[2],result$N),sprintf(fmt[3],result$stats),"\n")
+    len=sum(length)+3
+    cat("\n")
+    cat(centerprint("Descriptive Statistics",width=len))
+    cat("\n")
+    cat(reprint("-",len),"\n")
+    cat(paste(reprint(" ",length[1]+1),centerprint("N",width=length[2]+1),
+              centerprint("Total",width=length[3]+1),"\n"))
+    cat(reprint("-",len),"\n")
+    for(i in 1:length(string)) cat(string[i])
+    cat(reprint("-",len),"\n")
 }
