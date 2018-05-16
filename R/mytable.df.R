@@ -1,5 +1,11 @@
+#'@describeIn mytable S3 method for data.frame
+#'@export
+mytable.data.frame=function(x,...){
+    mytable_df(x,...)
+}
+
 #' make mytable from data.frame
-#' @param data A data.frame
+#' @param x A data.frame
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
@@ -19,34 +25,35 @@
 #' @return An object of class "mytable.df".
 #'      'print' returns a table for descriptive statistics.
 #' @export
-mytable.df=function(data,max.ylev=5,digits=1,method=1,show.all=FALSE) {
+mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 
     name=c()
     out1=c()
     out2=c()
     out3=c()
     p=c()
+    # str(x)
 
     plusminus="\u00b1"
-    for(i in 1:ncol(data)) {
+    for(i in 1:ncol(x)) {
 
-        xname=colnames(data)[i]
-        x=data[[xname]]
-        if(is.numeric(x)){
-            xlev=length(unique(x))
+        xname=colnames(x)[i]
+        y=x[[xname]]
+        if(is.numeric(y)){
+            xlev=length(unique(y))
             kind=ifelse(xlev<=max.ylev,"categorical","numeric")
         } else{
             kind="categorical"
         }
         if(kind=="numeric") {
-            temp=unlist(num_summary(x))
+            temp=unlist(num_summary(y))
 
             if(method==3){
                 if(length(x)<=5000) {
-                    fit=shapiro.test(x)
+                    fit=shapiro.test(y)
 
                 } else {
-                    fit=nortest::ad.test(x)
+                    fit=nortest::ad.test(y)
                 }
                 statmethod=ifelse(fit$p.value<0.05,2,1)
                 p=c(p,round(fit$p.value,3))
@@ -72,7 +79,7 @@ mytable.df=function(data,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 
         }
         else {
-            res1=table(x)
+            res1=table(y)
             res2=prop.table(res1)*100
             res=rbind(res1,res2)
             res=as.data.frame(t(res))
@@ -102,7 +109,7 @@ mytable.df=function(data,max.ylev=5,digits=1,method=1,show.all=FALSE) {
     result$name=sprintf(fmt,result$name)
     if(show.all==FALSE) result=result[-ncol(result)]
     class(result)=c("mytable.df","data.frame")
-    attr(result,"name")=substitute(data)
+    attr(result,"name")=substitute(x)
     result
 
 }
@@ -138,7 +145,7 @@ print.mytable.df=function(x,...){
     }
 
     len=max(nchar(string))
-    cat(paste0("Descriptive Statistics of data '",attr(result,"name"),"'\n"))
+    cat(paste0("\nDescriptive Statistics of data '",attr(result,"name"),"'\n\n"))
     cat(str_dup("-",len),"\n")
     lapply(string,cat)
     cat(str_dup("-",len),"\n")

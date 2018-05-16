@@ -92,13 +92,32 @@ num_summary <-function(x){
 
 }
 
+
+#' Produce table for descriptive statistics
+#'
+#' Produce table for descriptive statistics by groups for several variables easily.
+#' Depending on  the nature of these variables, different descriptive statistical
+#' methods were used(t-test, ANOVA,Kruskal-Wallis, chisq, Fisher,...)
+#' @param x An R object, formula or data.frame
+#' @param ... arguments to be passed to \code{\link{mytable_sub}}
+#' @export
+mytable=function(x,...)  UseMethod("mytable")
+
+
+#'@describeIn mytable Formula method of ztable
+#'@export
+mytable.formula=function(x,...) {
+    mytable_sub(x,...)
+}
+
+
 #' Produce table for descriptive statistics
 #'
 #' Produce table for descriptive statistics by groups for several variables easily.
 #' Depending on  the nature of these variables, different descriptive statistical
 #' methods were used(t-test, ANOVA,Kruskal-Wallis, chisq, Fisher,...)
 #'
-#' @param formula An object of class "formula". Left side of ~ must contain the
+#' @param x An object of class "formula". Left side of ~ must contain the
 #'                name of one grouping variable or two grouping variables in an
 #'                additive way(e.g. sex+group~), and the right side of ~ must have
 #'                variables in an additive way.
@@ -130,28 +149,37 @@ num_summary <-function(x){
 #' @importFrom stats addmargins
 #' @export
 #' @examples
-#' data(acs)
-#' mytable(Dx~.,data=acs)
+#' mytable(acs)
+#' mytable(~age+sex,data=acs)
 #' mytable(Dx~age+sex+height+weight+TC+TG+HDLC,data=acs,method=3,digits=2)
 #' mytable(am+cyl~.,data=mtcars)
 #' out=mytable(sex~.,data=acs)
 #' out
 #' summary(out)
 #' mylatex(out)
-#'
-mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
-    call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
-    # cat("\n Call:",call,"\n\n")
-    f=formula
-    myt=terms(f,data=data)
-    y=as.character(f[[2]])
-    res=unlist(strsplit(deparse(formula),"~",fixed=TRUE))
+mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+    # x=~.
+    # data=acs
 
-    y=unlist(strsplit(y,"+",fixed=TRUE))
+    call=paste(deparse(x),", ","data= ",substitute(data),sep="")
+    # cat("\n Call:",call,"\n\n")
+    f=x
+    length(f)
+    myt=terms(f,data=data)
+
+    if(length(f)>2) {
+        y=as.character(f[[2]])
+    } else{
+        y=""
+    }
+    y
+    res=unlist(strsplit(deparse(x),"~",fixed=TRUE))
+    # if(y!="") y=unlist(strsplit(y,"+",fixed=TRUE))
     if(length(y)>1) {
-        result=mytable2(formula,data,max.ylev,digits,method,show.all,exact=exact,show.total=show.total)
+        result=mytable2(x,data,max.ylev,digits,method,show.all,exact=exact,show.total=show.total)
         return(result)
     }
+    if(y!=""){
     if(exact){
         y1<-y
     } else{
@@ -177,7 +205,7 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=
     error=c()
     for(i in 1:length(x)) {
 
-        out<-mytable.sub(y1,x[i],data,max.ylev,show.total=show.total)
+        out<-mytable_sub2(y1,x[i],data,max.ylev,show.total=show.total)
         if(length(out)!=4) {
             error=c(error,x[i])
             next
@@ -187,6 +215,16 @@ mytable=function(formula,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=
     out=printmytable2(result,digits)
     class(out)=c("mytable")
     attr(out,"error")=error
+    out
+    } else{
+        dataname=as.character(substitute(data))
+        # str(dataname)
+        assign(dataname,data[attr(myt,"term.labels")])
+        out=eval(parse(text=paste0("mytable_df(",dataname,
+                                   ",max.ylev=",max.ylev,",digits=",digits,",method=",method,
+                                   ",show.all=",show.all,")")))
+        out
+    }
     out
 }
 
@@ -211,6 +249,7 @@ validColname=function(pattern,x) {
     x[result]
 }
 
+
 #' Internal mytable functions
 #'
 #' Internal mytable functions
@@ -223,7 +262,7 @@ validColname=function(pattern,x) {
 #' @param show.total a logical value
 #' @importFrom stats na.omit
 #' @export
-mytable.sub=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
+mytable_sub2=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
 
     mydata=try(data.frame(y=data[[y]],x=data[[x]]))
@@ -821,7 +860,7 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact
                         method=method,show.all=show.all)
             x=labels(myt)
             for(i in 1:length(x)) {
-                out=mytable.sub(y1,x[i],data,max.ylev,show.total=show.total)
+                out=mytable_sub2(y1,x[i],data,max.ylev,show.total=show.total)
                 result[[x[i]]]=out
             }
             out=printmytable2(result,digits)
@@ -845,7 +884,7 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact
                 data[[x[j]]]=factor(data[[x[j]]])
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
-            out=mytable.sub(validy2,x[j],mydata,max.ylev,show.total=show.total)
+            out=mytable_sub2(validy2,x[j],mydata,max.ylev,show.total=show.total)
             result[[x[j]]]=out
             #cat("y[2]=",y[2],",x[j]=",x[j],"\n")
         }
