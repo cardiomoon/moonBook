@@ -5,6 +5,7 @@
 #' @param y a vector
 #' @param x a numeric vector
 #' @importFrom stats lm shapiro.test resid var.test t.test kruskal.test anova wilcox.test
+#' @export
 my.t.test=function(y,x){
 
     result=table(y,x)
@@ -49,6 +50,7 @@ my.t.test=function(y,x){
 #' @param y a vector
 #' @param mydata a data.frame
 #' @importFrom stats chisq.test fisher.test xtabs
+#' @export
 my.chisq.test=function(x,y,mydata)
 {
 
@@ -78,6 +80,7 @@ my.chisq.test=function(x,y,mydata)
 #' These are not to be called by the user
 #' @param x a numeric vector
 #' @importFrom stats sd median mad IQR fivenum
+#' @export
 num_summary <-function(x){
     if(all(is.na(x))){
        result=list(NA,NA,NA,NA,NA,list(NA,NA,NA,NA,NA))

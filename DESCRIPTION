@@ -15,7 +15,8 @@ License: GPL-2
 LazyData: true
 Imports:
     nortest,
-    survival
+    survival,
+    stringr
 Suggests:
     testthat,
     knitr,
