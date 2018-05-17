@@ -132,6 +132,8 @@ mytable.formula=function(x,...) {
 #'                additive way(e.g. sex+group~), and the right side of ~ must have
 #'                variables in an additive way.
 #' @param data A data.frame contains data for analysis
+#' @param use.labels Logical. Whether or not use labels.
+#' @param use.column.label Logical. Whether or not use column labels.
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
@@ -161,7 +163,8 @@ mytable.formula=function(x,...) {
 #'
 #' @importFrom stats addmargins
 #' @export
-mytable_sub=function(x,data,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
+                     max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
     # x=Species~no
     # data=iris2
     # max.ylev=5;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
@@ -181,7 +184,8 @@ mytable_sub=function(x,data,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all
     res=unlist(strsplit(deparse(x),"~",fixed=TRUE))
     # if(y!="") y=unlist(strsplit(y,"+",fixed=TRUE))
     if(length(y)>1) {
-        result=mytable2(x,data,max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+        result=mytable2(x,data,use.labels,use.column.label,
+                        max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
         return(result)
     }
     if(y!=""){
@@ -196,7 +200,8 @@ mytable_sub=function(x,data,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all
         if(!identical(y,y1)) {
             cat("\n","'",y,"' is an invalid column name: Instead '",y1,"' is used\n")
             s=paste(y1,res[2],sep="~")
-            result=mytable(as.formula(s),data,max.ylev,digits,method,show.all,exact=exact,show.total=show.total)
+            result=mytable(as.formula(s),data,use.labels,use.column.label,
+                           max.ylev,digits,method,show.all,exact=exact,show.total=show.total)
             return(result)
         }
     }
@@ -208,6 +213,13 @@ mytable_sub=function(x,data,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all
     result=list(y=y1,length=length(t),names=names(t),count=unname(t),method=method,show.all=show.all)
     x=labels(myt)
     error=c()
+
+    if(use.column.label){
+        data<-changeColnameLabel(data)
+    }
+    if(use.labels){
+        data<-addLabelDf(data)
+    }
 
     for(i in 1:length(x)) {
 
@@ -818,6 +830,8 @@ summary.cbind.mytable=function(object,...) {
 #'                additive way(e.g. sex+group~), and the right side of ~ must have
 #'                variables in an additive way.
 #' @param data A data.frame contains data for analysis
+#' @param use.labels Logical. Whether or not use labels.
+#' @param use.column.label Logical. Whether or not use column labels.
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
@@ -843,7 +857,8 @@ summary.cbind.mytable=function(object,...) {
 #'                 Default value is FALSE.
 #' @export
 #' @return An object of class "cbind.mytable"
-mytable2=function(formula,data,max.ylev=5,maxCatLevel=20,digits=2,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
+                  max.ylev=5,maxCatLevel=20,digits=2,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
     f=formula
@@ -886,9 +901,17 @@ mytable2=function(formula,data,max.ylev=5,maxCatLevel=20,digits=2,method=1,show.
         if(recall==1) {
             s=paste(validy1,validy2,sep="+")
             s=paste(s,res[2],sep="~")
-            result=mytable2(as.formula(s),data,max.ylev,digits,method,show.all,exact,show.total)
+            result=mytable2(as.formula(s),data,use.labels,use.column.label,
+                            max.ylev,digits,method,show.all,exact,show.total)
             return(result)
         }
+    }
+
+    if(use.column.label){
+        data<-changeColnameLabel(data)
+    }
+    if(use.labels){
+        data<-addLabelDf(data)
     }
     uniquey=unique(data[[validy1]])
     ycount=length(uniquey)

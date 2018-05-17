@@ -6,6 +6,8 @@ mytable.data.frame=function(x,...){
 
 #' make mytable from data.frame
 #' @param x A data.frame
+#' @param use.labels Logical. Whether or not use labels.
+#' @param use.column.label Logical. Whether or not use column labels.
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
 #'                 variable. If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
@@ -28,7 +30,7 @@ mytable.data.frame=function(x,...){
 #' @return An object of class "mytable.df".
 #'      'print' returns a table for descriptive statistics.
 #' @export
-mytable_df=function(x,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
+mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
 
      # x=df;max.ylev=5;digits=1;method=1;show.all=FALSE
      # maxCatLevel=20
@@ -41,7 +43,13 @@ mytable_df=function(x,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE
     # str(x)
 
     plusminus="\u00b1"
-      # i=1
+
+    if(use.column.label){
+        x<-changeColnameLabel(x)
+    }
+    if(use.labels){
+        x<-addLabelDf(x)
+    }
     for(i in 1:ncol(x)) {
 
         xname=colnames(x)[i]

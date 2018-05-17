@@ -4,8 +4,9 @@
 \alias{mytable2}
 \title{Produce combined table for descriptive statistics}
 \usage{
-mytable2(formula, data, max.ylev = 5, maxCatLevel = 20, digits = 2,
-  method = 1, show.all = FALSE, exact = FALSE, show.total = FALSE)
+mytable2(formula, data, use.labels = TRUE, use.column.label = TRUE,
+  max.ylev = 5, maxCatLevel = 20, digits = 2, method = 1,
+  show.all = FALSE, exact = FALSE, show.total = FALSE)
 }
 \arguments{
 \item{formula}{An object of class "formula". Left side of ~ must contain two grouping variables in an
@@ -13,6 +14,10 @@ additive way(e.g. sex+group~), and the right side of ~ must have
 variables in an additive way.}
 
 \item{data}{A data.frame contains data for analysis}
+
+\item{use.labels}{Logical. Whether or not use labels.}
+
+\item{use.column.label}{Logical. Whether or not use column labels.}
 
 \item{max.ylev}{An integer indicating the maximum number of levels of grouping
 variable ('y'). If a colummn have unique values less than max.ylev

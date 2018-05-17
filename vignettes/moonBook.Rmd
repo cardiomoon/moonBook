@@ -28,6 +28,20 @@ The first argument of function `mytable` is an object of class `formula`. Left s
 str(acs)
 ```
 
+## Explore a data.frame
+
+You can use `mytable` function to explore a data.frame. 
+
+```{r,comment=NA}
+mytable(acs)
+```
+
+You can use formula without grouping variable(s).
+
+```{r,comment=NA}
+mytable(~age+sex,data=acs)
+```
+
 
 ## Choosing grouping variable(s) and row-variable(s)
 
