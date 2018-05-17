@@ -4,8 +4,8 @@
 \alias{mytable2}
 \title{Produce combined table for descriptive statistics}
 \usage{
-mytable2(formula, data, max.ylev = 5, digits = 2, method = 1,
-  show.all = FALSE, exact = FALSE, show.total = FALSE)
+mytable2(formula, data, max.ylev = 5, maxCatLevel = 20, digits = 2,
+  method = 1, show.all = FALSE, exact = FALSE, show.total = FALSE)
 }
 \arguments{
 \item{formula}{An object of class "formula". Left side of ~ must contain two grouping variables in an
@@ -17,6 +17,10 @@ variables in an additive way.}
 \item{max.ylev}{An integer indicating the maximum number of levels of grouping
 variable ('y'). If a colummn have unique values less than max.ylev
 it is treated as a categorical variable. Default value is 5.}
+
+\item{maxCatLevel}{An integer indicating the maximum number of unique levels of categorial variable.
+If a colummn have unique values more than maxCatLevel, categorical summarization
+wll not be performed.}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
 significant digits to be used. Default value is 1.}

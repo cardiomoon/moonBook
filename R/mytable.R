@@ -135,6 +135,9 @@ mytable.formula=function(x,...) {
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
+#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
+#'                  If a colummn have unique values more than maxCatLevel, categorical summarization
+#'                  wll not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
@@ -158,7 +161,7 @@ mytable.formula=function(x,...) {
 #'
 #' @importFrom stats addmargins
 #' @export
-mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+mytable_sub=function(x,data,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
     # x=Species~no
     # data=iris2
     # max.ylev=5;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
@@ -178,7 +181,7 @@ mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FA
     res=unlist(strsplit(deparse(x),"~",fixed=TRUE))
     # if(y!="") y=unlist(strsplit(y,"+",fixed=TRUE))
     if(length(y)>1) {
-        result=mytable2(x,data,max.ylev,digits,method,show.all,exact=exact,show.total=show.total)
+        result=mytable2(x,data,max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
         return(result)
     }
     if(y!=""){
@@ -208,7 +211,7 @@ mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FA
 
     for(i in 1:length(x)) {
 
-        out<-mytable_sub2(y1,x[i],data,max.ylev,show.total=show.total)
+        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,show.total=show.total)
 
         if(length(out)!=4) {
             error=c(error,x[i])
@@ -818,6 +821,9 @@ summary.cbind.mytable=function(object,...) {
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
 #'                 variable ('y'). If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
+#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
+#'                  If a colummn have unique values more than maxCatLevel, categorical summarization
+#'                  wll not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
@@ -837,7 +843,7 @@ summary.cbind.mytable=function(object,...) {
 #'                 Default value is FALSE.
 #' @export
 #' @return An object of class "cbind.mytable"
-mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+mytable2=function(formula,data,max.ylev=5,maxCatLevel=20,digits=2,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
     f=formula
@@ -900,7 +906,7 @@ mytable2=function(formula,data,max.ylev=5,digits=2,method=1,show.all=FALSE,exact
                         method=method,show.all=show.all)
             x=labels(myt)
             for(i in 1:length(x)) {
-                out=mytable_sub2(y1,x[i],data,max.ylev,show.total=show.total)
+                out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,show.total=show.total)
                 result[[x[i]]]=out
             }
             out=printmytable2(result,digits)
