@@ -159,8 +159,9 @@ mytable.formula=function(x,...) {
 #' @importFrom stats addmargins
 #' @export
 mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
-    # x=~.
-    # data=acs
+    # x=Species~no
+    # data=iris2
+    # max.ylev=5;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
 
     call=paste(deparse(x),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
@@ -204,15 +205,18 @@ mytable_sub=function(x,data,max.ylev=5,digits=1,method=1,show.all=FALSE,exact=FA
     result=list(y=y1,length=length(t),names=names(t),count=unname(t),method=method,show.all=show.all)
     x=labels(myt)
     error=c()
+
     for(i in 1:length(x)) {
 
         out<-mytable_sub2(y1,x[i],data,max.ylev,show.total=show.total)
+
         if(length(out)!=4) {
             error=c(error,x[i])
             next
         }
         result[[x[i]]]=out
     }
+    #str(result)
     out=printmytable2(result,digits)
     class(out)=c("mytable")
     attr(out,"error")=error
@@ -259,13 +263,17 @@ validColname=function(pattern,x) {
 #' @param x a vector
 #' @param data a data.frame
 #' @param max.ylev an integer
+#' @param maxCatLevel an integer
 #' @param method an integer
 #' @param show.total a logical value
 #' @importFrom stats na.omit
 #' @export
-mytable_sub2=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
+mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,show.total=FALSE){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
-
+    # data=iris2
+    # y="Species"
+    # x="Sepal.Length"
+    # max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
     mydata=try(data.frame(y=data[[y]],x=data[[x]]))
 
     if(class(mydata)!="data.frame") return(-1)
@@ -275,15 +283,17 @@ mytable_sub2=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
     N=sum(result)
     var_name=x
     xlev=dim(result)[1]
+      # xlev
     var_class=ifelse(is.numeric(mydata$x),"continuous","categorical")
     if(xlev<=max.ylev) {
         factorx=factor(mydata$x)
         var_class="categorical"
     }
-    #cat("name=",var_name,",class=",var_class,"N=",N,"\n")
+     # cat("name=",var_name,",class=",var_class,"N=",N,"\n")
     if(var_class=="categorical") {   # categorical
         subgroup=list()
         ## for descriptives
+        if(xlev<=maxCatLevel){
         for(i in 1:xlev){
             if(show.total){
 
@@ -319,10 +329,20 @@ mytable_sub2=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
         names(subgroup)=rownames(result)
         ## for statistical
         p=my.chisq.test(x,y,mydata)
+        } else{
+            var_class="categorical2"
+            if("Date" %in% class(mydata$x)){
+                subgroup=paste0(min(mydata$x),"-",max(mydata$x))
+            } else{
+               subgroup=paste0("unique values:",xlev)
+            }
+            p=NA
+        }
         result=list(class=var_class,count=N,subgroup=subgroup,p=p)
+        #str(result)
+        result
         #browser()
-    }
-    else {
+    } else {
          ## for descriptive
          out=tapply(data[[x]],data[[y]],num_summary)
 
@@ -350,6 +370,7 @@ mytable_sub2=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
         result=list(class=var_class,count=N,out=out,p=p)
 
     }
+    # str(result)
     result
 }
 
@@ -361,6 +382,8 @@ mytable_sub2=function(y,x,data,max.ylev=5,method=1,show.total=FALSE){
 #' @param digits an integer
 #' @export
 printmytable2=function(obj,digits=1){
+    # obj<-result;digits=1
+    # str(obj)
     plusminus="\u00b1"
     cl=c()
     N=c()
@@ -373,6 +396,8 @@ printmytable2=function(obj,digits=1){
     colnames(desc)=obj$names
 
     fmt=sprintf("%s%df","%4.",digits)
+    fmt
+    #str(obj)
     for(i in 7:length(obj)){
         varnames=c(varnames,names(obj)[i])
         subnames=c(subnames,"")
@@ -424,7 +449,7 @@ printmytable2=function(obj,digits=1){
             }
         }
         # if factor
-        else {          ##if(obj[[i]]$class=="categorical")
+        else if(obj[[i]]$class=="categorical"){          ##if(obj[[i]]$class=="categorical")
             add=matrix(,ncol=obj$length)
             for(j in 1:obj$length){
                    add[1,j]=""
@@ -460,6 +485,18 @@ printmytable2=function(obj,digits=1){
                 if(all(is.na(desc))) desc=add
                 else desc=rbind(desc,add)
             }
+        }
+        else{   ##if(obj[[i]]$class=="categorical2")
+            for(j in 1:obj$length){
+                add[1,j]=obj[[i]]$subgroup
+            }
+            if(all(is.na(desc))) desc=add
+            else desc=rbind(desc,add)
+            p1=c(p1,NA)
+            p2=c(p2,NA)
+            p3=c(p3,NA)
+            p4=c(p4,NA)
+            ptest=c(ptest,"")
         }
     }
     nname=ifelse(subnames=="",varnames,paste(varnames,"  - ",subnames,sep=""))

@@ -4,7 +4,8 @@
 \alias{mytable_sub2}
 \title{Internal mytable functions}
 \usage{
-mytable_sub2(y, x, data, max.ylev = 5, method = 1, show.total = FALSE)
+mytable_sub2(y, x, data, max.ylev = 5, maxCatLevel = 20, method = 1,
+  show.total = FALSE)
 }
 \arguments{
 \item{y}{a vector}
@@ -14,6 +15,8 @@ mytable_sub2(y, x, data, max.ylev = 5, method = 1, show.total = FALSE)
 \item{data}{a data.frame}
 
 \item{max.ylev}{an integer}
+
+\item{maxCatLevel}{an integer}
 
 \item{method}{an integer}
 
