@@ -4,7 +4,8 @@
 \alias{mytable_df}
 \title{make mytable from data.frame}
 \usage{
-mytable_df(x, max.ylev = 5, digits = 1, method = 1, show.all = FALSE)
+mytable_df(x, max.ylev = 5, maxCatLevel = 20, digits = 1, method = 1,
+  show.all = FALSE)
 }
 \arguments{
 \item{x}{A data.frame}

@@ -7,8 +7,11 @@ mytable.data.frame=function(x,...){
 #' make mytable from data.frame
 #' @param x A data.frame
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
-#'                 variable ('y'). If a colummn have unique values less than max.ylev
+#'                 variable. If a colummn have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
+#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
+#'                  If a colummn have unique values more than maxCatLevel, categorical summarization
+#'                  wll not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
@@ -25,9 +28,10 @@ mytable.data.frame=function(x,...){
 #' @return An object of class "mytable.df".
 #'      'print' returns a table for descriptive statistics.
 #' @export
-mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
+mytable_df=function(x,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
 
-
+     # x=df;max.ylev=5;digits=1;method=1;show.all=FALSE
+     # maxCatLevel=20
     name=c()
     no=c()
     out1=c()
@@ -37,6 +41,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
     # str(x)
 
     plusminus="\u00b1"
+      # i=1
     for(i in 1:ncol(x)) {
 
         xname=colnames(x)[i]
@@ -48,6 +53,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
         } else{
             kind="categorical"
         }
+        kind
         if(kind=="numeric") {
 
             temp=unlist(num_summary(y))
@@ -83,19 +89,35 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
 
 
         } else {
+
+            name=c(name,xname)
+            no=c(no,length(y)-sum(is.na(y)))
+
+            if(length(unique(y))>maxCatLevel){
+                if(class(y)=="Date"){
+                    out1=c(out1,paste0("Date:",min(y)))
+                    out2=c(out2,"-")
+                    out3=c(out3,paste0(max(y)))
+                } else{
+                out1=c(out1,"unique values")
+                out2=c(out2,"")
+                out3=c(out3,length(unique(y)))
+                }
+                p=c(p,"")
+            }else{
+                out1=c(out1,"")
+                out2=c(out2,"")
+                out3=c(out3,"")
+                p=c(p,"")
             res1=table(y)
+            res1
             res2=prop.table(res1)*100
             res=rbind(res1,res2)
             res=as.data.frame(t(res))
-
             colnames(res)=c("Freq","Ratio")
+            form=paste0("%0.",digits,"f")
             res$Ratio=paste0("(",sprintf(form,res$Ratio),"%)")
-            name=c(name,xname)
-            no=c(no,length(y)-sum(is.na(y)))
-            out1=c(out1,"")
-            out2=c(out2,"")
-            out3=c(out3,"")
-            p=c(p,"")
+
             for(j in 1:nrow(res)){
                 name=c(name,paste0("  - ",rownames(res)[j]))
                 no=c(no,"")
@@ -104,6 +126,7 @@ mytable_df=function(x,max.ylev=5,digits=1,method=1,show.all=FALSE) {
                 out3=c(out3,res$Ratio[j])
                 p=c(p,"")
             }
+        }
 
 
         }

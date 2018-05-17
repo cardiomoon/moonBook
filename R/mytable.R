@@ -504,6 +504,7 @@ p2sig=function(value){
 #' @param x a character vector
 #' @param ...  further arguments passed to or from other methods.
 #' @param width an integer
+#' @export
 centerprint=function(x,...,width=10){
 
         mwidth=max(nchar(x),width)
@@ -533,6 +534,7 @@ space=function(num){
 #' These are not to be called by the user
 #' @param x a character vector
 #' @param times an integer
+#' @export
 reprint=function(x,times){
     ret=x
     if(times<=1) return(x)
