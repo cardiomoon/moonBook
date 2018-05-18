@@ -205,21 +205,31 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
             return(result)
         }
     }
+    # if(use.column.label){
+    #     data<-changeColnameLabel(data,f)
+    # }
+    if(use.labels){
+            data<-addLabelDf(data)
+    }
     t=table(data[[y1]])
     if(show.total){
         t=addmargins(t)
         names(t)[length(t)]="Total"
     }
-    result=list(y=y1,length=length(t),names=names(t),count=unname(t),method=method,show.all=show.all)
+    labely1=y1
+    if(use.column.label){
+
+        label=attr(data[[y1]],"label",exact=TRUE)
+        if(!is.null(label)) labely1=label
+
+
+    }
+    result=list(y=labely1,length=length(t),names=names(t),count=unname(t),method=method,show.all=show.all)
+
     x=labels(myt)
     error=c()
 
-    if(use.column.label){
-        data<-changeColnameLabel(data)
-    }
-    if(use.labels){
-        data<-addLabelDf(data)
-    }
+
 
     for(i in 1:length(x)) {
 
@@ -229,7 +239,8 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
             error=c(error,x[i])
             next
         }
-        result[[x[i]]]=out
+        label=getLabel(data,x[i],use.column.label)
+        result[[label]]=out
     }
     #str(result)
     out=printmytable2(result,digits)
@@ -288,7 +299,7 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,show.total=FAL
     # data=iris2
     # y="Species"
     # x="Sepal.Length"
-    # max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
+    # use.column.label=TRUE;max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
     mydata=try(data.frame(y=data[[y]],x=data[[x]]))
 
     if(class(mydata)!="data.frame") return(-1)
@@ -907,9 +918,9 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
         }
     }
 
-    if(use.column.label){
-        data<-changeColnameLabel(data)
-    }
+    # if(use.column.label){
+    #     data<-changeColnameLabel(data)
+    # }
     if(use.labels){
         data<-addLabelDf(data)
     }
@@ -930,7 +941,9 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
             x=labels(myt)
             for(i in 1:length(x)) {
                 out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,show.total=show.total)
-                result[[x[i]]]=out
+                label=getLabel(data,x[i],use.column.label)
+                result[[label]]=out
+
             }
             out=printmytable2(result,digits)
             class(out)=c("mytable")
@@ -954,7 +967,9 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
             out=mytable_sub2(validy2,x[j],mydata,max.ylev,show.total=show.total)
-            result[[x[j]]]=out
+            label=getLabel(data,x[j],use.column.label)
+            result[[label]]=out
+
             #cat("y[2]=",y[2],",x[j]=",x[j],"\n")
         }
         out=printmytable2(result,digits)
@@ -962,6 +977,10 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
         out1[[i]]=out
 
     }
+    if(use.column.label) {
+
+    }
+    y=getLabel(data,y,use.column.label)
     if(ycount==2) final=cbind(out1[[1]],out1[[2]],caption=uniquey,y=y)
     else if(ycount==3) final=cbind(out1[[1]],out1[[2]],out1[[3]],caption=uniquey,y=y)
     else if(ycount==4) final=cbind(out1[[1]],out1[[2]],out1[[3]],out1[[4]],caption=uniquey,y=y)

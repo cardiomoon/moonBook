@@ -22,6 +22,8 @@ Suggests:
     testthat,
     knitr,
     ggplot2,
-    ztable
+    ztable,
+    magrittr,
+    sjlabelled
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

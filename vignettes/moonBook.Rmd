@@ -43,6 +43,37 @@ mytable(~age+sex,data=acs)
 ```
 
 
+## Use of labelled data
+
+You can use labels of the data. For example, you can add column labels and value labels of `mtcars` data using set_label() and set_labels() function of the `sjlabelled` package.
+
+```{r,comment=NA}
+if(!require(sjlabelled)) {
+    install.packages("sjlabelled")
+    require(sjlabelled)
+}
+df=mtcars
+df$am<-set_label(df$am,label="Transmission")
+df$am<-set_labels(df$am,labels=c("automatic","manual"))
+df$vs<-set_label(df$vs,label="Engine")
+df$vs<-set_labels(df$vs,labels=c("V-shaped","straight"))
+```
+
+You can see the labels of this data.
+
+```{r,comment=NA}
+str(df)
+```
+
+You can use the column label and value labels with mytable() function. The default values of `use.labels` and `use.column.labels` arguments of mytable() function are `TRUE`. You can change this arguments if you want.
+
+```{r,comment=NA}
+mytable(df)
+mytable(df,use.labels=FALSE, use.column.label=FALSE)
+mytable(am~.,data=df)
+mytable(vs+am~.,data=df)
+```
+
 ## Choosing grouping variable(s) and row-variable(s)
 
 You can choose the grouping variable(s) and row-variable(s) with the `formula`. 
@@ -138,6 +169,20 @@ mycsv(out1,fil="test1.csv")
 Following figure is a screen-shot in which test.csv and test1.csv files are opened with Numbers. 
 
 ![csvtest.png](../inst/extdata/csvtest.png)
+
+
+## Use of `ztable`
+
+You can use ztable() function from the `ztable` package.
+
+```{r,messgae=FALSE,results='asis'}
+require(ztable)
+require(magrittr)
+mytable(sex+DM~.,data=acs) %>%
+    ztable %>%
+    addSigColor %>%
+    print(type="html")
+```
 
 ## densityplot
 

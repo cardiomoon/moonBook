@@ -2,18 +2,13 @@
 % Please edit documentation in R/addLabelDf.R
 \name{changeColnameLabel}
 \alias{changeColnameLabel}
-\title{Add column labels to the data.frame}
+\title{Change column names with labels}
 \usage{
-changeColnameLabel(data, formula = NULL)
+changeColnameLabel(data)
 }
 \arguments{
 \item{data}{A data.frame}
-
-\item{formula}{A formula}
-}
-\value{
-A data.frame
 }
 \description{
-Add column labels to the data.frame
+Change column names with labels
 }
