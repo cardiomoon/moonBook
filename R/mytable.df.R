@@ -32,8 +32,9 @@ mytable.data.frame=function(x,...){
 #' @export
 mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
 
-     # x=df;max.ylev=5;digits=1;method=1;show.all=FALSE
-     # maxCatLevel=20
+     # x=acs;use.labels=TRUE;use.column.label=TRUE;max.ylev=5;maxCatLevel=20;
+     # digits=1;method=3;show.all=TRUE
+
     name=c()
     no=c()
     out1=c()
@@ -74,7 +75,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
                     fit=nortest::ad.test(y)
                 }
                 statmethod=ifelse(fit$p.value<0.05,2,1)
-                p=c(p,round(fit$p.value,3))
+                p=c(p,sprintf("%.3f",fit$p.value))
             } else{
                 statmethod=method
                 p=c(p,"")
@@ -102,7 +103,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
             no=c(no,length(y)-sum(is.na(y)))
 
             if(length(unique(y))>maxCatLevel){
-                if(class(y)=="Date"){
+                if("Date" %in% class(y)){
                     out1=c(out1,paste0("Date:",min(y)))
                     out2=c(out2,"-")
                     out3=c(out3,paste0(max(y)))
@@ -142,12 +143,14 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
     }
     stats=paste(out1,out2,out3)
     result=data.frame(name=name,N=no,stats=stats,p=p,stringsAsFactors = FALSE)
+    result
 
     fmt=paste0("%-",max(nchar(result$name)),"s")
     result$name=sprintf(fmt,result$name)
-    if(show.all==FALSE) result=result[-ncol(result)]
+    if(show.all==FALSE) {
+        result=result[-ncol(result)]
+    }
     class(result)=c("mytable.df","data.frame")
-    #attr(result,"name")=substitute(x)
     result
 
 }
@@ -163,15 +166,20 @@ print.mytable.df=function(x,...){
     length=apply(x,2,function(y){max(nchar(as.character(y)),na.rm=TRUE)})
     fmt=paste0("%",length+1,"s")
     fmt
-    string=paste(sprintf(fmt[1],result$name),sprintf(fmt[2],result$N),sprintf(fmt[3],result$stats),"\n")
-    len=sum(length)+3
+    string=paste(sprintf(fmt[1],result$name),sprintf(fmt[2],result$N),sprintf(fmt[3],result$stats))
+    if(!is.null(result$p)) string=paste(string,result$p)
+    string=paste(string,"\n")
+    len=sum(length)+5
     cat("\n")
     cat(centerprint("Descriptive Statistics",width=len))
     cat("\n")
     cat(reprint("-",len),"\n")
     cat(paste(reprint(" ",length[1]+1),centerprint("N",width=length[2]+1),
-              centerprint("Total",width=length[3]+1),"\n"))
+              centerprint("Total",width=length[3]+1)))
+    if(!is.null(result$p)) cat("  p ")
+    cat("\n")
     cat(reprint("-",len),"\n")
     for(i in 1:length(string)) cat(string[i])
     cat(reprint("-",len),"\n")
 }
+

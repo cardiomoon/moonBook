@@ -165,9 +165,9 @@ mytable.formula=function(x,...) {
 #' @export
 mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
                      max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
-    # x=Species~no
-    # data=iris2
-    # max.ylev=5;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
+    # x=Sex~.
+    # data=acs;use.labels=TRUE;use.column.label=TRUE
+    # max.ylev=5;maxCatLevel=20;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
 
     call=paste(deparse(x),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
@@ -200,8 +200,10 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
         if(!identical(y,y1)) {
             cat("\n","'",y,"' is an invalid column name: Instead '",y1,"' is used\n")
             s=paste(y1,res[2],sep="~")
+
             result=mytable(as.formula(s),data,use.labels,use.column.label,
-                           max.ylev,digits,method,show.all,exact=exact,show.total=show.total)
+                           max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+
             return(result)
         }
     }
@@ -913,7 +915,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
             s=paste(validy1,validy2,sep="+")
             s=paste(s,res[2],sep="~")
             result=mytable2(as.formula(s),data,use.labels,use.column.label,
-                            max.ylev,digits,method,show.all,exact,show.total)
+                            max.ylev,maxCatLevel,digits,method,show.all,exact,show.total)
             return(result)
         }
     }
