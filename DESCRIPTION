@@ -1,4 +1,4 @@
-Package: moonBook
+ Package: moonBook
 Title: Functions and Datasets for the Book by Keon-Woong Moon
 Version: 0.1.9
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",

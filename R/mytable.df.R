@@ -67,7 +67,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
             temp=unlist(num_summary(y))
 
             if(method==3){
-                if(length(x)<=5000) {
+                if(nrow(x)<=5000) {
                     fit=shapiro.test(y)
 
                 } else {
