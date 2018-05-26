@@ -25,6 +25,18 @@ addComma.mytable=function(x){
     x
 }
 
+#' @describeIn addComma S3 method for class mytable.df
+#' @export
+#' @importFrom stringr str_trim
+addComma.mytable.df=function(x){
+
+    x$N=comma(as.numeric(x$N))
+    x$N[str_trim(x$N,side="both")=="NA"]=""
+    x[[3]]<-addComma(x[[3]])
+    x
+}
+
+
 #' @describeIn addComma S3 method for class cbind.mytable
 #' @export
 addComma.cbind.mytable=function(x){
@@ -39,13 +51,18 @@ addComma.cbind.mytable=function(x){
 #' @describeIn addComma S3 method for class data.frame
 #' @export
 addComma.data.frame=function(x){
-
+    # x=mytable(diamonds)
+    # x
     df<-x
-    select=2:(ncol(df)-8)
-    select
+    if(ncol(df)>8){
+        select=2:(ncol(df)-8)
+    } else{
+        select=1:ncol(df)
+    }
 
+    select
     for(i in 1:length(select)){
-        df[[select[i]]]=addComma.character(df[[select[i]]])
+        df[[select[i]]]=addComma(df[[select[i]]])
     }
     df
 }

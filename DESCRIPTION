@@ -25,6 +25,7 @@ Suggests:
     knitr,
     ggplot2,
     ztable,
-    sjlabelled
+    sjlabelled,
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

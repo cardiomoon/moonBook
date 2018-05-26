@@ -3,6 +3,7 @@
 \name{addComma}
 \alias{addComma}
 \alias{addComma.mytable}
+\alias{addComma.mytable.df}
 \alias{addComma.cbind.mytable}
 \alias{addComma.data.frame}
 \alias{addComma.character}
@@ -11,6 +12,8 @@
 addComma(x)
 
 \method{addComma}{mytable}(x)
+
+\method{addComma}{mytable.df}(x)
 
 \method{addComma}{cbind.mytable}(x)
 
@@ -27,6 +30,8 @@ Change numbers into formatted numbers
 \section{Methods (by class)}{
 \itemize{
 \item \code{mytable}: S3 method for class mytable
+
+\item \code{mytable.df}: S3 method for class mytable.df
 
 \item \code{cbind.mytable}: S3 method for class cbind.mytable
 
