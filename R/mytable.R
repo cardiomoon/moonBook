@@ -543,7 +543,7 @@ printmytable2=function(obj,digits=1){
     res=data.frame(res,p=sp4,sig,p1=sp1,p2=sp2,p3=sp3,class=unlist(cl),ptest=ptest,N=unlist(N))
     #rownames(res)=names(obj)[4:length(obj)]
     colnames(res)[2:(2+length(obj$names)-1)]=obj$names
-    colnames(res)[1]=obj$y
+    if(length(obj$y)==1) colnames(res)[1]=obj$y
     result=list(res=res,count=obj$count,method=obj$method,show.all=obj$show.all)
     result
 }

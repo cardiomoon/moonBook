@@ -1,5 +1,7 @@
 #'@describeIn mytable S3 method for data.frame
 #'@export
+#'@examples
+#'mytable(acs)
 mytable.data.frame=function(x,...){
     mytable_df(x,...)
 }
@@ -32,7 +34,7 @@ mytable.data.frame=function(x,...){
 #' @export
 mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
 
-     # x=acs;use.labels=TRUE;use.column.label=TRUE;max.ylev=5;maxCatLevel=20;
+     # x=acs[2];use.labels=TRUE;use.column.label=TRUE;max.ylev=5;maxCatLevel=20;
      # digits=1;method=3;show.all=TRUE
 
     name=c()
@@ -41,6 +43,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
     out2=c()
     out3=c()
     p=c()
+    class=c()
     # str(x)
 
     plusminus="\u00b1"
@@ -94,9 +97,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
                 res=paste0("[",sprintf(form,temp[7]),";",sprintf(form,temp[9]),"]")
                 out3=c(out3,res)
             }
-
-
-
+            class=c(class,"continuous")
         } else {
 
             name=c(name,xname)
@@ -113,11 +114,13 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
                 out3=c(out3,length(unique(y)))
                 }
                 p=c(p,"")
+                class=c(class,"categorical")
             }else{
                 out1=c(out1,"")
                 out2=c(out2,"")
                 out3=c(out3,"")
                 p=c(p,"")
+                class=c(class,"categorical")
             res1=table(y)
             res1
             res2=prop.table(res1)*100
@@ -134,6 +137,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
                 out2=c(out2,"")
                 out3=c(out3,res$Ratio[j])
                 p=c(p,"")
+                class=c(class,"")
             }
         }
 
@@ -142,8 +146,8 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
 
     }
     stats=paste(out1,out2,out3)
-    result=data.frame(name=name,N=no,stats=stats,p=p,stringsAsFactors = FALSE)
-    result
+
+    result=data.frame(name=name,N=no,stats=stats,class=class,p=p,stringsAsFactors = FALSE)
 
     fmt=paste0("%-",max(nchar(result$name)),"s")
     result$name=sprintf(fmt,result$name)
@@ -162,8 +166,8 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
 print.mytable.df=function(x,...){
 
     result<-x
-
-    length=apply(x,2,function(y){max(nchar(as.character(y)),na.rm=TRUE)})
+    x1=x[-which(colnames(x)=="class")]
+    length=apply(x1,2,function(y){max(nchar(as.character(y)),na.rm=TRUE)})
     fmt=paste0("%",length+1,"s")
     fmt
     string=paste(sprintf(fmt[1],result$name),sprintf(fmt[2],result$N),sprintf(fmt[3],result$stats))

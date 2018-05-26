@@ -39,4 +39,5 @@ out
 summary(out)
 require(ztable)
 ztable(out)
+mytable(acs)
 }
