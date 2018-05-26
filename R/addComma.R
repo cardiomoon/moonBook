@@ -14,6 +14,8 @@ comma <- function(x,...) format(x,  big.mark = ",",...)
 #' if(require(ggplot2)){
 #'     mytable(cut~.,data=ggplot2::diamonds) %>% addComma
 #' }
+#' x=mytable(Dx~sex,data=acs)
+#' addComma(x)
 addComma=function(x) UseMethod("addComma")
 
 
@@ -51,8 +53,7 @@ addComma.cbind.mytable=function(x){
 #' @describeIn addComma S3 method for class data.frame
 #' @export
 addComma.data.frame=function(x){
-    # x=mytable(diamonds)
-    # x
+
     df<-x
     if(ncol(df)>8){
         select=2:(ncol(df)-8)
@@ -90,10 +91,11 @@ addComma.character=function(x){
     string[select]<-string[select] %>%
         str_replace_all(fixed("%)"),"") %>%
         str_split(fixed("(")) %>%
-        lapply(function(x) comma(as.numeric(x))) %>%
+        lapply(function(x) comma(as.numeric(x),digits=3)) %>%
         lapply(function(x) str_replace_all(x," ","")) %>%
         lapply(function(x) str_flatten(x,collapse=paste0(" ("))) %>%
         lapply(function(x) paste0(x,"%)")) %>%
+        lapply(function(x) str_replace(x,fixed(".0 ("),fixed(" ("))) %>%
         unlist
 
     select=str_detect(string,":")
