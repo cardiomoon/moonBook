@@ -6,7 +6,7 @@
 \usage{
 mytable_sub(x, data, use.labels = TRUE, use.column.label = TRUE,
   max.ylev = 5, maxCatLevel = 20, digits = 1, method = 1,
-  show.all = FALSE, exact = FALSE, show.total = FALSE)
+  catMethod = 2, show.all = FALSE, exact = FALSE, show.total = FALSE)
 }
 \arguments{
 \item{x}{An object of class "formula". Left side of ~ must contain the
@@ -40,6 +40,17 @@ Possible values in methods are
            normal or non-normal}
 }
 Default value is 1.}
+
+\item{catMethod}{An integer indicating methods for categorical variables.
+Possible values in methods are
+\describe{
+   \item{0}{Perform chisq.test first. If warning present, perform fisher test}
+   \item{1}{Perform chisq.test without continuity correction}
+   \item{2}{Perform chisq.test with continuity correction}
+   \item{3}{perform fisher.test}
+   \item{4}{perform prop.trend test}
+}
+Default value is 2.}
 
 \item{show.all}{A logical value indicating whether or not all statistical
 values have to be shown in table. Default value is FALSE.}

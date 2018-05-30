@@ -4,14 +4,25 @@
 \alias{my.chisq.test}
 \title{Internal mytable functions}
 \usage{
-my.chisq.test(x, y, mydata)
+my.chisq.test(x, y, mydata, catMethod = 2)
 }
 \arguments{
 \item{x}{a vector}
 
 \item{y}{a vector}
 
-\item{mydata}{a data.frame}
+\item{mydata}{A data.frame}
+
+\item{catMethod}{An integer indicating methods for categorical variables.
+Possible values in methods are
+\describe{
+   \item{0}{Perform chisq.test first. If warning present, perform fisher test}
+   \item{1}{Perform chisq.test without continuity correction}
+   \item{2}{Perform chisq.test with continuity correction}
+   \item{3}{perform fisher.test}
+   \item{4}{perform prop.trend test}
+}
+Default value is 2.}
 }
 \description{
 Internal mytable functions

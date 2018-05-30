@@ -98,3 +98,20 @@ extractKind=function(df){
     }
     kind
 }
+
+
+#'Delete rows of class mytable object
+#'@param x An object of class mytable or cbind.mytable
+#'@param rows rows to delete
+#'@export
+deleteRows=function(x,rows){
+    if("cbind.mytable" %in% class(x)){
+        for(i in 1:length(x)){
+            x[[i]]$res<-x[[i]]$res[-rows,]
+        }
+    } else if("mytable" %in% class(x)){
+        x$res<-x$res[-rows,]
+    }
+    x
+}
+

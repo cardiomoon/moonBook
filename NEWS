@@ -1,3 +1,11 @@
+moonBook 0.2.1
+==============
+(2018-May-30)
+
+* New argument 'catMethod' added to mytable() functions to select method for categorical variables
+
+* New function deleteRows() added
+
 moonBook 0.2.0
 ==============
 (2018-May-26)

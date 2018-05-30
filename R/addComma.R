@@ -69,7 +69,7 @@ addComma.data.frame=function(x){
 }
 
 #' @describeIn addComma S3 method for class character
-#' @importFrom stringr fixed str_detect str_flatten str_split
+#' @importFrom stringr fixed str_detect str_flatten str_split str_replace
 #' @importFrom magrittr "%>%"
 #' @export
 addComma.character=function(x){

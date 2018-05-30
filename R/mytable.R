@@ -48,30 +48,78 @@ my.t.test=function(y,x){
 #' These are not to be called by the user
 #' @param x a vector
 #' @param y a vector
-#' @param mydata a data.frame
-#' @importFrom stats chisq.test fisher.test xtabs
+#' @param mydata A data.frame
+#' @param catMethod An integer indicating methods for categorical variables.
+#'               Possible values in methods are
+#'               \describe{
+#'                  \item{0}{Perform chisq.test first. If warning present, perform fisher test}
+#'                  \item{1}{Perform chisq.test without continuity correction}
+#'                  \item{2}{Perform chisq.test with continuity correction}
+#'                  \item{3}{perform fisher.test}
+#'                  \item{4}{perform prop.trend test}
+#'               }
+#'               Default value is 2.
+#' @importFrom stats chisq.test fisher.test xtabs prop.trend.test
 #' @export
-my.chisq.test=function(x,y,mydata)
+my.chisq.test=function(x,y,mydata,catMethod=2)
 {
 
-    mytable=xtabs(~x+y,data=mydata)
-    if(dim(mytable)[2]==1){
+    temp=table(mydata$y,mydata$x)
+
+    if((nrow(temp)>2)&(ncol(temp)==2)) temp=t(temp)
+    # temp=xtabs(~x+y)
+    if(dim(temp)[2]==1){
         p=c(NA,NA,NA)
-    } else if(dim(mytable)[1]==1){
+    } else if(dim(temp)[1]==1){
         p=c(NA,NA,NA)
     } else{
+        p=c(NA,NA,NA)
         ow=options("warn")
         options(warn=-1)
-        out<-try(chisq.test(mytable))
-        if(class(out)!="htest") p=c(NA,NA,NA)
-        else if(sum(mytable)< 100 & dim(mytable)[1]>1){
-            out1=fisher.test(mytable)
-            p=c(out$p.value,out1$p.value,NA)
+        if(catMethod==0) result=cat.test(temp)
+        else if(catMethod==1) result=chisq.test(temp,correct=FALSE)
+        else if(catMethod==2) result=chisq.test(temp)
+        else if(catMethod==3) result=fisher.test(temp)
+        else if(catMethod==4) {
+            if(nrow(temp)>2) {
+                result=NA
+            } else {
+                result=prop.trend.test(temp[2,],colSums(temp))
+            }
         }
-        else p=c(out$p.value,NA,NA)
+        if(is.na(result)){
+            p[1]<-NA
+            attr(p,"method")=""
+        } else{
+           p[1]=result$p.value
+           attr(p,"method")=result$method
+        }
+        if(sum(temp)< 100 & dim(temp)[1]>1){
+            p[2]=fisher.test(temp)$p.value
+        }
+        if(nrow(temp)>2) {
+            p[3]=NA
+        } else {
+            p[3]=prop.trend.test(temp[2,],colSums(temp))$p.value
+        }
         options(ow)
     }
     p
+}
+
+#' Perform chisq.test or fisher test
+#' @param x a numeric vector or matrix. x and y can also both be factors.
+#' @param ... Further arguments to be paseed to chisq.test or fisher.test
+#' @export
+cat.test=function(x,...){
+  result=tryCatch(chisq.test(x,...),warning=function(w) return("warning present"))
+  if(class(result)!="htest"){
+    result2=tryCatch(fisher.test(x,...),
+                     warning=function(w) return("warning present"),
+                     error=function(e) return("error present"))
+    if(class(result2)=="htest") result=result2
+  }
+  result
 }
 
 #' Internal mytable functions
@@ -151,6 +199,16 @@ mytable.formula=function(x,...) {
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.
+#' @param catMethod An integer indicating methods for categorical variables.
+#'               Possible values in methods are
+#'               \describe{
+#'                  \item{0}{Perform chisq.test first. If warning present, perform fisher test}
+#'                  \item{1}{Perform chisq.test without continuity correction}
+#'                  \item{2}{Perform chisq.test with continuity correction}
+#'                  \item{3}{perform fisher.test}
+#'                  \item{4}{perform prop.trend test}
+#'               }
+#'               Default value is 2.
 #' @param show.all A logical value indicating whether or not all statistical
 #'                 values have to be shown in table. Default value is FALSE.
 #' @param exact A logical value indicating whether or not permit call with approximate
@@ -164,7 +222,8 @@ mytable.formula=function(x,...) {
 #' @importFrom stats addmargins
 #' @export
 mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
-                     max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+                     max.ylev=5,maxCatLevel=20,digits=1,method=1,catMethod=2,
+                     show.all=FALSE,exact=FALSE,show.total=FALSE){
     # x=Sex~.
     # data=acs;use.labels=TRUE;use.column.label=TRUE
     # max.ylev=5;maxCatLevel=20;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
@@ -185,7 +244,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
     # if(y!="") y=unlist(strsplit(y,"+",fixed=TRUE))
     if(length(y)>1) {
         result=mytable2(x,data,use.labels,use.column.label,
-                        max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+                        max.ylev,maxCatLevel,digits,method=method,catMethod=catMethod,show.all,exact=exact,show.total=show.total)
         return(result)
     }
     if(y!=""){
@@ -235,7 +294,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
 
     for(i in 1:length(x)) {
 
-        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,show.total=show.total)
+        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total)
 
         if(length(out)!=4) {
             error=c(error,x[i])
@@ -293,10 +352,11 @@ validColname=function(pattern,x) {
 #' @param max.ylev an integer
 #' @param maxCatLevel an integer
 #' @param method an integer
+#' @param catMethod an integer
 #' @param show.total a logical value
 #' @importFrom stats na.omit
 #' @export
-mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,show.total=FALSE){
+mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,show.total=FALSE){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
     # data=iris2
     # y="Species"
@@ -356,7 +416,7 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,show.total=FAL
         #}
         names(subgroup)=rownames(result)
         ## for statistical
-        p=my.chisq.test(x,y,mydata)
+        p=my.chisq.test(x,y,mydata,catMethod=catMethod)
         } else{
             var_class="categorical2"
             if("Date" %in% class(mydata$x)){
@@ -490,7 +550,7 @@ printmytable2=function(obj,digits=1){
             p3=c(p3,length(obj[[i]]$subgroup))
             #p3=c(p3,NA)
             p4=c(p4,obj[[i]]$p[1])
-            ptest=c(ptest,"chisq.test")
+            ptest=c(ptest,attr(obj[[i]]$p,"method"))
             for(k in 1:length(obj[[i]]$subgroup)){
                 temp=names(obj[[i]]$subgroup)[k]
                 varnames=c(varnames,"")
@@ -862,6 +922,16 @@ summary.cbind.mytable=function(object,...) {
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.
+#' @param catMethod An integer indicating methods for categorical variables.
+#'               Possible values in methods are
+#'               \describe{
+#'                  \item{0}{Perform chisq.test first. If warning present, perform fisher test}
+#'                  \item{1}{Perform chisq.test without continuity correction}
+#'                  \item{2}{Perform chisq.test with continuity correction}
+#'                  \item{3}{perform fisher.test}
+#'                  \item{4}{perform prop.trend test}
+#'               }
+#'               Default value is 2.
 #' @param show.all A logical value indicating whether or not all statistical
 #'                 values have to be shown in table. Default value is FALSE.
 #' @param exact A logical value indicating whether or not permit call with approximate
@@ -871,7 +941,7 @@ summary.cbind.mytable=function(object,...) {
 #' @export
 #' @return An object of class "cbind.mytable"
 mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
-                  max.ylev=5,maxCatLevel=20,digits=2,method=1,show.all=FALSE,exact=FALSE,show.total=FALSE){
+                  max.ylev=5,maxCatLevel=20,digits=2,method=1,catMethod=2,show.all=FALSE,exact=FALSE,show.total=FALSE){
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
     f=formula
@@ -915,7 +985,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
             s=paste(validy1,validy2,sep="+")
             s=paste(s,res[2],sep="~")
             result=mytable2(as.formula(s),data,use.labels,use.column.label,
-                            max.ylev,maxCatLevel,digits,method,show.all,exact,show.total)
+                            max.ylev,maxCatLevel,digits,method=method,catMethod=catMethod,show.all,exact,show.total)
             return(result)
         }
     }
@@ -942,7 +1012,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                         method=method,show.all=show.all)
             x=labels(myt)
             for(i in 1:length(x)) {
-                out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,show.total=show.total)
+                out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total)
                 label=getLabel(data,x[i],use.column.label)
                 result[[label]]=out
 
@@ -968,7 +1038,8 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                 data[[x[j]]]=factor(data[[x[j]]])
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
-            out=mytable_sub2(validy2,x[j],mydata,max.ylev,show.total=show.total)
+            out=mytable_sub2(validy2,x[j],mydata,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total)
+
             label=getLabel(data,x[j],use.column.label)
             result[[label]]=out
 

@@ -71,7 +71,7 @@ You can use the column label and value labels with mytable() function. The defau
 mytable(df)
 mytable(df,use.labels=FALSE, use.column.label=FALSE)
 mytable(am~.,data=df)
-mytable(vs+am~.,data=df)
+# mytable(vs+am~.,data=df)
 ```
 
 ## Choosing grouping variable(s) and row-variable(s)

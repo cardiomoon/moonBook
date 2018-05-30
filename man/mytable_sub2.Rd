@@ -5,7 +5,7 @@
 \title{Internal mytable functions}
 \usage{
 mytable_sub2(y, x, data, max.ylev = 5, maxCatLevel = 20, method = 1,
-  show.total = FALSE)
+  catMethod = 2, show.total = FALSE)
 }
 \arguments{
 \item{y}{a vector}
@@ -19,6 +19,8 @@ mytable_sub2(y, x, data, max.ylev = 5, maxCatLevel = 20, method = 1,
 \item{maxCatLevel}{an integer}
 
 \item{method}{an integer}
+
+\item{catMethod}{an integer}
 
 \item{show.total}{a logical value}
 }
