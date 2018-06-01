@@ -4,10 +4,12 @@
 \alias{cat.test}
 \title{Perform chisq.test or fisher test}
 \usage{
-cat.test(x, ...)
+cat.test(x, mode = 1, ...)
 }
 \arguments{
 \item{x}{a numeric vector or matrix. x and y can also both be factors.}
+
+\item{mode}{An integer. If 1(default), perform chisq.test first, If 2, perform fisher.test first}
 
 \item{...}{Further arguments to be paseed to chisq.test or fisher.test}
 }

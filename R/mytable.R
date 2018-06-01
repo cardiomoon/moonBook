@@ -79,7 +79,7 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
         if(catMethod==0) result=cat.test(temp)
         else if(catMethod==1) result=chisq.test(temp,correct=FALSE)
         else if(catMethod==2) result=chisq.test(temp)
-        else if(catMethod==3) result=fisher.test(temp)
+        else if(catMethod==3) result=cat.test(temp,mode=2)
         else if(catMethod==4) {
             if(nrow(temp)>2) {
                 result=NA
@@ -109,16 +109,18 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
 
 #' Perform chisq.test or fisher test
 #' @param x a numeric vector or matrix. x and y can also both be factors.
+#' @param mode An integer. If 1(default), perform chisq.test first, If 2, perform fisher.test first
 #' @param ... Further arguments to be paseed to chisq.test or fisher.test
 #' @export
-cat.test=function(x,...){
+cat.test=function(x,mode=1,...){
+
   result=tryCatch(chisq.test(x,...),warning=function(w) return("warning present"))
-  if(class(result)!="htest"){
-    result2=tryCatch(fisher.test(x,...),
+  if((mode==1) & ("htest" %in% class(result))) return(result)
+
+  result2=tryCatch(fisher.test(x,...),
                      warning=function(w) return("warning present"),
                      error=function(e) return("error present"))
-    if(class(result2)=="htest") result=result2
-  }
+  if("htest" %in% class(result2)) result=result2
   result
 }
 
