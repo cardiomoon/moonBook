@@ -2,16 +2,15 @@
 % Please edit documentation in R/addLabelDf.R
 \name{addLabelDf}
 \alias{addLabelDf}
-\title{Add labels to the data.frame}
+\title{Add value labels to the data.frame}
 \usage{
-addLabelDf(data)
+addLabelDf(data, mapping = NULL)
 }
 \arguments{
 \item{data}{A data.frame}
-}
-\value{
-A data.frame
+
+\item{mapping}{Set of aesthetic mappings created by aes or aes_.}
 }
 \description{
-Add labels to the data.frame
+Add value labels to the data.frame
 }
