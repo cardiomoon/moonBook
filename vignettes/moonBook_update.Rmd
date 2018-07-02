@@ -23,7 +23,7 @@ Function "mytable"" produce table for descriptive analysis easily. It is most us
 
 ## Basic Usage
 
-If you are unfamiliar to package moonBook and mytable function, please see the R package `moonBook` vignette at: https://cran.r-project.org/web/packages/moonBook/vignettes/moonBook.html
+If you are unfamiliar to package moonBook and mytable function, please see the R package `moonBook` vignette at: https://CRAN.R-project.org/package=moonBook/vignettes/moonBook.html
 
 
 ## Explore a data.frame

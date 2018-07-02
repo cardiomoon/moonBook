@@ -44,9 +44,8 @@ Change numbers into formatted numbers
 require(stringr)
 require(ztable)
 require(magrittr)
-if(require(ggplot2)){
-    mytable(cut~.,data=ggplot2::diamonds) \%>\% addComma
-}
+require(ggplot2)
+mytable(cut~.,data=diamonds) \%>\% addComma
 x=mytable(Dx~sex,data=acs)
 addComma(x)
 }
