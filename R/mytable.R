@@ -9,30 +9,41 @@
 my.t.test=function(y,x){
 
     result=table(y,x)
-    xlev=dim(result)[1]
-    ylev=dim(result)[1]
+    dim(result)
+
+    (xlev=dim(result)[1])
+    (ylev=dim(result)[1])
     if(ylev==1) {
         p=c(NA,NA,NA)
-    }
-    else if(xlev==2) {
+    } else if(xlev==2) {
         #browser()
         out=lm(x~y)
-        if(sum(result)<=5000) out3=shapiro.test(resid(out))
-        else out3=nortest::ad.test(resid(out))
+        if(sum(result)<=5000) {
+            out3=shapiro.test(resid(out))
+        } else {
+            out3=nortest::ad.test(resid(out))
+        }
         out1=try(var.test(x~y))
-        if(class(out1)!="htest") p=c(NA,NA,NA)
-        else{
-            if(out1$p.value<0.05) out4=t.test(x~y,na.rm=T)
-            else out4=t.test(x~y,var.equal=TRUE)
-            #out5=wilcox.test(x~y,exact=FALSE)
+
+        if(class(out1)!="htest") {
+            p=c(NA,NA,NA)
+        } else{
             options(warn=-1)
             out5<-wilcox.test(x~y)
             options(warn=0)
-            p=c(out3$p.value,out4$p.value,out5$p.value)
+            if(is.nan(out1$p.value)) {
+                p=c(NA,NA,out5$p.value)
+            } else if(out1$p.value<0.05) {
+                out4=t.test(x~y,na.rm=T)
+                p=c(out3$p.value,out4$p.value,out5$p.value)
+            } else {
+                out4=t.test(x~y,var.equal=TRUE)
+                p=c(out3$p.value,out4$p.value,out5$p.value)
+            }
+
         }
 
-    }
-    else{
+    } else{
         out3=lm(x~y)
         if(sum(result)<=5000) out4=shapiro.test(resid(out3))
         else out4=nortest::ad.test(resid(out3))
@@ -70,8 +81,10 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
     # temp=xtabs(~x+y)
     if(dim(temp)[2]==1){
         p=c(NA,NA,NA)
+        attr(p,"method")=""
     } else if(dim(temp)[1]==1){
         p=c(NA,NA,NA)
+        attr(p,"method")=""
     } else{
         p=c(NA,NA,NA)
         ow=options("warn")
@@ -508,8 +521,13 @@ printmytable2=function(obj,digits=1){
                 if(obj$method==1) temp=temp1
                 else if(obj$method==2) temp=temp2
                 else if(obj$method==3) {
-                    if(obj[[i]]$p[1]<=0.05) temp=temp2
-                    else temp=temp1
+                    if(is.na(obj[[i]]$p[1])){
+                        temp=temp2
+                    } else if(obj[[i]]$p[1]<=0.05) {
+                        temp=temp2
+                    } else {
+                        temp=temp1
+                    }
                 }
                 add[1,j]=temp
 
@@ -528,11 +546,13 @@ printmytable2=function(obj,digits=1){
                 ptest=c(ptest,"non-normal")
             }
             else if(obj$method==3) {
-                if(obj[[i]]$p[1]<=0.05) {
+                if(is.na(obj[[i]]$p[1])) {
                     p4=c(p4,obj[[i]]$p[3])
                     ptest=c(ptest,"non-normal")
-                }
-                else{
+                } else if(obj[[i]]$p[1]<=0.05) {
+                    p4=c(p4,obj[[i]]$p[3])
+                    ptest=c(ptest,"non-normal")
+                } else{
                     p4=c(p4,obj[[i]]$p[2])
                     ptest=c(ptest,"normal")
                 }
@@ -602,6 +622,8 @@ printmytable2=function(obj,digits=1){
     sp3=sapply(p3,function(x) ifelse(is.na(x),"",sprintf("%.3f",x)))
     sp4=sapply(p4,function(x) ifelse(is.na(x),"",sprintf("%.3f",x)))
     sig=sapply(p4,p2sig)
+    # str(res)
+    # str(ptest)
     res=data.frame(res,p=sp4,sig,p1=sp1,p2=sp2,p3=sp3,class=unlist(cl),ptest=ptest,N=unlist(N))
     #rownames(res)=names(obj)[4:length(obj)]
     colnames(res)[2:(2+length(obj$names)-1)]=obj$names
