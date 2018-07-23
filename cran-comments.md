@@ -6,3 +6,9 @@ This is an update of the package 'moonBook'
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.
+
+## Downstream dependencies
+
+* I have downloaded 4 packages (ggiraphExtra, ggplotAssist, webr, ztable)
+
+* There were no ERRORs or WARNINGs on revdep_check().
