@@ -74,7 +74,7 @@ compress.data.frame=function(x,no=2,add.label=TRUE){
     res
 }
 
-#' Extract kind of an pbject of class mytable
+#' Extract kind of an object of class mytable
 #' @param df An object of class mytable or cbind.mytable
 #' @export
 extractKind=function(df){

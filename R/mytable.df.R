@@ -15,7 +15,7 @@ mytable.data.frame=function(x,...){
 #'                 it is treated as a categorical variable. Default value is 5.
 #' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
 #'                  If a colummn have unique values more than maxCatLevel, categorical summarization
-#'                  wll not be performed.
+#'                  will not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
@@ -160,7 +160,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
 }
 
 #' Print an object of mytable.df
-#' @param x An onject of class mytable.df
+#' @param x An object of class mytable.df
 #' @param ... Further arguments
 #' @export
 print.mytable.df=function(x,...){

@@ -137,7 +137,7 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
 #' Perform chisq.test or fisher test
 #' @param x a numeric vector or matrix. x and y can also both be factors.
 #' @param mode An integer. If 1(default), perform chisq.test first, If 2, perform fisher.test first
-#' @param ... Further arguments to be paseed to chisq.test or fisher.test
+#' @param ... Further arguments to be passed to chisq.test or fisher.test
 #' @export
 cat.test=function(x,mode=1,...){
 
@@ -216,7 +216,7 @@ mytable.formula=function(x,...) {
 #'                 it is treated as a categorical variable. Default value is 5.
 #' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
 #'                  If a colummn have unique values more than maxCatLevel, categorical summarization
-#'                  wll not be performed.
+#'                  will not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.
@@ -948,7 +948,7 @@ summary.cbind.mytable=function(object,...) {
 #'                 it is treated as a categorical variable. Default value is 5.
 #' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
 #'                  If a colummn have unique values more than maxCatLevel, categorical summarization
-#'                  wll not be performed.
+#'                  will not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
 #' @param method An integer indicating methods for continuous variables.

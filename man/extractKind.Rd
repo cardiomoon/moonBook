@@ -2,7 +2,7 @@
 % Please edit documentation in R/compressMytable.R
 \name{extractKind}
 \alias{extractKind}
-\title{Extract kind of an pbject of class mytable}
+\title{Extract kind of an object of class mytable}
 \usage{
 extractKind(df)
 }
@@ -10,5 +10,5 @@ extractKind(df)
 \item{df}{An object of class mytable or cbind.mytable}
 }
 \description{
-Extract kind of an pbject of class mytable
+Extract kind of an object of class mytable
 }

@@ -7,7 +7,7 @@
 \method{print}{mytable.df}(x, ...)
 }
 \arguments{
-\item{x}{An onject of class mytable.df}
+\item{x}{An object of class mytable.df}
 
 \item{...}{Further arguments}
 }

@@ -25,7 +25,7 @@ it is treated as a categorical variable. Default value is 5.}
 
 \item{maxCatLevel}{An integer indicating the maximum number of unique levels of categorial variable.
 If a colummn have unique values more than maxCatLevel, categorical summarization
-wll not be performed.}
+will not be performed.}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
 significant digits to be used. Default value is 1.}

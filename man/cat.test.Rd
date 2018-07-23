@@ -11,7 +11,7 @@ cat.test(x, mode = 1, ...)
 
 \item{mode}{An integer. If 1(default), perform chisq.test first, If 2, perform fisher.test first}
 
-\item{...}{Further arguments to be paseed to chisq.test or fisher.test}
+\item{...}{Further arguments to be passed to chisq.test or fisher.test}
 }
 \description{
 Perform chisq.test or fisher test
