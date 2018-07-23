@@ -74,11 +74,20 @@ my.t.test=function(y,x){
 #' @export
 my.chisq.test=function(x,y,mydata,catMethod=2)
 {
-
+  # x="sex"
+  # y="Dx"
+  # mydata=acs[c(x,y)]
+  # str(mydata)
+  # colnames(mydata)=c("x","y")
+  #  catMethod=2
     temp=table(mydata$y,mydata$x)
-
+    # temp
+    # str(x)
+    #  str(y)
+    #  str(mydata)
     if((nrow(temp)>2)&(ncol(temp)==2)) temp=t(temp)
     # temp=xtabs(~x+y)
+     temp
     if(dim(temp)[2]==1){
         p=c(NA,NA,NA)
         attr(p,"method")=""
@@ -89,18 +98,23 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
         p=c(NA,NA,NA)
         ow=options("warn")
         options(warn=-1)
-        if(catMethod==0) result=cat.test(temp)
-        else if(catMethod==1) result=chisq.test(temp,correct=FALSE)
-        else if(catMethod==2) result=chisq.test(temp)
-        else if(catMethod==3) result=cat.test(temp,mode=2)
-        else if(catMethod==4) {
+        if(catMethod==0) {
+          result=cat.test(temp)
+        } else if(catMethod==1) {
+          result=chisq.test(temp,correct=FALSE)
+        } else if(catMethod==2) {
+          result=chisq.test(temp)
+        } else if(catMethod==3) {
+          result=cat.test(temp,mode=2)
+        } else if(catMethod==4) {
             if(nrow(temp)>2) {
                 result=NA
             } else {
                 result=prop.trend.test(temp[2,],colSums(temp))
             }
         }
-        if(is.na(result)){
+
+        if(length(result)==1){
             p[1]<-NA
             attr(p,"method")=""
         } else{
