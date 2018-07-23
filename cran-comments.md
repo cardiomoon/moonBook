@@ -9,6 +9,6 @@ There were no ERRORs or WARNINGs.
 
 ## Downstream dependencies
 
-* I have downloaded 4 packages (ggiraphExtra, ggplotAssist, webr, ztable)
+* I have downloaded and checked 4 packages (ggiraphExtra, ggplotAssist, webr, ztable)
 
 * There were no ERRORs or WARNINGs on revdep_check().
