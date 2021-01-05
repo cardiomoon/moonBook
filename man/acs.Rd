@@ -3,7 +3,8 @@
 \name{acs}
 \alias{acs}
 \title{Demographic data of 857 patients with ACS}
-\format{A data frame with 857 rows and 17 variables:
+\format{
+A data frame with 857 rows and 17 variables:
 \describe{
  \item{age}{patient age in years}
  \item{sex}{"Male" or "Female"}
@@ -22,7 +23,8 @@
  \item{DM}{history of diabetes mellitus,"No" or "Yes"}
  \item{HBP}{history of hypertension,"No" or "Yes"}
  \item{smoking}{history of smoking, One of the followings : "Never","Ex-smoker","Smoker"}
-}}
+}
+}
 \description{
 A dataset containing demographic data and laboratory data of 857 patients with
 acute coronary syndrome(ACS).

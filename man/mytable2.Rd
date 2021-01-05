@@ -4,9 +4,20 @@
 \alias{mytable2}
 \title{Produce combined table for descriptive statistics}
 \usage{
-mytable2(formula, data, use.labels = TRUE, use.column.label = TRUE,
-  max.ylev = 5, maxCatLevel = 20, digits = 2, method = 1,
-  catMethod = 2, show.all = FALSE, exact = FALSE, show.total = FALSE)
+mytable2(
+  formula,
+  data,
+  use.labels = TRUE,
+  use.column.label = TRUE,
+  max.ylev = 5,
+  maxCatLevel = 20,
+  digits = 2,
+  method = 1,
+  catMethod = 2,
+  show.all = FALSE,
+  exact = FALSE,
+  show.total = FALSE
+)
 }
 \arguments{
 \item{formula}{An object of class "formula". Left side of ~ must contain two grouping variables in an

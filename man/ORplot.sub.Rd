@@ -4,9 +4,20 @@
 \alias{ORplot.sub}
 \title{A sub function for ORplot and HRplot}
 \usage{
-ORplot.sub(result, type = 1, xlab = "", ylab = "", show.OR = TRUE,
-  show.CI = FALSE, sig.level = 1, cex = 1.2, lwd = 2, pch = 18,
-  col = NULL, ...)
+ORplot.sub(
+  result,
+  type = 1,
+  xlab = "",
+  ylab = "",
+  show.OR = TRUE,
+  show.CI = FALSE,
+  sig.level = 1,
+  cex = 1.2,
+  lwd = 2,
+  pch = 18,
+  col = NULL,
+  ...
+)
 }
 \arguments{
 \item{result}{A resultant data.frame of function extractOR}

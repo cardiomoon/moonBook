@@ -1,6 +1,6 @@
 Package: moonBook
 Title: Functions and Datasets for the Book by Keon-Woong Moon
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
     role=c("aut", "cre"))
 URL: https://github.com/cardiomoon/moonBook
@@ -13,19 +13,19 @@ Depends:
     R (>= 3.1.2)
 License: GPL-2
 LazyData: true
+Encoding: UTF-8
 Imports:
     nortest,
     survival,
     sjmisc,
-    purrr,
     stringr,
-    magrittr
+    magrittr,
+    ztable
 Suggests:
     testthat,
     knitr,
     ggplot2,
-    ztable,
     sjlabelled,
     rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1

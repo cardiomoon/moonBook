@@ -19,8 +19,10 @@ row names to be written.}
 Export to csv file for class "cbind.mytable"
 }
 \examples{
+\dontrun{
 require(moonBook)
 res1=mytable(sex+Dx~age+DM,data=acs)
 mycsv(res1,file="test1.csv")
 mycsv(summary(res1),file="testsummary1.csv")
+}
 }

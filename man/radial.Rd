@@ -4,7 +4,8 @@
 \alias{radial}
 \title{Demographic data of 115 patients performing IVUS(intravascular ultrasound)
 examination of a radial artery.}
-\format{A data frame with 115 rows and 15 variables:
+\format{
+A data frame with 115 rows and 15 variables:
 \describe{
  \item{male}{if Male, 1; if Female 0}
  \item{age}{patient age in years}
@@ -21,7 +22,8 @@ examination of a radial artery.}
  \item{NTAV}{normalized total atheroma volume measured by IVUS in cubic mm}
  \item{PAV}{percent atheroma volume in percentage}
  \item{sex}{Factor with two levels; "Male" or "Female"}
-}}
+}
+}
 \description{
 A dataset containing demographic data and laboratory data of 115 patients performing IVUS(intravascular ultrasound)
 examination of a radial artery after tansradial coronary angiography.

@@ -7,17 +7,37 @@
 \alias{mylatex.cbind.mytable}
 \title{Exporting "cbind.mytable","mytable" to LaTeX format}
 \usage{
-mylatex(myobj, size = 5, caption = NULL, caption.placement = "top",
-  caption.position = "c")
+mylatex(
+  myobj,
+  size = 5,
+  caption = NULL,
+  caption.placement = "top",
+  caption.position = "c"
+)
 
-\method{mylatex}{default}(myobj, size = 5, caption = NULL,
-  caption.placement = "top", caption.position = "c")
+\method{mylatex}{default}(
+  myobj,
+  size = 5,
+  caption = NULL,
+  caption.placement = "top",
+  caption.position = "c"
+)
 
-\method{mylatex}{mytable}(myobj, size = 5, caption = NULL,
-  caption.placement = "top", caption.position = "c")
+\method{mylatex}{mytable}(
+  myobj,
+  size = 5,
+  caption = NULL,
+  caption.placement = "top",
+  caption.position = "c"
+)
 
-\method{mylatex}{cbind.mytable}(myobj, size = 5, caption = NULL,
-  caption.placement = "top", caption.position = "c")
+\method{mylatex}{cbind.mytable}(
+  myobj,
+  size = 5,
+  caption = NULL,
+  caption.placement = "top",
+  caption.position = "c"
+)
 }
 \arguments{
 \item{myobj}{An object of class 'mytable'}

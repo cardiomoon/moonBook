@@ -19,9 +19,11 @@ row names to be written.}
 Export to csv file for class "mytable"
 }
 \examples{
+\dontrun{
 require(moonBook)
 res=mytable(sex~age+DM,data=acs)
 mycsv(res,file="test.csv")
 mycsv(summary(res),file="testsummary.csv")
 mycsv=function(x,row.names=FALSE) UseMethod("mycsv")
+}
 }

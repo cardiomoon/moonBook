@@ -4,9 +4,20 @@
 \alias{mytable_sub}
 \title{Produce table for descriptive statistics}
 \usage{
-mytable_sub(x, data, use.labels = TRUE, use.column.label = TRUE,
-  max.ylev = 5, maxCatLevel = 20, digits = 1, method = 1,
-  catMethod = 2, show.all = FALSE, exact = FALSE, show.total = FALSE)
+mytable_sub(
+  x,
+  data,
+  use.labels = TRUE,
+  use.column.label = TRUE,
+  max.ylev = 5,
+  maxCatLevel = 20,
+  digits = 1,
+  method = 1,
+  catMethod = 2,
+  show.all = FALSE,
+  exact = FALSE,
+  show.total = FALSE
+)
 }
 \arguments{
 \item{x}{An object of class "formula". Left side of ~ must contain the

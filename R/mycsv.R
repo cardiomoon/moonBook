@@ -7,10 +7,12 @@
 #' @param ... further arguments passed to or from other methods.
 #' @export
 #' @examples
+#' \dontrun{
 #' require(moonBook)
 #' res=mytable(sex~age+DM,data=acs)
 #' mycsv(res,file="test.csv")
 #' mycsv(summary(res),file="testsummary.csv")
+#' }
 mycsv=function(x,row.names=FALSE,...) UseMethod("mycsv")
 
 
@@ -24,11 +26,13 @@ mycsv=function(x,row.names=FALSE,...) UseMethod("mycsv")
 #' @importFrom utils write.csv
 #' @export
 #' @examples
+#' \dontrun{
 #' require(moonBook)
 #' res=mytable(sex~age+DM,data=acs)
 #' mycsv(res,file="test.csv")
 #' mycsv(summary(res),file="testsummary.csv")
 #' mycsv=function(x,row.names=FALSE) UseMethod("mycsv")
+#' }
 mycsv.mytable=function(x,row.names=FALSE,...) {
     out=mytable2df(x)
     write.csv(out,row.names=row.names,...)
@@ -44,10 +48,12 @@ mycsv.mytable=function(x,row.names=FALSE,...) {
 #' @importFrom utils write.table
 #' @export
 #' @examples
+#' \dontrun{
 #' require(moonBook)
 #' res1=mytable(sex+Dx~age+DM,data=acs)
 #' mycsv(res1,file="test1.csv")
 #' mycsv(summary(res1),file="testsummary1.csv")
+#' }
 mycsv.cbind.mytable=function(x,row.names=FALSE,...) {
 
     myobj=x

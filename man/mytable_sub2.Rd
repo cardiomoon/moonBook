@@ -4,8 +4,16 @@
 \alias{mytable_sub2}
 \title{Internal mytable functions}
 \usage{
-mytable_sub2(y, x, data, max.ylev = 5, maxCatLevel = 20, method = 1,
-  catMethod = 2, show.total = FALSE)
+mytable_sub2(
+  y,
+  x,
+  data,
+  max.ylev = 5,
+  maxCatLevel = 20,
+  method = 1,
+  catMethod = 2,
+  show.total = FALSE
+)
 }
 \arguments{
 \item{y}{a vector}
