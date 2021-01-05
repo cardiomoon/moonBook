@@ -41,6 +41,7 @@ Change numbers into formatted numbers
 }}
 
 \examples{
+\dontrun{
 require(stringr)
 require(ztable)
 require(magrittr)
@@ -48,4 +49,5 @@ require(ggplot2)
 mytable(cut~.,data=diamonds) \%>\% addComma
 x=mytable(Dx~sex,data=acs)
 addComma(x)
+}
 }

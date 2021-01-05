@@ -8,6 +8,7 @@ comma <- function(x,...) format(x,  big.mark = ",",...)
 #' @param x An object
 #' @export
 #' @examples
+#' \dontrun{
 #' require(stringr)
 #' require(ztable)
 #' require(magrittr)
@@ -15,6 +16,7 @@ comma <- function(x,...) format(x,  big.mark = ",",...)
 #' mytable(cut~.,data=diamonds) %>% addComma
 #' x=mytable(Dx~sex,data=acs)
 #' addComma(x)
+#' }
 addComma=function(x) UseMethod("addComma")
 
 
