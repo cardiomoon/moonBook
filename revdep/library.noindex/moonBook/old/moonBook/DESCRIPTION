@@ -1,0 +1,25 @@
+Package: moonBook
+Title: Functions and Datasets for the Book by Keon-Woong Moon
+Version: 0.2.3
+Authors@R: person("Keon-Woong","Moon", email="cardiomoon@gmail.com",
+    role=c("aut", "cre"))
+URL: https://github.com/cardiomoon/moonBook
+BugReports: https://github.com/cardiomoon/moonBook/issues
+Description: Several analysis-related functions for the book entitled "R
+    statistics and graph for medical articles" (written in Korean), version 1,
+    by Keon-Woong Moon with Korean demographic data with several plot
+    functions.
+Depends: R (>= 3.1.2)
+License: GPL-2
+LazyData: true
+Imports: nortest, survival, sjmisc, purrr, stringr, magrittr
+Suggests: testthat, knitr, ggplot2, ztable, sjlabelled, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2018-07-23 05:14:50 UTC; cardiomoon
+Author: Keon-Woong Moon [aut, cre]
+Maintainer: Keon-Woong Moon <cardiomoon@gmail.com>
+Repository: CRAN
+Date/Publication: 2018-07-23 05:40:02 UTC
+Built: R 4.0.2; ; 2020-07-16 13:53:11 UTC; unix

@@ -1,0 +1,219 @@
+---
+title: "Package moonBook"
+author: "Keon-Woong Moon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{package moonBook}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+## Function "mytable"
+
+Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline charateristics common in medical research papers. 
+
+## Basic Usage
+
+```{r,comment=NA}
+require(moonBook)
+data(acs)
+mytable(Dx~.,data=acs)
+```
+
+The first argument of function `mytable` is an object of class `formula`. Left side of ~ must contain the name of one grouping variable or two grouping variables in an additive way(e.g. sex+group~), and the right side of ~ must have variables in an additive way. `.` is allowed on the right side of formula which means all variables in the data.frame specified by the 2nd argument `data`. The sample data 'acs' containing demographic data and laboratory data of 857 pateints with acute coronary syndrome(ACS). For more information about the data acs, type ?acs in your R console.  
+
+```{r,comment=NA}
+str(acs)
+```
+
+## Explore a data.frame
+
+You can use `mytable` function to explore a data.frame. 
+
+```{r,comment=NA}
+mytable(acs)
+```
+
+You can use formula without grouping variable(s).
+
+```{r,comment=NA}
+mytable(~age+sex,data=acs)
+```
+
+
+## Use of labelled data
+
+You can use labels of the data. For example, you can add column labels and value labels of `mtcars` data using set_label() and set_labels() function of the `sjlabelled` package.
+
+```{r,comment=NA}
+if(!require(sjlabelled)) {
+    install.packages("sjlabelled")
+    require(sjlabelled)
+}
+df=mtcars
+df$am<-set_label(df$am,label="Transmission")
+df$am<-set_labels(df$am,labels=c("automatic","manual"))
+df$vs<-set_label(df$vs,label="Engine")
+df$vs<-set_labels(df$vs,labels=c("V-shaped","straight"))
+```
+
+You can see the labels of this data.
+
+```{r,comment=NA}
+str(df)
+```
+
+You can use the column label and value labels with mytable() function. The default values of `use.labels` and `use.column.labels` arguments of mytable() function are `TRUE`. You can change this arguments if you want.
+
+```{r,comment=NA}
+mytable(df)
+mytable(df,use.labels=FALSE, use.column.label=FALSE)
+mytable(am~.,data=df)
+# mytable(vs+am~.,data=df)
+```
+
+## Choosing grouping variable(s) and row-variable(s)
+
+You can choose the grouping variable(s) and row-variable(s) with the `formula`. 
+
+```{r,comment=NA}
+mytable(sex~age+Dx,data=acs)
+```
+
+You can choose row-variable(s) with `.` and `+` and `-` and variable name in an additive way.
+
+```{r, comment=NA}
+mytable(am~.-hp-disp-cyl-carb-gear,data=mtcars)
+```
+
+## Method for continuous variables
+
+By default continuous variables are analyzed as normal-distributed and are described with mean and standard deviation. To change default options, you can use the `method` argument. Possible values of `method` argument are:
+
+- 1: forces analysis as normal-distributed, default value
+- 2: forces analysis as continuous non-normal
+- 3: performs a Shapiro-Wilks test to decide between normal or non-normal
+
+When continuous variables are analyzed as non-normal, they are described with median and interquantile range.
+
+```{r,comment=NA}
+mytable(sex~height+weight+BMI,data=acs,method=3)
+```
+
+Because the `method` argument is selected as 3, a Shapiro-Wilk test normality test is used to decide if the variable is normal or non-normal distributed. Note that `height` and `BMI` was described as mean $\pm$ sd, whereas the weight was described as median and interquatile range. 
+
+## choice of variable : categorical or continuous variable - my way
+
+In many cases, categorical variables are usually coded as numeric. For example, many people usually code 0 and 1 instead of "No" and "Yes". Similarly, factor variables with three or four levels are coded 0/1/2 or 0/1/2/3. In many cases, if we analyze these variables as continuous variables, we are not able to get the right result. In `mytable`, variables with less than five `unique` values are treated as a categorical variables. 
+
+```{r, comment=NA,warning=FALSE}
+mytable(am~.,data=mtcars)
+```
+
+In `mtcars` data, all variables are expressed as numeric. But as you can see, `cyl`, `vs` and `gear` is treated as categorical variables. The `carb` variables has six `unique` values and treated as continuous variables. If you wanted the `carb` variable to be treated as categorical variable, you can changed the `max.ylev` argument.
+
+```{r,comment=NA,warning=FALSE}
+mytable(am~carb,data=mtcars,max.ylev=6)
+```
+
+## Combining tables
+
+If you wanted to make two separate tables and combine into one table, **`mytable` is the function of choice**. For example, if you wanted to build seperate table for female and male patients stratified by presence or absence of DM and combine it, 
+
+```{r,comment=NA,warning=FALSE}
+mytable(sex+DM~.,data=acs)
+
+```
+
+## For more beautiful output : myhtml
+
+If you want more beautiful table in your R markdown file, you can use myhtml function.
+
+```{r,results='asis'}
+out=mytable(Dx~.,data=acs)
+myhtml(out)
+out1=mytable(sex+DM~.,data=acs)
+myhtml(out1)
+```
+
+## For more beautiful output : mylatex 
+
+If you want more beautiful table, you can use mylatex function.
+
+```{r,eval=FALSE}
+mylatex(mytable(sex+DM~age+Dx,data=acs))
+```
+
+![latextest.png](../inst/extdata/latextest.png)
+
+You can adjust font size of latex table by using parameter size from 1 to 10.
+```{r,eval=FALSE}
+out=mytable(sex~age+Dx,data=acs)
+for(i in c(3,5)) 
+    mylatex(out,size=i,caption=paste("Table ",i,". Fontsize=",i,sep=""))
+```
+
+![latextest2.png](../inst/extdata/latextest.png)
+
+## Export to csv file : mycsv
+
+If you want to export your table into csv file format, you can use mycsv function.
+
+```{r,eval=FALSE}
+mycsv(out,file="test.csv")
+mycsv(out1,fil="test1.csv")
+```
+
+Following figure is a screen-shot in which test.csv and test1.csv files are opened with Numbers. 
+
+![csvtest.png](../inst/extdata/csvtest.png)
+
+
+## Use of `ztable`
+
+You can use ztable() function from the `ztable` package.
+
+```{r,messgae=FALSE,results='asis'}
+require(ztable)
+require(magrittr)
+mytable(sex+DM~.,data=acs) %>%
+    ztable %>%
+    addSigColor %>%
+    print(type="html")
+```
+
+## densityplot
+
+```{r,fig.height=5,fig.width=6}
+library(moonBook)
+densityplot(age~sex,data=acs)
+densityplot(age~Dx,data=acs)
+```
+
+## Plot for odds ratios of a glm object
+
+```{r,fig.width=6,fig.height=6,comment=NA}
+require(survival)
+data(colon)
+out1=glm(status~sex+age+rx+obstruct+node4,data=colon)
+out2=glm(status~rx+node4,data=colon)
+ORplot(out1,type=2,show.CI=TRUE,xlab="This is xlab",main="Odds Ratio")
+ORplot(out2,type=1)
+ORplot(out1,type=1,show.CI=TRUE,col=c("blue","red"))
+ORplot(out1,type=4,show.CI=TRUE,sig.level=0.05)
+ORplot(out1,type=1,show.CI=TRUE,main="Odds Ratio",sig.level=0.05,
+        pch=1,cex=2,lwd=4,col=c("red","blue"))
+```
+
+## For automation of cox's proportional hazard model
+
+```{r,fig.width=6,fig.height=6,comment=NA}
+attach(colon)
+colon$TS=Surv(time,status==1)
+out=mycph(TS~.,data=colon)
+out
+HRplot(out,type=2,show.CI=TRUE,cex=2,sig=0.05,
+       main="Hazard ratios of all individual variables")
+```

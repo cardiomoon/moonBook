@@ -1,0 +1,2 @@
+CC=clang -mmacosx-version-min=10.13
+CFLAGS=-Wall -g -O2

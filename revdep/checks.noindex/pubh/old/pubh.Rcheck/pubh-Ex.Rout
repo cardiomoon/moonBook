@@ -1,0 +1,2611 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "pubh"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('pubh')
+Loading required package: emmeans
+Loading required package: ggformula
+Loading required package: ggplot2
+Loading required package: ggstance
+
+Attaching package: ‘ggstance’
+
+The following objects are masked from ‘package:ggplot2’:
+
+    GeomErrorbarh, geom_errorbarh
+
+
+New to ggformula?  Try the tutorials: 
+	learnr::run_tutorial("introduction", package = "ggformula")
+	learnr::run_tutorial("refining", package = "ggformula")
+Loading required package: magrittr
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("Bernard")
+> ### * Bernard
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Bernard
+> ### Title: Survival of patients with sepsis.
+> ### Aliases: Bernard
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Bernard)
+> 
+> cross_tab(fate ~ treat, data = Bernard)
+                                  Mortality status                   
+                                   Alive         Dead         Total  
+                                 (N=279)      (N=176)       (N=455)  
+             [1mT[22m[1mr[22m[1me[22m[1ma[22m[1mt[22m[1mm[22m[1me[22m[1mn[22m[1mt[22m[1m [22m[1m [22m[1m [22m[1m [22m                                           
+             - Placebo       139 (49.8%)   92 (52.3%)   231 (50.8%)  
+             - Ibuprofen     140 (50.2%)   84 (47.7%)   224 (49.2%)  
+
+Column names: , Alive, Dead, Total
+> 
+> contingency(fate ~ treat, data = Bernard)
+           Outcome
+Predictor   Dead Alive
+  Ibuprofen   84   140
+  Placebo     92   139
+
+             Outcome +    Outcome -      Total        Inc risk *        Odds
+Exposed +           84          140        224              37.5       0.600
+Exposed -           92          139        231              39.8       0.662
+Total              176          279        455              38.7       0.631
+
+Point estimates and 95% CIs:
+-------------------------------------------------------------------
+Inc risk ratio                               0.94 (0.75, 1.19)
+Odds ratio                                   0.91 (0.62, 1.32)
+Attrib risk *                                -2.33 (-11.27, 6.62)
+Attrib risk in population *                  -1.15 (-8.88, 6.59)
+Attrib fraction in exposed (%)               -6.20 (-33.90, 15.76)
+Attrib fraction in population (%)            -2.96 (-15.01, 7.82)
+-------------------------------------------------------------------
+ Test that OR = 1: chi2(1) = 0.260 Pr>chi2 = 0.61
+ Wald confidence limits
+ CI: confidence interval
+ * Outcomes per 100 population units 
+
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  dat
+X-squared = 0.17076, df = 1, p-value = 0.6794
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Brenner")
+> ### * Brenner
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Brenner
+> ### Title: Prevalence of Helicobacter pylori infection in preschool
+> ###   children.
+> ### Aliases: Brenner
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Brenner)
+> 
+> Brenner %>%
++   cross_tab(infected ~ ulcer)
+                                          Infected                   
+                                     No           Yes         Total  
+                                (N=745)       (N=118)       (N=863)  
+            [1mG[22m[1ma[22m[1ms[22m[1mt[22m[1mr[22m[1mi[22m[1mc[22m[1m [22m[1mu[22m[1ml[22m[1mc[22m[1me[22m[1mr[22m                                            
+            - No            729 (97.9%)   112 (94.9%)   841 (97.5%)  
+            - Yes            16 ( 2.1%)     6 ( 5.1%)    22 ( 2.5%)  
+
+Column names: , No, Yes, Total
+> 
+> contingency(infected ~ ulcer, data = Brenner, method = "cross.sectional")
+         Outcome
+Predictor Yes  No
+      Yes   6  16
+      No  112 729
+
+             Outcome +    Outcome -      Total        Prevalence *        Odds
+Exposed +            6           16         22                27.3       0.375
+Exposed -          112          729        841                13.3       0.154
+Total              118          745        863                13.7       0.158
+
+Point estimates and 95% CIs:
+-------------------------------------------------------------------
+Prevalence ratio                             2.05 (1.01, 4.14)
+Odds ratio                                   2.44 (0.94, 6.37)
+Attrib prevalence *                          13.96 (-4.80, 32.71)
+Attrib prevalence in population *            0.36 (-2.89, 3.60)
+Attrib fraction in exposed (%)              51.17 (1.29, 75.84)
+Attrib fraction in population (%)           2.60 (-1.11, 6.17)
+-------------------------------------------------------------------
+ Test that OR = 1: chi2(1) = 3.537 Pr>chi2 = 0.06
+ Wald confidence limits
+ CI: confidence interval
+ * Outcomes per 100 population units 
+
+
+	Fisher's Exact Test for Count Data
+
+data:  dat
+p-value = 0.1049
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.7646852 6.7323223
+sample estimates:
+odds ratio 
+  2.437485 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Fentress")
+> ### * Fentress
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Fentress
+> ### Title: Migraine pain reduction.
+> ### Aliases: Fentress
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Fentress)
+> 
+> Fentress %>%
++   strip_error(pain ~ group) %>%
++   axis_labs()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Hodgkin")
+> ### * Hodgkin
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Hodgkin
+> ### Title: T-cell counts from Hodgkin's disease patients.
+> ### Aliases: Hodgkin
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Hodgkin)
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> 
+> Hodgkin <- Hodgkin %>%
++   mutate(
++     Ratio = CD4/CD8
++   ) %>%
++   var_labels(
++     Ratio = "CD4+ / CD8+ T-cells"
++   )
+> 
+> estat(~ Ratio|Group, data = Hodgkin)
+                          Disease  N Min. Max. Mean Median   SD   CV
+1 CD4+ / CD8+ T-cells Non-Hodgkin 20 1.10 3.49 2.12   2.15 0.73 0.34
+2                         Hodgkin 20 0.47 3.82 1.50   1.19 0.91 0.61
+> 
+> Hodgkin %>%
++   qq_plot(~ Ratio|Group) %>%
++   axis_labs()
+> 
+> Hodgkin$Ratio <- Hodgkin$CD4/Hodgkin$CD8
+> estat(~ Ratio|Group, data = Hodgkin)
+                   Disease  N Min. Max. Mean Median   SD   CV
+1 CD4+ T-cells Non-Hodgkin 20 1.10 3.49 2.12   2.15 0.73 0.34
+2                  Hodgkin 20 0.47 3.82 1.50   1.19 0.91 0.61
+> 
+> qq_plot(~ Ratio|Group, data = Hodgkin) %>%
++ axis_labs()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("Kirkwood")
+> ### * Kirkwood
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Kirkwood
+> ### Title: Body weight and plasma volume.
+> ### Aliases: Kirkwood
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Kirkwood)
+> 
+> Kirkwood %>%
++   gf_point(volume ~ weight) %>%
++   gf_lm(col = "indianred3", interval = "confidence", fill = "indianred3") %>%
++   axis_labs()
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Macmahon")
+> ### * Macmahon
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Macmahon
+> ### Title: Breast cancer and age of childbirth.
+> ### Aliases: Macmahon
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Macmahon)
+> 
+> Macmahon %>%
++   cross_tab(cancer ~ age)
+                                       Breast cancer                    
+                                      No            Yes          Total  
+                               (N=10245)       (N=3220)      (N=13465)  
+         [1mA[22m[1mg[22m[1me[22m[1m [22m[1ma[22m[1mt[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                               
+         [1mc[22m[1mh[22m[1mi[22m[1ml[22m[1md[22m[1mb[22m[1mi[22m[1mr[22m[1mt[22m[1mh[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                               
+         [1m([22m[1my[22m[1me[22m[1ma[22m[1mr[22m[1ms[22m[1m)[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                               
+         - <20              1422 (13.9%)    320 ( 9.9%)   1742 (12.9%)  
+         - 20-24            4432 (43.3%)   1206 (37.5%)   5638 (41.9%)  
+         - 25-29            2893 (28.2%)   1011 (31.4%)   3904 (29.0%)  
+         - 30-34            1092 (10.7%)    463 (14.4%)   1555 (11.5%)  
+         - >34               406 ( 4.0%)    220 ( 6.8%)    626 ( 4.6%)  
+
+Column names: , No, Yes, Total
+> 
+> odds_trend(cancer ~ age, data = Macmahon)$df
+  Exposure   OR lower upper chi.square fisher.exact
+1      <20 1.00    NA    NA       <NA>         <NA>
+2    20-24 1.21  1.05  1.39      0.007        0.007
+3    25-29 1.55  1.35  1.79    < 0.001      < 0.001
+4    30-34 1.88  1.60  2.22    < 0.001      < 0.001
+5      >34 2.41  1.96  2.95    < 0.001      < 0.001
+> odds_trend(cancer ~ age, data = Macmahon)$fig
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Oncho")
+> ### * Oncho
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Oncho
+> ### Title: Onchocerciasis in Sierra Leone.
+> ### Aliases: Oncho
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Oncho)
+> 
+> odds_trend(mf ~ agegrp, data = Oncho)$df
+  Exposure    OR lower upper chi.square fisher.exact
+1      5-9  1.00    NA    NA       <NA>         <NA>
+2    10-19  2.82  1.85  4.31    < 0.001      < 0.001
+3    20-39  8.11  5.50 11.98    < 0.001      < 0.001
+4      40+ 16.02 10.66 24.09    < 0.001      < 0.001
+> odds_trend(mf ~ agegrp, data = Oncho)$fig
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Roberts")
+> ### * Roberts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Roberts
+> ### Title: Extracorporeal membrane oxygenation in neonates.
+> ### Aliases: Roberts
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Roberts)
+> 
+> Roberts %>%
++   cross_tab(survived ~ emo)
+                                         Survived?                  
+                                      No          Yes        Total  
+                                  (N=84)      (N=101)      (N=185)  
+              [1mE[22m[1mM[22m[1mO[22m[1m [22m[1mt[22m[1mr[22m[1me[22m[1ma[22m[1mt[22m[1mm[22m[1me[22m[1mn[22m[1mt[22m                                         
+              - No            54 (64.3%)   38 (37.6%)   92 (49.7%)  
+              - Yes           30 (35.7%)   63 (62.4%)   93 (50.3%)  
+
+Column names: , No, Yes, Total
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Rothman")
+> ### * Rothman
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Rothman
+> ### Title: Oral contraceptives and stroke.
+> ### Aliases: Rothman
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Rothman)
+> 
+> cross_tab(stroke ~ oc + ht, data = Rothman)
+                                  Thrombotic stroke                   
+                                       No          Yes         Total  
+                                  (N=342)      (N=135)       (N=477)  
+           Oral                                                       
+           contraceptive                                              
+           - Non-user         294 (86.0%)   80 (59.3%)   374 (78.4%)  
+           - User              48 (14.0%)   55 (40.7%)   103 (21.6%)  
+           Hypertension                                               
+           - No               272 (79.5%)   68 (50.4%)   340 (71.3%)  
+           - Yes               70 (20.5%)   67 (49.6%)   137 (28.7%)  
+
+Column names: , No, Yes, Total
+> 
+> mhor(stroke ~ ht/oc, data = Rothman)
+
+               OR Lower.CI Upper.CI Pr(>|z|)
+htNo:ocUser  5.01     2.79     8.99  < 0.001
+htYes:ocUser 3.78     1.60     8.94    0.002
+
+                          Common OR Lower CI Upper CI Pr(>|z|)
+Cochran-Mantel-Haenszel:       4.52     2.77     7.37  < 0.001
+
+Test for effect modification (interaction): p =  0.6001 
+ 
+> 
+> ## Model with standard interaction term:
+> model1 <- glm(stroke ~ ht*oc, data = Rothman, family = binomial)
+> glm_coef(model1)
+     Parameter        Odds ratio Pr(>|z|)
+1  (Intercept) 0.16 (0.11, 0.22)  < 0.001
+2        htYes 4.44 (2.63, 7.48)  < 0.001
+3       ocUser 5.01 (2.79, 8.99)  < 0.001
+4 htYes:ocUser 0.76 (0.27, 2.14)    0.598
+> 
+> ## Model considering join exposure:
+> Rothman$join <- 0
+> Rothman$join[Rothman$oc == "Non-user" & Rothman$ht == "Yes"] <- 1
+> Rothman$join[Rothman$oc == "User" & Rothman$ht == "No"] <- 2
+> Rothman$join[Rothman$oc == "User" & Rothman$ht == "Yes"] <- 3
+> Rothman$join <- factor(Rothman$join, labels=c("Unexposed", "Hypertension", "OC user",
++                        "OC and hypertension"))
+> 
+> require(sjlabelled, quietly = TRUE)
+> Rothman$join <- set_label(Rothman$join, label = "Exposure")
+> 
+> cross_tab(stroke ~ join, data = Rothman)
+                                  Thrombotic stroke                   
+                                       No          Yes         Total  
+                                  (N=342)      (N=135)       (N=477)  
+           [1mE[22m[1mx[22m[1mp[22m[1mo[22m[1ms[22m[1mu[22m[1mr[22m[1me[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                           
+           - Unexposed        233 (68.1%)   37 (27.4%)   270 (56.6%)  
+           - Hypertension      61 (17.8%)   43 (31.9%)   104 (21.8%)  
+           - OC user           39 (11.4%)   31 (23.0%)    70 (14.7%)  
+           - OC and             9 ( 2.6%)   24 (17.8%)    33 ( 6.9%)  
+           hypertension                                               
+
+Column names: , No, Yes, Total
+> 
+> model2 <- glm(stroke ~ join, data = Rothman, family = binomial)
+> glm_coef(model2)
+                Parameter          Odds ratio Pr(>|z|)
+1             (Intercept)   0.16 (0.11, 0.22)  < 0.001
+2        joinHypertension   4.44 (2.63, 7.48)  < 0.001
+3             joinOC user   5.01 (2.79, 8.99)  < 0.001
+4 joinOC and hypertension 16.79 (7.24, 38.94)  < 0.001
+> odds_trend(stroke ~ join, data = Rothman)$df
+             Exposure    OR lower upper chi.square fisher.exact
+1           Unexposed  1.00    NA    NA       <NA>         <NA>
+2        Hypertension  4.44  2.63  7.48    < 0.001      < 0.001
+3             OC user  5.01  2.79  8.99    < 0.001      < 0.001
+4 OC and hypertension 16.79  7.24 38.94    < 0.001      < 0.001
+> odds_trend(stroke ~ join, data = Rothman)$fig
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("Sandler")
+> ### * Sandler
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Sandler
+> ### Title: Passive smoking in adulthood and cancer risk.
+> ### Aliases: Sandler
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Sandler)
+> 
+> Sandler %>%
++   cross_tab(cancer ~ passive)
+                                             Cancer                   
+                                      No           Yes         Total  
+                                 (N=489)       (N=509)       (N=998)  
+            [1mP[22m[1ma[22m[1ms[22m[1ms[22m[1mi[22m[1mv[22m[1me[22m[1m [22m[1ms[22m[1mm[22m[1mo[22m[1mk[22m[1me[22m[1mr[22m                                            
+            - No             279 (57.1%)   228 (44.8%)   507 (50.8%)  
+            - Yes            210 (42.9%)   281 (55.2%)   491 (49.2%)  
+
+Column names: , No, Yes, Total
+> 
+> cross_tab(cancer ~ passive + smoke, data = Sandler)
+                                             Cancer                   
+                                      No           Yes         Total  
+                                 (N=489)       (N=509)       (N=998)  
+            Passive smoker                                            
+            - No             279 (57.1%)   228 (44.8%)   507 (50.8%)  
+            - Yes            210 (42.9%)   281 (55.2%)   491 (49.2%)  
+            Active smoker                                             
+            - No             235 (48.1%)   231 (45.4%)   466 (46.7%)  
+            - Yes            254 (51.9%)   278 (54.6%)   532 (53.3%)  
+
+Column names: , No, Yes, Total
+> 
+> mhor(cancer ~ smoke/passive, data = Sandler)
+
+                      OR Lower.CI Upper.CI Pr(>|z|)
+smokeNo:passiveYes  2.09     1.44     3.04  < 0.001
+smokeYes:passiveYes 1.31     0.93     1.85    0.119
+
+                          Common OR Lower CI Upper CI Pr(>|z|)
+Cochran-Mantel-Haenszel:       1.63     1.26     2.09  < 0.001
+
+Test for effect modification (interaction): p =  0.0702 
+ 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Sharples")
+> ### * Sharples
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Sharples
+> ### Title: Measured and self-reported weight in New Zealand.
+> ### Aliases: Sharples
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> Sharples %>%
++   bland_altman(srweight ~ weight, transform = TRUE) %>%
++   gf_labs(x = "Mean of weights (kg)", y = "Measured weight / Self-reported weight") %>%
++   gf_theme(theme = sjPlot::theme_sjplot2(base_size = 9))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Thall")
+> ### * Thall
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Thall
+> ### Title: RCT on the treatment of epilepsy.
+> ### Aliases: Thall
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Thall)
+> 
+> c1 <- cbind(Thall[, c(1:5)], count = Thall$y1)[, c(1:4, 6)]
+> c2 <- cbind(Thall[, c(1:4, 6)], count = Thall$y2)[, c(1:4, 6)]
+> c3 <- cbind(Thall[, c(1:4, 7)], count = Thall$y3)[, c(1:4, 6)]
+> c4 <- cbind(Thall[, c(1:4, 8)], count = Thall$y3)[, c(1:4, 6)]
+> epilepsy <- rbind(c1, c2, c3, c4)
+> 
+> require(lme4, quietly = TRUE)
+> model_glmer <- glmer(count ~ treat + base + I(age - mean(age, na.rm = TRUE)) +
++                  (1|id), data = epilepsy, family = poisson)
+> glm_coef(model_glmer, labels = c("Treatment (Prograbide/Control)",
++                                "Baseline count", "Age (years)"))
+                       Parameter        Exp(Coeff) Pr(>|z|)
+1 Treatment (Prograbide/Control)  0.8 (0.57, 1.13)    0.203
+2                 Baseline count 1.03 (1.02, 1.03)  < 0.001
+3                    Age (years) 1.01 (0.99, 1.04)    0.364
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:lme4’, ‘package:Matrix’
+
+> nameEx("Tuzson")
+> ### * Tuzson
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Tuzson
+> ### Title: Peak knee velocity in walking at flexion and extension.
+> ### Aliases: Tuzson
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Tuzson)
+> 
+> Tuzson %>%
++   gf_point(flexion ~ extension) %>%
++   axis_labs()
+> 
+> cor.test(~ flexion + extension, data = Tuzson)
+
+	Pearson's product-moment correlation
+
+data:  flexion and extension
+t = 7.4938, df = 16, p-value = 1.281e-06
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.7061680 0.9555142
+sample estimates:
+    cor 
+0.88219 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Vanderpump")
+> ### * Vanderpump
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Vanderpump
+> ### Title: Smoking and mortality in Whickham, England.
+> ### Aliases: Vanderpump
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(Vanderpump)
+> 
+> Vanderpump %>%
++   cross_tab(vstatus ~ .)
+                                     Survival status                   
+                                    Alive          Dead         Total  
+                                  (N=945)       (N=369)      (N=1314)  
+           [1mA[22m[1mg[22m[1me[22m[1m [22m[1mg[22m[1mr[22m[1mo[22m[1mu[22m[1mp[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                            
+           [1m([22m[1my[22m[1me[22m[1ma[22m[1mr[22m[1ms[22m[1m)[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                            
+           - 18-24            114 (12.1%)     3 ( 0.8%)   117 ( 8.9%)  
+           - 25-34            273 (28.9%)     8 ( 2.2%)   281 (21.4%)  
+           - 35-44            209 (22.1%)    21 ( 5.7%)   230 (17.5%)  
+           - 45-54            169 (17.9%)    39 (10.6%)   208 (15.8%)  
+           - 55-64            145 (15.3%)    91 (24.7%)   236 (18.0%)  
+           - 65-74             35 ( 3.7%)   130 (35.2%)   165 (12.6%)  
+           - 75+                0 ( 0.0%)    77 (20.9%)    77 ( 5.9%)  
+           Smoking status                                              
+           - Non smoker       502 (53.1%)   230 (62.3%)   732 (55.7%)  
+           - Smoker           443 (46.9%)   139 (37.7%)   582 (44.3%)  
+
+Column names: , Alive, Dead, Total
+> 
+> mhor(vstatus ~ agegrp/smoker, data = Vanderpump)
+
+                           OR Lower.CI Upper.CI Pr(>|z|)
+agegrp18-24:smokerSmoker 2.30     0.20    26.11    0.501
+agegrp25-34:smokerSmoker 0.75     0.18     3.22    0.703
+agegrp35-44:smokerSmoker 2.40     0.93     6.19    0.070
+agegrp45-54:smokerSmoker 1.44     0.68     3.04    0.337
+agegrp55-64:smokerSmoker 1.61     0.95     2.74    0.076
+agegrp65-74:smokerSmoker 1.15     0.46     2.90    0.769
+agegrp75+:smokerSmoker   1.00     0.00      Inf    1.000
+
+                          Common OR Lower CI Upper CI Pr(>|z|)
+Cochran-Mantel-Haenszel:       1.53     1.08     2.16     0.02
+
+Test for effect modification (interaction): p =  0.8815 
+ 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("axis_labs")
+> ### * axis_labs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: axis_labs
+> ### Title: Apply labels from variables to axis-labels in plots.
+> ### Aliases: axis_labs
+> 
+> ### ** Examples
+> 
+> data(kfm, package = "ISwR")
+> require(sjlabelled, quietly = TRUE)
+> kfm = kfm %>%
++   var_labels(
++      dl.milk = 'Breast-milk intake (dl/day)',
++      sex = 'Sex',
++      weight = 'Child weight (kg)',
++      ml.suppl = 'Milk substitute (ml/day)',
++      mat.weight = 'Maternal weight (kg)',
++      mat.height = 'Maternal height (cm)'
++      )
+> 
+> kfm %>%
++   gf_point(weight ~ dl.milk) %>%
++   gf_lm(col = 2, interval = "confidence", col = 2) %>%
++   axis_labs()
+> 
+> kfm %>%
++   box_plot(dl.milk ~ sex, fill='thistle', alpha = 0.8) %>%
++   axis_labs() %>%
++   gf_star(x1 = 1, y1 = 10.9, x2 = 2, y2 = 11, y3 = 11.2)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("bar_error")
+> ### * bar_error
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bar_error
+> ### Title: Bar charts with error bars.
+> ### Aliases: bar_error
+> 
+> ### ** Examples
+> 
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> data(birthwt, package = "MASS")
+> birthwt <- birthwt %>%
++   mutate(
++     smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++     Race = factor(race > 1, labels = c("White", "Non-white"))
++   ) %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status'
++  )
+> 
+> birthwt %>%
++   bar_error(bwt ~ smoke, fill = 'plum3') %>%
++   axis_labs()
+> 
+> birthwt %>%
++   bar_error(bwt ~ smoke|Race, fill = 'plum3') %>%
++   axis_labs()
+> 
+> birthwt %>%
++   bar_error(bwt ~ smoke, fill = ~ Race) %>%
++   axis_labs()
+> 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("bland_altman")
+> ### * bland_altman
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bland_altman
+> ### Title: Bland-Altman agreement plots.
+> ### Aliases: bland_altman
+> 
+> ### ** Examples
+> 
+> data(wright, package = "ISwR")
+> 
+> wright %>%
++   bland_altman(mini.wright ~ std.wright, pch = 16,
++                ylab = "Large-mini expiratory flow rate (l/min)",
++                xlab = "Mean expiratory flow rate (l/min)") %>%
++  gf_labs(y = "Large-mini expiratory flow rate (l/min)",
++          x = "Mean expiratory flow rate (l/min)") %>%
++  gf_theme(theme = sjPlot::theme_sjplot2(base_size = 9))
+> 
+> data(Sharples)
+> 
+> Sharples %>%
++   bland_altman(srweight ~ weight, transform = TRUE) %>%
++   gf_labs(x = "Mean of weights (kg)", y = "Measured weight / Self-reported weight") %>%
++   gf_theme(theme = sjPlot::theme_sjplot2(base_size = 9))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("box_plot")
+> ### * box_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: box_plot
+> ### Title: Construct box plots.
+> ### Aliases: box_plot
+> 
+> ### ** Examples
+> 
+> data(kfm, package = "ISwR")
+> require(sjlabelled, quietly = TRUE)
+> kfm = kfm %>%
++   var_labels(
++      dl.milk = 'Breast-milk intake (dl/day)',
++      sex = 'Sex',
++      weight = 'Child weight (kg)',
++      ml.suppl = 'Milk substitute (ml/day)',
++      mat.weight = 'Maternal weight (kg)',
++      mat.height = 'Maternal height (cm)'
++      )
+> 
+> kfm %>%
++   box_plot(dl.milk ~ sex, fill = 'thistle', alpha = 0.8) %>%
++   axis_labs()
+> 
+> t.test(dl.milk ~ sex, data = kfm)
+
+	Welch Two Sample t-test
+
+data:  dl.milk by sex
+t = 2.174, df = 47.89, p-value = 0.03468
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.06729676 1.72470324
+sample estimates:
+ mean in group boy mean in group girl 
+            7.9524             7.0564 
+
+> 
+> kfm %>%
++   box_plot(dl.milk ~ sex, fill = 'thistle', alpha = 0.8) %>%
++   axis_labs() %>%
++   gf_star(1, 10.9, 2, 11, 11.4, legend = 'p = 0.035', size = 2.5)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("bst")
+> ### * bst
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bst
+> ### Title: Bootstrap Confidence Intervals.
+> ### Aliases: bst
+> 
+> ### ** Examples
+> 
+> data(IgM, package = "ISwR")
+> bst(IgM, "median")
+   stat estimate %CI lower upper
+ median      0.7  95   0.7   0.8
+> 
+> bst(IgM, "gmean")
+  stat estimate %CI lower upper
+ gmean      0.7  95  0.65  0.74
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coef_det")
+> ### * coef_det
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coef_det
+> ### Title: Coefficient of determination.
+> ### Aliases: coef_det
+> 
+> ### ** Examples
+> 
+> ## Linear regression:
+> Riboflavin <- seq(0, 80, 10)
+> OD <- 0.0125*Riboflavin + rnorm(9, 0.6, 0.03)
+> titration <- data.frame(Riboflavin, OD)
+> model1 <- lm(OD ~ Riboflavin, data = titration)
+> summary(model1)
+
+Call:
+lm(formula = OD ~ Riboflavin, data = titration)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.033390 -0.010812  0.002495  0.006670  0.045785 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.5920180  0.0148205   39.95 1.61e-09 ***
+Riboflavin  0.0128352  0.0003113   41.23 1.29e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.02411 on 7 degrees of freedom
+Multiple R-squared:  0.9959,	Adjusted R-squared:  0.9953 
+F-statistic:  1700 on 1 and 7 DF,  p-value: 1.287e-09
+
+> coef_det(titration$OD, fitted(model1))
+[1] 0.9958994
+> 
+> ## Non-linear regression:
+> library(nlme, quietly = TRUE)
+> data(Puromycin)
+> mm.tx <- gnls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
++   subset = state == "treated")
+> summary(mm.tx)
+Generalized nonlinear least squares fit
+  Model: rate ~ SSmicmen(conc, Vm, K) 
+  Data: Puromycin 
+  Subset: state == "treated" 
+       AIC      BIC    logLik
+  95.27097 96.72569 -44.63548
+
+Coefficients:
+       Value Std.Error   t-value p-value
+Vm 212.68374  6.947155 30.614509       0
+K    0.06412  0.008281  7.743228       0
+
+ Correlation: 
+  Vm   
+K 0.765
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max 
+-1.1601501 -0.5228120 -0.0366657  0.4560775  2.3262130 
+
+Residual standard error: 10.93366 
+Degrees of freedom: 12 total; 10 residual
+> coef_det(Puromycin$rate[1:12], mm.tx$fitted)
+[1] 0.9612608
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:nlme’
+
+> nameEx("contingency")
+> ### * contingency
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: contingency
+> ### Title: Measures of association from two by two contingency tables
+> ###   (formula).
+> ### Aliases: contingency
+> 
+> ### ** Examples
+> 
+> ## A case-control study on the effect of alcohol on oesophageal cancer.
+> Freq <- c(386, 29, 389, 171)
+> status <- gl(2, 1, 4, labels=c("Control", "Case"))
+> alcohol <- gl(2, 2, labels=c("0-39", "40+"))
+> cancer <- data.frame(Freq, status, alcohol)
+> cancer <- expand_df(cancer)
+> contingency(status ~ alcohol, data = cancer, method = "case.control")
+         Outcome
+Predictor Case Control
+     40+   171     389
+     0-39   29     386
+
+             Outcome +    Outcome -      Total        Prevalence *        Odds
+Exposed +          171          389        560               30.54      0.4396
+Exposed -           29          386        415                6.99      0.0751
+Total              200          775        975               20.51      0.2581
+
+Point estimates and 95% CIs:
+-------------------------------------------------------------------
+Odds ratio (W)                               5.85 (3.85, 8.89)
+Attrib prevalence *                          23.55 (19.01, 28.08)
+Attrib prevalence in population *            13.52 (10.00, 17.05)
+Attrib fraction (est) in exposed  (%)        82.88 (73.78, 89.14)
+Attrib fraction (est) in population (%)      70.89 (58.94, 79.36)
+-------------------------------------------------------------------
+ Test that OR = 1: chi2(1) = 81.060 Pr>chi2 = <0.001
+ Wald confidence limits
+ CI: confidence interval
+ * Outcomes per 100 population units 
+
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  dat
+X-squared = 79.623, df = 1, p-value < 2.2e-16
+
+> 
+> data(Oncho)
+> require(moonBook, quietly = TRUE)
+> 
+> mytable(mf ~ area, data = Oncho, show.total = TRUE)
+
+          Descriptive Statistics by 'Infection'          
+__________________________________________________________ 
+                Not-infected  Infected      Total      p  
+                  (N=480)      (N=822)    (N=1302)  
+---------------------------------------------------------- 
+ Residence                                           0.000
+   - Savannah   267 (55.6%)  281 (34.2%) 548 (42.1%)      
+   - Rainforest 213 (44.4%)  541 (65.8%) 754 (57.9%)      
+---------------------------------------------------------- 
+> 
+> Oncho %>%
++   contingency(mf ~ area)
+            Outcome
+Predictor    Infected Not-infected
+  Rainforest      541          213
+  Savannah        281          267
+
+             Outcome +    Outcome -      Total        Inc risk *        Odds
+Exposed +          541          213        754              71.8        2.54
+Exposed -          281          267        548              51.3        1.05
+Total              822          480       1302              63.1        1.71
+
+Point estimates and 95% CIs:
+-------------------------------------------------------------------
+Inc risk ratio                               1.40 (1.27, 1.54)
+Odds ratio                                   2.41 (1.92, 3.04)
+Attrib risk *                                20.47 (15.20, 25.75)
+Attrib risk in population *                  11.86 (6.92, 16.79)
+Attrib fraction in exposed (%)               28.53 (21.56, 34.89)
+Attrib fraction in population (%)            18.78 (13.59, 23.65)
+-------------------------------------------------------------------
+ Test that OR = 1: chi2(1) = 57.151 Pr>chi2 = <0.001
+ Wald confidence limits
+ CI: confidence interval
+ * Outcomes per 100 population units 
+
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  dat
+X-squared = 56.275, df = 1, p-value = 6.301e-14
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:moonBook’
+
+> nameEx("contingency2")
+> ### * contingency2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: contingency2
+> ### Title: Measures of association from two by two contingency tables
+> ###   (direct input).
+> ### Aliases: contingency2
+> 
+> ### ** Examples
+> 
+> ## A case-control study on the effect of alcohol on oesophageal cancer.
+> Freq <- c(386, 29, 389, 171)
+> status <- gl(2, 1, 4, labels=c("Control", "Case"))
+> alcohol <- gl(2, 2, labels=c("0-39", "40+"))
+> cancer <- data.frame(Freq, status, alcohol)
+> cancer <- expand_df(cancer)
+> 
+> contingency2(171, 389, 29, 386, method = "case.control")
+
+    Yes  No
+Yes 171 389
+No   29 386
+
+             Outcome +    Outcome -      Total        Prevalence *        Odds
+Exposed +          171          389        560               30.54      0.4396
+Exposed -           29          386        415                6.99      0.0751
+Total              200          775        975               20.51      0.2581
+
+Point estimates and 95% CIs:
+-------------------------------------------------------------------
+Odds ratio (W)                               5.85 (3.85, 8.89)
+Attrib prevalence *                          23.55 (19.01, 28.08)
+Attrib prevalence in population *            13.52 (10.00, 17.05)
+Attrib fraction (est) in exposed  (%)        82.88 (73.78, 89.14)
+Attrib fraction (est) in population (%)      70.89 (58.94, 79.36)
+-------------------------------------------------------------------
+ Test that OR = 1: chi2(1) = 81.060 Pr>chi2 = <0.001
+ Wald confidence limits
+ CI: confidence interval
+ * Outcomes per 100 population units 
+
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  dat
+X-squared = 79.623, df = 1, p-value < 2.2e-16
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cross_tab")
+> ### * cross_tab
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cross_tab
+> ### Title: Cross-tabulation.
+> ### Aliases: cross_tab
+> 
+> ### ** Examples
+> 
+> data(Oncho)
+> 
+> ## A two by two contingency table:
+> Oncho %>%
++   cross_tab(mf ~ area)
+                                          Infection                   
+                            Not-infected      Infected         Total  
+                                 (N=480)       (N=822)      (N=1302)  
+           [1mR[22m[1me[22m[1ms[22m[1mi[22m[1md[22m[1me[22m[1mn[22m[1mc[22m[1me[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                             
+           - Savannah        267 (55.6%)   281 (34.2%)   548 (42.1%)  
+           - Rainforest      213 (44.4%)   541 (65.8%)   754 (57.9%)  
+
+Column names: , Not-infected, Infected, Total
+> 
+> ## Reporting prevalence:
+> Oncho %>%
++   cross_tab(area ~ mf)
+                                           Residence                   
+                                 Savannah    Rainforest         Total  
+                                  (N=548)       (N=754)      (N=1302)  
+           [1mI[22m[1mn[22m[1mf[22m[1me[22m[1mc[22m[1mt[22m[1mi[22m[1mo[22m[1mn[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                            
+           - Not-infected     267 (48.7%)   213 (28.2%)   480 (36.9%)  
+           - Infected         281 (51.3%)   541 (71.8%)   822 (63.1%)  
+
+Column names: , Savannah, Rainforest, Total
+> 
+> ## Contingency table for both sex and area of residence:
+> Oncho %>%
++   cross_tab(mf ~ sex + area, p_val = TRUE)
+                                     Infection                           
+                       Not-infected      Infected         Total       p  
+                            (N=480)       (N=822)      (N=1302)          
+        Sex                                                       0.000  
+        - Male          190 (39.6%)   426 (51.8%)   616 (47.3%)          
+        - Female        290 (60.4%)   396 (48.2%)   686 (52.7%)          
+        Residence                                                 0.000  
+        - Savannah      267 (55.6%)   281 (34.2%)   548 (42.1%)          
+        - Rainforest    213 (44.4%)   541 (65.8%)   754 (57.9%)          
+
+Column names: , Not-infected, Infected, Total, p
+> 
+> ## Descriptive statistics for all variables in the \code{Oncho} data set except \code{id}.
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> Oncho %>%
++   select(- id) %>%
++   cross_tab(mf ~ .)
+                                           Infection                    
+                             Not-infected      Infected          Total  
+                                  (N=480)       (N=822)       (N=1302)  
+          [1mR[22m[1me[22m[1ms[22m[1mi[22m[1md[22m[1me[22m[1mn[22m[1mc[22m[1me[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                              
+          - Savannah          267 (55.6%)   281 (34.2%)    548 (42.1%)  
+          - Rainforest        213 (44.4%)   541 (65.8%)    754 (57.9%)  
+          Age group                                                     
+          (years)                                                       
+          - 5-9               156 (32.5%)    46 ( 5.6%)    202 (15.5%)  
+          - 10-19             119 (24.8%)    99 (12.0%)    218 (16.7%)  
+          - 20-39             125 (26.0%)   299 (36.4%)    424 (32.6%)  
+          - 40+                80 (16.7%)   378 (46.0%)    458 (35.2%)  
+          Sex                                                           
+          - Male              190 (39.6%)   426 (51.8%)    616 (47.3%)  
+          - Female            290 (60.4%)   396 (48.2%)    686 (52.7%)  
+          Microfiliariae                                                
+          load                                                          
+          - 0                480 (100.0%)     0 ( 0.0%)    480 (36.9%)  
+          - 1-9                 0 ( 0.0%)   367 (44.6%)    367 (28.2%)  
+          - 10-49               0 ( 0.0%)   277 (33.7%)    277 (21.3%)  
+          - >=50                0 ( 0.0%)   178 (21.7%)    178 (13.7%)  
+          Severe eye                                                    
+          lesions?                                                      
+          - No                461 (96.0%)   640 (77.9%)   1101 (84.6%)  
+          - Yes                19 ( 4.0%)   182 (22.1%)    201 (15.4%)  
+
+Column names: , Not-infected, Infected, Total
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’
+
+> nameEx("diag_test")
+> ### * diag_test
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: diag_test
+> ### Title: Diagnostic tests from variables.
+> ### Aliases: diag_test
+> 
+> ### ** Examples
+> 
+> ## We compare the use of lung’s X-rays on the screening of TB against the gold standard test.
+> Freq <- c(1739, 8, 51, 22)
+> BCG <- gl(2, 1, 4, labels=c("Negative", "Positive"))
+> Xray <- gl(2, 2, labels=c("Negative", "Positive"))
+> tb <- data.frame(Freq, BCG, Xray)
+> tb <- expand_df(tb)
+> 
+> tb %>%
++   diag_test(BCG ~ Xray)
+          Outcome +    Outcome -      Total
+Test +           22           51         73
+Test -            8         1739       1747
+Total            30         1790       1820
+
+Point estimates and 95 % CIs:
+---------------------------------------------------------
+Apparent prevalence                    0.04 (0.03, 0.05)
+True prevalence                        0.02 (0.01, 0.02)
+Sensitivity                            0.73 (0.54, 0.88)
+Specificity                            0.97 (0.96, 0.98)
+Positive predictive value              0.30 (0.20, 0.42)
+Negative predictive value              1.00 (0.99, 1.00)
+Positive likelihood ratio              25.74 (18.21, 36.38)
+Negative likelihood ratio              0.27 (0.15, 0.50)
+---------------------------------------------------------
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("diag_test2")
+> ### * diag_test2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: diag_test2
+> ### Title: Diagnostic tests from direct input.
+> ### Aliases: diag_test2
+> 
+> ### ** Examples
+> 
+> ## We compare the use of lung’s X-rays on the screening of TB against the gold standard test.
+> diag_test2(22, 51, 8, 1739)
+
+          Outcome +    Outcome -      Total
+Test +           22           51         73
+Test -            8         1739       1747
+Total            30         1790       1820
+
+Point estimates and 95 % CIs:
+---------------------------------------------------------
+Apparent prevalence                    0.04 (0.03, 0.05)
+True prevalence                        0.02 (0.01, 0.02)
+Sensitivity                            0.73 (0.54, 0.88)
+Specificity                            0.97 (0.96, 0.98)
+Positive predictive value              0.30 (0.20, 0.42)
+Negative predictive value              1.00 (0.99, 1.00)
+Positive likelihood ratio              25.74 (18.21, 36.38)
+Negative likelihood ratio              0.27 (0.15, 0.50)
+---------------------------------------------------------
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("estat")
+> ### * estat
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: estat
+> ### Title: Descriptive statistics for continuous variables.
+> ### Aliases: estat
+> 
+> ### ** Examples
+> 
+> data(kfm, package = "ISwR")
+> require(sjlabelled, quietly = TRUE)
+> kfm = kfm %>%
++ var_labels(
++   dl.milk = 'Breast-milk intake (dl/day)',
++   sex = 'Sex',
++   weight = 'Child weight (kg)',
++   ml.suppl = 'Milk substitute (ml/day)',
++   mat.weight = 'Maternal weight (kg)',
++   mat.height = 'Maternal height (cm)'
++  )
+> 
+> kfm %>%
++   estat(~ dl.milk)
+                               N Min.  Max. Mean Median   SD  CV
+1 Breast-milk intake (dl/day) 50 4.44 10.43  7.5   7.66 1.51 0.2
+> 
+> estat(~ dl.milk|sex, data = kfm)
+                               Sex  N Min.  Max. Mean Median   SD   CV
+1 Breast-milk intake (dl/day)  boy 25 4.91 10.43 7.95   8.39 1.49 0.19
+2                             girl 25 4.44 10.03 7.06   7.22 1.42 0.20
+> 
+> kfm %>%
++   estat(~ weight|sex)
+                     Sex  N Min. Max. Mean Median   SD  CV
+1 Child weight (kg)  boy 25 4.36 6.58 5.44   5.36 0.57 0.1
+2                   girl 25 4.12 6.10 5.20   5.34 0.51 0.1
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("expand_df")
+> ### * expand_df
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: expand_df
+> ### Title: Expand a data frame.
+> ### Aliases: expand_df
+> 
+> ### ** Examples
+> 
+> Freq <- c(5032, 5095, 41, 204)
+> Mortality <- gl(2, 2, labels=c("No", "Yes"))
+> Calcium <- gl(2, 1, 4, labels=c("No", "Yes"))
+> anyca <- data.frame(Freq, Mortality, Calcium)
+> anyca
+  Freq Mortality Calcium
+1 5032        No      No
+2 5095        No     Yes
+3   41       Yes      No
+4  204       Yes     Yes
+> anyca.exp <- expand_df(anyca)
+> with(anyca.exp, table(Calcium, Mortality))
+       Mortality
+Calcium   No  Yes
+    No  5032   41
+    Yes 5095  204
+> 
+> 
+> 
+> cleanEx()
+> nameEx("freq_cont")
+> ### * freq_cont
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: freq_cont
+> ### Title: Relative and Cumulative Frequency.
+> ### Aliases: freq_cont
+> 
+> ### ** Examples
+> 
+> data(IgM, package="ISwR")
+> Ab <- data.frame(IgM)
+> estat(~ IgM, data = Ab)
+        N Min. Max. Mean Median   SD   CV
+1 IgM 298  0.1  4.5  0.8    0.7 0.47 0.58
+> freq_cont(IgM, seq(0, 4.5, 0.5))
+    Class Mids Counts rel.freq cum.freq
+1 (0,0.5] 0.25     88     0.30     0.30
+2 (0.5,1] 0.75    149     0.50     0.80
+3 (1,1.5] 1.25     38     0.13     0.92
+4 (1.5,2] 1.75     17     0.06     0.98
+5 (2,2.5] 2.25      4     0.01     0.99
+6 (2.5,3] 2.75      1     0.00     1.00
+7 (3,3.5] 3.25      0     0.00     1.00
+8 (3.5,4] 3.75      0     0.00     1.00
+9 (4,4.5] 4.25      1     0.00     1.00
+> 
+> 
+> 
+> cleanEx()
+> nameEx("gen_bst_df")
+> ### * gen_bst_df
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gen_bst_df
+> ### Title: Generate a data frame with estimate and bootstrap CIs.
+> ### Aliases: gen_bst_df
+> 
+> ### ** Examples
+> 
+> data(kfm, package = "ISwR")
+> require(sjlabelled, quietly = TRUE)
+> kfm = kfm %>%
++   var_labels(
++      dl.milk = 'Breast-milk intake (dl/day)',
++      sex = 'Sex',
++      weight = 'Child weight (kg)',
++      ml.suppl = 'Milk substitute (ml/day)',
++      mat.weight = 'Maternal weight (kg)',
++      mat.height = 'Maternal height (cm)'
++      )
+> 
+> kfm %>%
++   gen_bst_df(dl.milk ~ sex)
+  Breast-milk intake (dl/day) LowerCI UpperCI  Sex
+1                        7.95    7.42    8.54  boy
+2                        7.06    6.49    7.61 girl
+> 
+> data(birthwt, package = "MASS")
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:sjlabelled’:
+
+    as_label
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> birthwt <- mutate(birthwt,
++   smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++   Race = factor(race > 1, labels = c("White", "Non-white")))
+> 
+> birthwt = birthwt %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status'
++   )
+> 
+> gen_bst_df(bwt ~ smoke|Race, data = birthwt)
+  Birth weight (g) LowerCI UpperCI Smoking status Smoking status
+1          3428.75 3226.17 3632.37     Non-smoker          White
+2          2824.51 2664.40 2988.11     Non-smoker      Non-white
+3          2826.85 2674.75 3008.70         Smoker          White
+4          2642.09 2347.04 2922.91         Smoker      Non-white
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’, ‘package:sjlabelled’
+
+> nameEx("geo_mean")
+> ### * geo_mean
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: geo_mean
+> ### Title: Geometric mean.
+> ### Aliases: geo_mean
+> 
+> ### ** Examples
+> 
+> data(IgM, package = "ISwR")
+> Ab <- data.frame(IgM)
+> estat(~ IgM, data = Ab)
+        N Min. Max. Mean Median   SD   CV
+1 IgM 298  0.1  4.5  0.8    0.7 0.47 0.58
+> geo_mean(IgM)
+[1] 0.6954728
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_r2")
+> ### * get_r2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_r2
+> ### Title: Estimate R2 or Pseudo-R2 from regression models
+> ### Aliases: get_r2
+> 
+> ### ** Examples
+> 
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> require(huxtable, quietly = TRUE)
+
+Attaching package: ‘huxtable’
+
+The following object is masked from ‘package:sjlabelled’:
+
+    set_label
+
+The following object is masked from ‘package:dplyr’:
+
+    add_rownames
+
+The following object is masked from ‘package:ggplot2’:
+
+    theme_grey
+
+> 
+> data(birthwt, package = "MASS")
+> birthwt <- birthwt %>%
++   mutate(
++     smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++     race = factor(race, labels = c("White", "African American", "Other"))
++   ) %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status',
++     race = 'Race'
++   )
+> 
+> model_norm <- lm(bwt ~ smoke + race, data = birthwt)
+> 
+> model_norm %>%
++   glm_coef(labels = model_labels(model_norm)) %>%
++   as_hux() %>% set_align(everywhere, 2:3, "right") %>%
++   theme_pubh(1) %>%
++   add_footnote(get_r2(model_norm), font_size = 9)
+        ───────────────────────────────────────────────────────────────
+          [1mP[22m[1ma[22m[1mr[22m[1ma[22m[1mm[22m[1me[22m[1mt[22m[1me[22m[1mr[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m   [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1mC[22m[1mo[22m[1me[22m[1mf[22m[1mf[22m[1mi[22m[1mc[22m[1mi[22m[1me[22m[1mn[22m[1mt[22m   [1mP[22m[1mr[22m[1m([22m[1m>[22m[1m|[22m[1mt[22m[1m|[22m[1m)[22m  
+        ───────────────────────────────────────────────────────────────
+          Constant                       3334.95 (3153.89,    < 0.001  
+                                                  3516.01)             
+          Smoking status: Smoker         -428.73 (-643.86,    < 0.001  
+                                                   -213.6)             
+          Race: African American         -450.36 (-752.45,      0.004  
+                                                  -148.27)             
+          Race: Other                    -452.88 (-682.67,    < 0.001  
+                                                  -223.08)             
+        ───────────────────────────────────────────────────────────────
+          R2 = 0.123                                                   
+
+Column names: Parameter, Coefficient, Pr(>|t|)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:huxtable’, ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("gf_star")
+> ### * gf_star
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: gf_star
+> ### Title: Annotating a plot to display differences between groups.
+> ### Aliases: gf_star
+> 
+> ### ** Examples
+> 
+> data(kfm, package = "ISwR")
+> require(sjlabelled, quietly = TRUE)
+> kfm = kfm %>%
++   var_labels(
++      dl.milk = 'Breast-milk intake (dl/day)',
++      sex = 'Sex',
++      weight = 'Child weight (kg)',
++      ml.suppl = 'Milk substitute (ml/day)',
++      mat.weight = 'Maternal weight (kg)',
++      mat.height = 'Maternal height (cm)'
++      )
+> 
+> kfm %>%
++   box_plot(dl.milk ~ sex, fill='thistle', alpha = 0.8) %>%
++   axis_labs() %>%
++   gf_star(x1 = 1, y1 = 10.9, x2 = 2, y2 = 11, y3 = 11.2)
+> 
+> kfm %>%
++   box_plot(dl.milk ~ sex, fill='thistle', alpha = 0.8) %>%
++   axis_labs() %>%
++   gf_star(1, 10.9, 2, 11, 11.4, legend = 'p = 0.035', size = 2.5)
+> 
+> data(energy, package = "ISwR")
+> energy = energy %>%
++   var_labels(
++     expend = 'Energy expenditure (MJ/day)',
++     stature = 'Stature'
++     )
+> 
+> energy %>%
++   strip_error(expend ~ stature, col = 'red') %>%
++   axis_labs() %>%
++   gf_star(1, 13, 2, 13.2, 13.4, "**")
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("glm_coef")
+> ### * glm_coef
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: glm_coef
+> ### Title: Table of coefficients from generalised linear models.
+> ### Aliases: glm_coef
+> 
+> ### ** Examples
+> 
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> 
+> ## Continuous outcome.
+> data(birthwt, package = "MASS")
+> birthwt <- birthwt %>%
++   mutate(
++     smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++     race = factor(race, labels = c("White", "African American", "Other"))
++   ) %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status',
++     race = 'Race'
++   )
+> 
+> model_norm <- lm(bwt ~ smoke + race, data = birthwt)
+> 
+> glm_coef(model_norm, labels = model_labels(model_norm))
+               Parameter                Coefficient Pr(>|t|)
+1               Constant 3334.95 (3153.89, 3516.01)  < 0.001
+2 Smoking status: Smoker  -428.73 (-643.86, -213.6)  < 0.001
+3 Race: African American -450.36 (-752.45, -148.27)    0.004
+4            Race: Other -452.88 (-682.67, -223.08)  < 0.001
+> 
+> ## Logistic regression.
+> data(diet, package = "Epi")
+> model_binom <- glm(chd ~ fibre, data = diet, family = binomial)
+> model_binom %>%
++   glm_coef(labels = c("Constant", "Fibre intake (g/day)"))
+             Parameter        Odds ratio Pr(>|z|)
+1             Constant 0.95 (0.29, 3.11)    0.936
+2 Fibre intake (g/day) 0.33 (0.15, 0.69)    0.003
+> 
+> model_binom %>%
++   glm_coef(labels = c("Constant", "Fibre intake (g/day)"), type = "ext")
+             Parameter Odds ratio Std. Error Lower CI Upper CI Pr(>|z|)
+1             Constant       0.95       0.60     0.29     3.11    0.936
+2 Fibre intake (g/day)       0.33       0.38     0.15     0.69    0.003
+> 
+> ## For more examples, please read the Vignette on Regression.
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("harm_mean")
+> ### * harm_mean
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: harm_mean
+> ### Title: Harmonic mean.
+> ### Aliases: harm_mean
+> 
+> ### ** Examples
+> 
+> data(IgM, package = "ISwR")
+> Ab <- data.frame(IgM)
+> estat(~ IgM, data = Ab)
+        N Min. Max. Mean Median   SD   CV
+1 IgM 298  0.1  4.5  0.8    0.7 0.47 0.58
+> harm_mean(IgM)
+[1] 0.5908755
+> 
+> 
+> 
+> cleanEx()
+> nameEx("hist_norm")
+> ### * hist_norm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: hist_norm
+> ### Title: Histogram with Normal density curve.
+> ### Aliases: hist_norm
+> 
+> ### ** Examples
+> 
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> data(birthwt, package = "MASS")
+> birthwt <- birthwt %>%
++   mutate(
++     smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++     Race = factor(race > 1, labels = c("White", "Non-white"))
++   ) %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status'
++  )
+> 
+> birthwt %>%
++   hist_norm(~ bwt, alpha = 0.7, bins = 20, fill = 'cadetblue') %>%
++   axis_labs()
+> 
+> birthwt %>%
++   hist_norm(~ bwt|smoke, alpha = 0.7, bins = 20, fill = 'cadetblue') %>%
++   axis_labs()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("jack_knife")
+> ### * jack_knife
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: jack_knife
+> ### Title: Ranks leverage observations from Jackknife method.
+> ### Aliases: jack_knife
+> 
+> ### ** Examples
+> 
+> x <- rnorm(10, 170, 8)
+> x
+ [1] 164.9884 171.4691 163.3150 182.7622 172.6361 163.4363 173.8994 175.9066
+ [9] 174.6063 167.5569
+> mean(x)
+[1] 171.0576
+> jack_knife(x)
+   Observation    Value     Mean          SS
+1            4 182.7622 169.7571 1.691336134
+2            3 163.3150 171.9179 0.740106751
+3            6 163.4363 171.9044 0.717102103
+4            1 164.9884 171.7320 0.454763318
+5            8 175.9066 170.5188 0.290278547
+6            9 174.6063 170.6633 0.155466231
+7           10 167.5569 171.4466 0.151297605
+8            7 173.8994 170.7419 0.099702284
+9            5 172.6361 170.8822 0.030758921
+10           2 171.4691 171.0119 0.002090769
+> 
+> x <- rnorm(100, 170, 8)
+> mean(x)
+[1] 171.0433
+> head(jack_knife(x))
+  Observation    Value     Mean         SS
+1           4 152.2824 171.2328 0.03591186
+2          51 189.2129 170.8598 0.03368382
+3          14 154.0852 171.2146 0.02934173
+4          60 187.3809 170.8783 0.02723358
+5          57 155.5603 171.1997 0.02445903
+6          46 185.8432 170.8938 0.02234837
+> 
+> 
+> 
+> cleanEx()
+> nameEx("knife_mean")
+> ### * knife_mean
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: knife_mean
+> ### Title: Jackknife for means.
+> ### Aliases: knife_mean
+> 
+> ### ** Examples
+> 
+> x <- rnorm(10, 170, 8)
+> x
+ [1] 164.9884 171.4691 163.3150 182.7622 172.6361 163.4363 173.8994 175.9066
+ [9] 174.6063 167.5569
+> mean(x)
+[1] 171.0576
+> knife_mean(x)
+ [1] 171.7320 171.0119 171.9179 169.7571 170.8822 171.9044 170.7419 170.5188
+ [9] 170.6633 171.4466
+> 
+> 
+> 
+> cleanEx()
+> nameEx("leverage")
+> ### * leverage
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: leverage
+> ### Title: Leverage.
+> ### Aliases: leverage
+> 
+> ### ** Examples
+> 
+> x <- rnorm(10, 170, 8)
+> x
+ [1] 164.9884 171.4691 163.3150 182.7622 172.6361 163.4363 173.8994 175.9066
+ [9] 174.6063 167.5569
+> mean(x)
+[1] 171.0576
+> leverage(x)
+ [1] 0.2049558 0.1004825 0.2708108 0.4903471 0.1070989 0.2655015 0.1230105
+ [8] 0.1669940 0.1358804 0.1349183
+> rank_leverage(x)
+   Observation  Leverage
+1            4 0.4903471
+2            3 0.2708108
+3            6 0.2655015
+4            1 0.2049558
+5            8 0.1669940
+6            9 0.1358804
+7           10 0.1349183
+8            7 0.1230105
+9            5 0.1070989
+10           2 0.1004825
+> 
+> 
+> 
+> cleanEx()
+> nameEx("logistic_gof")
+> ### * logistic_gof
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: logistic_gof
+> ### Title: Goodness of fit for Logistic Regression.
+> ### Aliases: logistic_gof
+> 
+> ### ** Examples
+> 
+> data(diet, package = "Epi")
+> model <- glm(chd ~ fibre, data = diet, family = binomial)
+> glm_coef(model, labels = c("Constant", "Fibre intake (g/day)"))
+             Parameter        Odds ratio Pr(>|z|)
+1             Constant 0.95 (0.29, 3.11)    0.936
+2 Fibre intake (g/day) 0.33 (0.15, 0.69)    0.003
+> logistic_gof(model)
+  Sum of squared errors Expected value|H0        SD         Z         P
+1              37.86702          37.76733 0.1799215 0.5540765 0.5795265
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mhor")
+> ### * mhor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mhor
+> ### Title: Mantel-Haenszel odds ratio.
+> ### Aliases: mhor
+> 
+> ### ** Examples
+> 
+> data(oswego, package = "epitools")
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> oswego <- oswego %>%
++   mutate(
++     ill = factor(ill, labels = c("No", "Yes")),
++     sex = factor(sex, labels = c("Female", "Male")),
++     chocolate.ice.cream = factor(chocolate.ice.cream, labels = c("No", "Yes"))
++   ) %>%
++   var_labels(
++     ill = "Developed illness",
++     sex = "Sex",
++     chocolate.ice.cream = "Consumed chocolate ice cream"
++   )
+> 
+> require(moonBook, quietly = TRUE)
+> mytable(ill ~ sex + chocolate.ice.cream, data = oswego, show.total = TRUE)
+
+           Descriptive Statistics by 'Developed illness'           
+____________________________________________________________________ 
+                                  No        Yes       Total      p  
+                                (N=29)     (N=46)     (N=75)  
+-------------------------------------------------------------------- 
+ Sex                                                           0.226
+   - Female                   14 (48.3%) 30 (65.2%) 44 (58.7%)      
+   - Male                     15 (51.7%) 16 (34.8%) 31 (41.3%)      
+ Consumed chocolate ice cream                                  0.127
+   - No                       7 (24.1%)  20 (44.4%) 27 (36.5%)      
+   - Yes                      22 (75.9%) 25 (55.6%) 47 (63.5%)      
+-------------------------------------------------------------------- 
+> 
+> oswego %>%
++   mhor(ill ~ sex/chocolate.ice.cream)
+
+                                   OR Lower.CI Upper.CI Pr(>|z|)
+sexFemale:chocolate.ice.creamYes 0.47     0.11     2.06    0.318
+sexMale:chocolate.ice.creamYes   0.24     0.05     1.13    0.072
+
+                          Common OR Lower CI Upper CI Pr(>|z|)
+Cochran-Mantel-Haenszel:       0.35     0.12     1.01    0.085
+
+Test for effect modification (interaction): p =  0.5434 
+ 
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:moonBook’, ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("model_labels")
+> ### * model_labels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_labels
+> ### Title: Using labels as coefficient names in tables of coefficients.
+> ### Aliases: model_labels
+> 
+> ### ** Examples
+> 
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> require(sjlabelled, quietly = TRUE)
+
+Attaching package: ‘sjlabelled’
+
+The following object is masked from ‘package:dplyr’:
+
+    as_label
+
+> 
+> data(birthwt, package = "MASS")
+> birthwt <- birthwt %>%
++   mutate(
++     smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++     race = factor(race, labels = c("White", "African American", "Other"))
++   ) %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status',
++     race = 'Race'
++   )
+> 
+> model_norm <- lm(bwt ~ smoke + race, data = birthwt)
+> 
+> glm_coef(model_norm, labels = model_labels(model_norm))
+               Parameter                Coefficient Pr(>|t|)
+1               Constant 3334.95 (3153.89, 3516.01)  < 0.001
+2 Smoking status: Smoker  -428.73 (-643.86, -213.6)  < 0.001
+3 Race: African American -450.36 (-752.45, -148.27)    0.004
+4            Race: Other -452.88 (-682.67, -223.08)  < 0.001
+> 
+> model_int = lm(formula = bwt ~ smoke*race, data = birthwt)
+> 
+> model_int %>%
++   glm_coef(labels = c(
++     model_labels(model_int),
++     "Smoker: African American",
++     "Smoker: Other"
++  ))
+                 Parameter                Coefficient Pr(>|t|)
+1                 Constant   3428.75 (3225.4, 3632.1)  < 0.001
+2   Smoking status: Smoker   -601.9 (-878.2, -325.61)  < 0.001
+3   Race: African American -574.25 (-968.03, -180.47)    0.004
+4              Race: Other -612.97 (-885.79, -340.15)  < 0.001
+5 Smoker: African American     251.4 (-358.5, 861.31)    0.417
+6            Smoker: Other     543.29 (32.37, 1054.2)    0.037
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’, ‘package:dplyr’
+
+> nameEx("multiple")
+> ### * multiple
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: multiple
+> ### Title: Multiple comparisons with plot.
+> ### Aliases: multiple
+> 
+> ### ** Examples
+> 
+> data(birthwt, package = "MASS")
+> birthwt$race <- factor(birthwt$race, labels = c("White", "African American", "Other"))
+> 
+> model_1 <- aov(bwt ~ race, data = birthwt)
+> multiple(model_1, ~ race)$df
+                  contrast estimate     SE t.ratio p.value lower.CL upper.CL
+1 African American - White  -383.03 157.96   -2.42    0.04  -754.45   -11.61
+2            Other - White  -297.44 113.74   -2.61    0.03  -564.88   -29.99
+3 Other - African American    85.59 165.09    0.52    0.86  -302.58   473.76
+> 
+> multiple(model_1, ~ race)$fig_ci %>%
++   gf_labs(y = 'Race', x = 'Difference in birth weights (g)')
+> 
+> multiple(model_1, ~ race)$fig_pval %>%
++   gf_labs(y = 'Race')
+> 
+> 
+> 
+> cleanEx()
+> nameEx("odds_trend")
+> ### * odds_trend
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: odds_trend
+> ### Title: Function to calculate OR using Wald CI, and plot trend.
+> ### Aliases: odds_trend
+> 
+> ### ** Examples
+> 
+> ## A cross-sectional study looked at the association between obesity and a biopsy resulting
+> ## from mammography screening.
+> 
+> Freq <- c(3441, 34, 39137, 519, 20509, 280, 12149, 196, 11882, 199)
+> Biopsy <- gl(2, 1, 10, labels = c("No", "Yes"))
+> Weight <- gl(5, 2, 10, labels = c("Underweight", "Normal", "Over (11-24%)",
++              "Over (25-39%)", "Over (> 39%)"))
+> breast <- data.frame(Freq, Biopsy, Weight)
+> breast
+    Freq Biopsy        Weight
+1   3441     No   Underweight
+2     34    Yes   Underweight
+3  39137     No        Normal
+4    519    Yes        Normal
+5  20509     No Over (11-24%)
+6    280    Yes Over (11-24%)
+7  12149     No Over (25-39%)
+8    196    Yes Over (25-39%)
+9  11882     No  Over (> 39%)
+10   199    Yes  Over (> 39%)
+> 
+> breast <- expand_df(breast)
+> require(sjlabelled, quietly = TRUE)
+> 
+> breast = var_labels(breast,
++   Weight = 'Weight group'
++   )
+> 
+> odds_trend(Biopsy ~ Weight, data = breast)$df
+       Exposure   OR lower upper chi.square fisher.exact
+1   Underweight 1.00    NA    NA         NA           NA
+2        Normal 1.34  0.95  1.90      0.097        0.099
+3 Over (11-24%) 1.38  0.97  1.98      0.075        0.088
+4 Over (25-39%) 1.63  1.13  2.35      0.008        0.008
+5  Over (> 39%) 1.69  1.18  2.44      0.004        0.003
+> 
+> odds_trend(Biopsy ~ Weight, data = breast)$fig
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("predict_inv")
+> ### * predict_inv
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predict_inv
+> ### Title: Given y solve for x in a simple linear model.
+> ### Aliases: predict_inv
+> 
+> ### ** Examples
+> 
+> ## Spectrophotometry example. Titration curve for riboflavin (nmol/ml). The sample has an absorbance
+> ## of 1.15. Aim is to estimate the concentration of riboflavin in the sample.
+> 
+> Riboflavin <- seq(0, 80, 10)
+> OD <- 0.0125 * Riboflavin + rnorm(9, 0.6, 0.03)
+> titration <- data.frame(Riboflavin, OD)
+> 
+> require(sjlabelled, quietly = TRUE)
+> titration <- titration %>%
++   var_labels(
++     Riboflavin = "Riboflavin (nmol/ml)",
++     OD = "Optical density"
++   )
+> 
+> titration %>%
++   gf_point(OD ~ Riboflavin) %>%
++   gf_smooth(col = 'indianred3', se = TRUE, lwd = 0.5, method = 'loess') %>%
++   axis_labs()
+> 
+> ## Model with intercept different from zero:
+> model <- lm(OD ~ Riboflavin, data = titration)
+> glm_coef(model)
+    Parameter       Coefficient Pr(>|t|)
+1 (Intercept) 0.59 (0.56, 0.63)  < 0.001
+2  Riboflavin 0.01 (0.01, 0.01)  < 0.001
+> predict_inv(model, 1.15)
+[1] 43.4729
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("prop_or")
+> ### * prop_or
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: prop_or
+> ### Title: Proportion, p1 from proportion p2 and OR.
+> ### Aliases: prop_or
+> 
+> ### ** Examples
+> 
+> flu <- matrix(c(20, 80, 220, 140), nrow = 2)
+> colnames(flu) <- c("Yes", "No")
+> rownames(flu) <- c("Vaccine", "Placebo")
+> flu
+        Yes  No
+Vaccine  20 220
+Placebo  80 140
+> 
+> or <- (20 * 140) / (80 * 220)
+> p2 <- 80 / 220
+> prop_or(p2 = p2, or = or)
+[1] 0.08333333
+> 20 / 240
+[1] 0.08333333
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pseudo_r2")
+> ### * pseudo_r2
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pseudo_r2
+> ### Title: Pseudo R2 (logistic regression) 'pseudo_r2' Calculates R2
+> ###   analogues (pseudo R2) of logistic regression.
+> ### Aliases: pseudo_r2
+> 
+> ### ** Examples
+> 
+> data(Oncho)
+> model_oncho <- glm(mf ~ area, data = Oncho, binomial)
+> glm_coef(model_oncho, labels = c("Constant", "Area (rainforest/savannah)"))
+                   Parameter        Odds ratio Pr(>|z|)
+1                   Constant 1.05 (0.89, 1.24)     0.55
+2 Area (rainforest/savannah) 2.41 (1.92, 3.04)  < 0.001
+> pseudo_r2(model_oncho)
+                Index Estimate
+1          Nagelkerke    0.059
+2 Hosmer and Lemeshow    0.033
+3       Cox and Snell    0.043
+> 
+> 
+> 
+> cleanEx()
+> nameEx("qq_plot")
+> ### * qq_plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: qq_plot
+> ### Title: Quantile-quantile plots against the standard Normal
+> ###   distribution.
+> ### Aliases: qq_plot
+> 
+> ### ** Examples
+> 
+> data(kfm, package = "ISwR")
+> require(sjlabelled, quietly = TRUE)
+> kfm = kfm %>%
++   var_labels(
++      dl.milk = 'Breast-milk intake (dl/day)',
++      sex = 'Sex',
++      weight = 'Child weight (kg)',
++      ml.suppl = 'Milk substitute (ml/day)',
++      mat.weight = 'Maternal weight (kg)',
++      mat.height = 'Maternal height (cm)'
++      )
+> 
+> kfm %>%
++   qq_plot(~ dl.milk) %>%
++   axis_labs()
+> 
+> qq_plot(~ dl.milk|sex, data = kfm) %>%
++   axis_labs()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:sjlabelled’
+
+> nameEx("rank_influence")
+> ### * rank_influence
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rank_influence
+> ### Title: Ranks observations based upon influence measures on models.
+> ### Aliases: rank_influence
+> 
+> ### ** Examples
+> 
+> data(diet, package = "Epi")
+> model <- glm(chd ~ fibre, data = diet, family = binomial)
+> rank_influence(model)
+         dfb.1_    dfb.fibr      dffit     cov.r      cook.d         hat signif
+6    0.27043359 -0.24264455  0.2783594 1.0087323 0.029277990 0.022595035      2
+11  -0.15555833  0.14084606 -0.1590651 1.0267097 0.005823676 0.025760951      2
+13  -0.15555833  0.14084606 -0.1590651 1.0267097 0.005823676 0.025760951      2
+42  -0.14880393  0.13420735 -0.1525754 1.0253342 0.005335881 0.024319013      2
+46  -0.17261533  0.15763492 -0.1755325 1.0302823 0.007166233 0.029477051      2
+69  -0.15103586  0.13640042 -0.1547177 1.0257861 0.005494351 0.024793447      2
+86  -0.18753053  0.17234155 -0.1900097 1.0335089 0.008473094 0.032800088      2
+105 -0.18884749  0.22574887  0.2493504 0.9690157 0.066130153 0.008094153      2
+4    0.02517640  0.01011223  0.1299152 0.9784638 0.009858579 0.003254752      1
+9    0.06954753 -0.03522806  0.1367669 0.9812643 0.009991570 0.003885012      1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rank_leverage")
+> ### * rank_leverage
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rank_leverage
+> ### Title: Ranks observations by leverage.
+> ### Aliases: rank_leverage
+> 
+> ### ** Examples
+> 
+> x <- rnorm(10, 170, 8)
+> x
+ [1] 164.9884 171.4691 163.3150 182.7622 172.6361 163.4363 173.8994 175.9066
+ [9] 174.6063 167.5569
+> mean(x)
+[1] 171.0576
+> rank_leverage(x)
+   Observation  Leverage
+1            4 0.4903471
+2            3 0.2708108
+3            6 0.2655015
+4            1 0.2049558
+5            8 0.1669940
+6            9 0.1358804
+7           10 0.1349183
+8            7 0.1230105
+9            5 0.1070989
+10           2 0.1004825
+> 
+> x <- rnorm(100, 170, 8)
+> mean(x)
+[1] 171.0433
+> head(rank_leverage(x))
+  Observation   Leverage
+1           4 0.07641325
+2          51 0.07229285
+3          14 0.06426285
+4          60 0.06036415
+5          57 0.05523308
+6          46 0.05132975
+> 
+> 
+> 
+> cleanEx()
+> nameEx("reference_range")
+> ### * reference_range
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: reference_range
+> ### Title: Reference range (reference interval).
+> ### Aliases: reference_range
+> 
+> ### ** Examples
+> 
+> x <- rnorm(100, 170, 8)
+> round(mean(x), 2)
+[1] 170.87
+> round(sd(x), 2)
+[1] 7.19
+> 
+> round(reference_range(mean(x), sd(x)), 2)
+  lower.ri upper.ri
+1   156.79   184.95
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rel_dis")
+> ### * rel_dis
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rel_dis
+> ### Title: Relative Dispersion.
+> ### Aliases: rel_dis
+> 
+> ### ** Examples
+> 
+> height <- rnorm(100, 170, 8)
+> rel_dis(height)
+[1] 0.04205272
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ss_jk")
+> ### * ss_jk
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ss_jk
+> ### Title: Sum of squares for Jackknife.
+> ### Aliases: ss_jk
+> 
+> ### ** Examples
+> 
+> x <- rnorm(10, 170, 8)
+> x
+ [1] 164.9884 171.4691 163.3150 182.7622 172.6361 163.4363 173.8994 175.9066
+ [9] 174.6063 167.5569
+> mean(x)
+[1] 171.0576
+> ss_jk(x, mean(x))
+ [1]  36.8358288   0.1693523  59.9486468 136.9982269   2.4914726  58.0852704
+ [7]   8.0758850  23.5125623  12.5927647  12.2551060
+> jack_knife(x)
+   Observation    Value     Mean          SS
+1            4 182.7622 169.7571 1.691336134
+2            3 163.3150 171.9179 0.740106751
+3            6 163.4363 171.9044 0.717102103
+4            1 164.9884 171.7320 0.454763318
+5            8 175.9066 170.5188 0.290278547
+6            9 174.6063 170.6633 0.155466231
+7           10 167.5569 171.4466 0.151297605
+8            7 173.8994 170.7419 0.099702284
+9            5 172.6361 170.8822 0.030758921
+10           2 171.4691 171.0119 0.002090769
+> 
+> 
+> 
+> cleanEx()
+> nameEx("strip_error")
+> ### * strip_error
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: strip_error
+> ### Title: Strip plots with error bars.
+> ### Aliases: strip_error
+> 
+> ### ** Examples
+> 
+> data(energy, package="ISwR")
+> require(sjlabelled, quietly = TRUE)
+> energy = energy %>%
++   var_labels(
++     expend = 'Energy expenditure (MJ/day)',
++     stature = 'Stature'
++   )
+> 
+> energy %>%
++   strip_error(expend ~ stature, col = 'red') %>%
++   axis_labs()
+> 
+> t.test(expend ~ stature, data = energy)
+
+	Welch Two Sample t-test
+
+data:  expend by stature
+t = -3.8555, df = 15.919, p-value = 0.001411
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.459167 -1.004081
+sample estimates:
+ mean in group lean mean in group obese 
+           8.066154           10.297778 
+
+> 
+> ## Adding an horizontal line to show significant difference:
+> energy %>%
++   strip_error(expend ~ stature, col = 'red') %>%
++   axis_labs() %>%
++   gf_star(1, 13, 2, 13.2, 13.4, "**")
+> 
+> data(birthwt, package = "MASS")
+> require(dplyr, quietly = TRUE)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:sjlabelled’:
+
+    as_label
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> birthwt <- birthwt %>%
++   mutate(
++     smoke = factor(smoke, labels = c("Non-smoker", "Smoker")),
++     Race = factor(race > 1, labels = c("White", "Non-white"))
++   ) %>%
++   var_labels(
++     bwt = 'Birth weight (g)',
++     smoke = 'Smoking status'
++  )
+> 
+> birthwt %>%
++   strip_error(bwt ~ smoke|Race, col = 'darksalmon') %>%
++   axis_labs()
+> 
+> birthwt %>%
++   strip_error(bwt ~ smoke, col = ~ Race) %>%
++   gf_refine(ggsci::scale_color_jama()) %>%
++   axis_labs()
+> 
+> birthwt %>%
++   strip_error(bwt ~ smoke, pch = ~ Race, col = ~ Race) %>%
++   gf_refine(ggsci::scale_color_jama()) %>%
++   axis_labs()
+> 
+> birthwt %>%
++   strip_error(bwt ~ smoke|Race) %>%
++   axis_labs()
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:dplyr’, ‘package:sjlabelled’
+
+> nameEx("theme_pubh")
+> ### * theme_pubh
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: theme_pubh
+> ### Title: A theme for huxtables This function quickly set a default style
+> ###   for a huxtable.
+> ### Aliases: theme_pubh
+> 
+> ### ** Examples
+> 
+> require(huxtable, quietly = TRUE)
+
+Attaching package: ‘huxtable’
+
+The following object is masked from ‘package:ggplot2’:
+
+    theme_grey
+
+> data(Oncho)
+> 
+> Oncho %>%
++   cross_tab(area ~ mf) %>%
++   theme_pubh()
+         ──────────────────────────────────────────────────────────────
+           [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m   [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1mR[22m[1me[22m[1ms[22m[1mi[22m[1md[22m[1me[22m[1mn[22m[1mc[22m[1me[22m      [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m  
+           [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m   [1m [22m[1m [22m[1m [22m[1mS[22m[1ma[22m[1mv[22m[1ma[22m[1mn[22m[1mn[22m[1ma[22m[1mh[22m   [1m [22m[1mR[22m[1ma[22m[1mi[22m[1mn[22m[1mf[22m[1mo[22m[1mr[22m[1me[22m[1ms[22m[1mt[22m   [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1mT[22m[1mo[22m[1mt[22m[1ma[22m[1ml[22m  
+                                  (N=548)       (N=754)      (N=1302)  
+         ──────────────────────────────────────────────────────────────
+           [1mI[22m[1mn[22m[1mf[22m[1me[22m[1mc[22m[1mt[22m[1mi[22m[1mo[22m[1mn[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                            
+           - Not-infected     267 (48.7%)   213 (28.2%)   480 (36.9%)  
+           - Infected         281 (51.3%)   541 (71.8%)   822 (63.1%)  
+         ──────────────────────────────────────────────────────────────
+
+Column names: , Savannah, Rainforest, Total
+> 
+> data(Bernard)
+> 
+> t1 <- estat(~ apache|fate, data = Bernard)
+> t2 <- estat(~ o2del|fate, data = Bernard)
+> rbind(t1, t2) %>%
++   as_hux() %>%
++   theme_pubh(c(1, 3))
+     ─────────────────────────────────────────────────────────────────────
+       [1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m   [1mM[22m[1mo[22m[1mr[22m[1mt[22m[1ma[22m[1ml[22m[1mi[22m[1mt[22m   [1m [22m[1m [22m[1mN[22m   [1mM[22m[1mi[22m[1mn[22m[1m.[22m   [1m [22m[1m [22m[1m [22m[1m [22m[1mM[22m[1ma[22m[1mx[22m[1m.[22m   [1m [22m[1m [22m[1m [22m[1m [22m[1mM[22m[1me[22m[1ma[22m[1mn[22m   [1m [22m[1m [22m[1mM[22m[1me[22m[1md[22m[1mi[22m[1ma[22m[1mn[22m  
+                  [1my[22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m[1m [22m                                                
+                  [1ms[22m[1mt[22m[1ma[22m[1mt[22m[1mu[22m[1ms[22m[1m [22m[1m [22m                                                
+     ─────────────────────────────────────────────────────────────────────
+       APACHE     Alive      279      0   41         13.3       13        
+       score                                                              
+                  Dead       175      3   37         18.6       18        
+                                                                          
+     ─────────────────────────────────────────────────────────────────────
+       Oxygen     Alive      101    372   2.5e+03    1.09e+03   1.01e+03  
+       delivery                                                           
+       (baselin                                                           
+       e)                                                                 
+                  Dead        67    317   2.58e+03   925        872       
+                                                                          
+     ─────────────────────────────────────────────────────────────────────
+
+Column names: , Mortality status, N, Min., Max., Mean, Median, SD, CV
+
+7/9 columns shown.> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:huxtable’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  10.584 0.461 12.508 0.002 0.004 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

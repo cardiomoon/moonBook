@@ -1,0 +1,10 @@
+citHeader("To cite moonBook in publications, please use:")
+
+citEntry(entry = "book",
+  author = "Keon_Woong Moon",
+  title = "R statistics and graphs for medical papers",
+  publisher = "Hannarae Seoul",
+  year = "2015",
+  isbn = "978-89-5566-179-8",
+  textVersion = "Keon-Woong Moon. R statistics and graphs for medical papers. Hannaare Seoul, 2015."
+)

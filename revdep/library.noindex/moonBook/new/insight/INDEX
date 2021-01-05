@@ -1,0 +1,63 @@
+all_models_equal        Checks if all objects are models of same class
+clean_names             Get clean names of model terms
+clean_parameters        Get clean names of model parameters
+color_if                Color-formatting for data columns based on
+                        condition
+display                 Generic export of data frames into formatted
+                        tables
+download_model          Download circus models
+export_table            Data frame and Tables Pretty Formatting
+find_algorithm          Find sampling algorithm and optimizers
+find_formula            Find model formula
+find_interactions       Find interaction terms from models
+find_offset             Find possible offset terms in a model
+find_parameters         Find names of model parameters
+find_predictors         Find names of model predictors
+find_random             Find names of random effects
+find_random_slopes      Find names of random slopes
+find_response           Find name of the response variable
+find_smooth             Find smooth terms from a model object
+find_statistic          Find statistic for model
+find_terms              Find all model terms
+find_variables          Find names of all variables
+find_weights            Find names of model weights
+fish                    Sample data set
+format_bf               Bayes Factor formatting
+format_ci               Confidence/Credible Interval (CI) Formatting
+format_number           Convert number to words
+format_p                p-values formatting
+format_pd               Probability of direction (pd) formatting
+format_rope             Percentage in ROPE formatting
+format_value            Numeric Values Formatting
+get_data                Get the data that was used to fit the model
+get_parameters          Get model parameters
+get_predictors          Get the data from model predictors
+get_priors              Get summary of priors used for a model
+get_random              Get the data from random effects
+get_response            Get the values from the response variable
+get_sigma               Get residual standard deviation from models
+get_statistic           Get statistic associated with estimates
+get_varcov              Get variance-covariance matrix from models
+get_variance            Get variance components from random effects
+                        models
+get_weights             Get the values from model weights
+has_intercept           Checks if model has an intercept
+is_model                Checks if an object is a regression model
+                        object
+is_model_supported      Checks if an object is a regression model
+                        object supported in 'insight' package.
+is_multivariate         Checks if an object stems from a multivariate
+                        response model
+is_nullmodel            Checks if model is a null-model
+                        (intercept-only)
+link_function           Get link-function from model object
+link_inverse            Get link-inverse function from model object
+model_info              Access information from model objects
+n_obs                   Get number of observations from a model
+null_model              Compute intercept-only model for regression
+                        models
+parameters_table        Parameter table formatting
+print_color             Coloured console output
+print_parameters        Prepare summary statistics of model parameters
+                        for printing
+standardize_names       Standardize column names

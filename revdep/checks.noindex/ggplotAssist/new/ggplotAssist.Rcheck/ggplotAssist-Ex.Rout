@@ -1,0 +1,247 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "ggplotAssist"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('ggplotAssist')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("ggplotAssist")
+> ### * ggplotAssist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ggplotAssist
+> ### Title: A shiny app for learn ggplot2
+> ### Aliases: ggplotAssist
+> 
+> ### ** Examples
+> 
+> library(tidyverse)
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
+✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+✔ tibble  3.0.4     ✔ dplyr   1.0.2
+✔ tidyr   1.1.2     ✔ stringr 1.4.0
+✔ readr   1.4.0     ✔ forcats 0.5.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+> library(rstudioapi)
+> library(miniUI)
+> library(moonBook)
+> library(shinyAce)
+> library(ggthemes)
+> library(shiny)
+> library(stringr)
+> library(editData)
+> library(shinyWidgets)
+> library(gcookbook)
+> library(shiny)
+> # Only run examples in interactive R sessions
+> if (interactive()) {
++     result<-ggplotAssist(mtcars)
++     result
++ }
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:gcookbook’, ‘package:shinyWidgets’,
+  ‘package:editData’, ‘package:shiny’, ‘package:ggthemes’,
+  ‘package:shinyAce’, ‘package:moonBook’, ‘package:miniUI’,
+  ‘package:rstudioapi’, ‘package:forcats’, ‘package:stringr’,
+  ‘package:dplyr’, ‘package:purrr’, ‘package:readr’, ‘package:tidyr’,
+  ‘package:tibble’, ‘package:ggplot2’, ‘package:tidyverse’
+
+> nameEx("selectizeInput3")
+> ### * selectizeInput3
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: selectizeInput3
+> ### Title: side-by-side selectizeInput
+> ### Aliases: selectizeInput3
+> 
+> ### ** Examples
+> 
+> library(shiny)
+> # Only run examples in interactive R sessions
+> if (interactive()) {
++   ui <- fluidPage(
++          selectizeInput3("color", "color", choices=colors())
++     )
++     server <- function(input, output) {
++ 
++     }
++     shinyApp(ui, server)
++ }
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:shiny’
+
+> nameEx("textAreaInput4")
+> ### * textAreaInput4
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: textAreaInput4
+> ### Title: Create side-by side textAreaInput with disabled spell check
+> ### Aliases: textAreaInput4
+> 
+> ### ** Examples
+> 
+> library(shiny)
+> # Only run examples in interactive R sessions
+> if (interactive()) {
++      ui <- fluidPage(
++           textAreaInput4("Code","Code","")
++      )
++      server <- function(input, output) {
++           
++      }
++      shinyApp(ui, server)
++ }  
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:shiny’
+
+> nameEx("textFunctionInput")
+> ### * textFunctionInput
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: textFunctionInput
+> ### Title: UI of textFunction shiny module
+> ### Aliases: textFunctionInput
+> 
+> ### ** Examples
+> 
+> library(ggplotAssist)
+> library(shiny)
+> # Only run examples in interactive R sessions
+> if(interactive()){
++ ui=fluidPage(
++    textFunctionInput("text"),
++    textOutput("text")
++ )
++ server=function(input,output,session){
++    rv=reactiveValues()
++    rawData=read.csv("data-raw/setting.csv",stringsAsFactors = FALSE)
++    settingData=splitData(rawData,"setting")
++    rv$argList<-list(label="text",mode="text",value="element_text()",choices=NULL,width=200,
++                     bg="lightcyan",placeholder="")
++    result=callModule(textFunction,"text",argList=reactive(rv$argList),
++                      editCode=reactive(TRUE),settingData=reactive(settingData))
++    output$text=renderText({
++        result()
++    })
++ }
++ shinyApp(ui,server)
++ }
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:shiny’
+
+> nameEx("textInput4")
+> ### * textInput4
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: textInput4
+> ### Title: Create side-by side textInput with disabled spell check
+> ### Aliases: textInput4
+> 
+> ### ** Examples
+> 
+> library(shiny)
+> # Only run examples in interactive R sessions
+> if (interactive()) {
++      ui <- fluidPage(
++           textInput4("id", "id", ""),
++           textInput4("name","name","")
++      )
++      server <- function(input, output) {
++           
++      }
++      shinyApp(ui, server)
++ }  
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:shiny’
+
+> nameEx("uiOutput3")
+> ### * uiOutput3
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: uiOutput3
+> ### Title: Create side-by side uiOutput
+> ### Aliases: uiOutput3
+> 
+> ### ** Examples
+> 
+> library(shiny)
+> # Only run examples in interactive R sessions
+> if (interactive()) {
++      ui <- fluidPage(
++           textInput4("name","name",""),
++           uiOutput3("test")
++      )
++      server <- function(input, output) {
++           
++      }
++      shinyApp(ui, server)
++ }  
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching ‘package:shiny’
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.154 0.083 1.246 0.001 0.002 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

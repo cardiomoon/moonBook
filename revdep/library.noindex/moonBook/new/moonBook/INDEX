@@ -1,0 +1,60 @@
+HRplot                  Draw a hazard ratio plot
+ORplot                  Plot for odds ratios for a S3 object of glm
+ORplot.sub              A sub function for ORplot and HRplot
+acs                     Demographic data of 857 patients with ACS
+addComma                Change numbers into formatted numbers
+addLabelDf              Add value labels to the data.frame
+cat.test                Perform chisq.test or fisher test
+cbind.mytable           cbind function for class "mytable"
+centerprint             Internal mytable functions
+changeColnameLabel      Change column names with labels
+comma                   Convert number to formatted number
+compress                Compress an object of class mytable or
+                        cbind.mytable
+deleteRows              Delete rows of class mytable object
+densityplot             Make Kernel density plot
+extractHR               Extract hazard ratio from a data.frame
+extractKind             Extract kind of an object of class mytable
+extractOR               Extract the odds ratios from a S3 object of glm
+getLabel                Add column labels to the data.frame
+getMapping              extract variable name from mapping, aes
+my.chisq.test           Internal mytable functions
+my.t.test               Internal mytable functions
+mycph                   Perform coxph of individual expecting variables
+mycsv                   Export to csv file for class "mytable" or
+                        "cbind.mytable"
+mycsv.cbind.mytable     Export to csv file for class "cbind.mytable"
+mycsv.mytable           Export to csv file for class "mytable"
+myhtml                  Export to html file for class "mytable" or
+                        "cbind.mytable" of "data.frame"
+myhtmlHead              Print my html style
+mylatex                 Exporting "cbind.mytable","mytable" to LaTeX
+                        format
+mytable                 Produce table for descriptive statistics
+mytable2                Produce combined table for descriptive
+                        statistics
+mytable2df              Convert mytable object to data.frame
+mytable2html            Prepare mytable object to data.frame ready to
+                        html
+mytable_df              make mytable from data.frame
+mytable_sub             Produce table for descriptive statistics
+mytable_sub2            Internal mytable functions
+num_summary             Internal mytable functions
+obj2linecount           Internal mytable functions
+p2sig                   Internal mytable functions
+print.cbind.mytable     Print function for class "cbind.mytable"
+print.mytable           Print function for class "mytable"
+print.mytable.df        Print an object of mytable.df
+printmytable2           Internal mytable functions
+r                       Subfunction used in mylatex
+radial                  Demographic data of 115 patients performing
+                        IVUS(intravascular ultrasound) examination of a
+                        radial artery.
+rank2group              rank a numeric vector and returns a new ordinal
+                        vector
+reprint                 Internal mytable functions
+space                   Internal mytable functions
+summary.cbind.mytable   Summarizing function for class "cbind.mytable"
+summary.mytable         Summarizing function for class "mytable"
+validColname            Find valid string among character vector from
+                        approximate string

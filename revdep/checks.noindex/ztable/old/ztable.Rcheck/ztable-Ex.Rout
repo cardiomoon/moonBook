@@ -1,0 +1,1883 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "ztable"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('ztable')
+Welcome to package ztable ver 0.2.2
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("addCellColor")
+> ### * addCellColor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: addCellColor
+> ### Title: Add column colors of an object of ztable
+> ### Aliases: addCellColor
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D z=ztable(head(iris))
+> ##D z=addRowColor(z,c(1,3),color="platinum")
+> ##D z=addColColor(z,2,color="cyan")
+> ##D z=addCellColor(z,cols=c(5,4),rows=5,color="red")
+> ##D z
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("addColColor")
+> ### * addColColor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: addColColor
+> ### Title: Add column colors of an object of ztable
+> ### Aliases: addColColor
+> 
+> ### ** Examples
+> 
+> z=ztable(head(iris))
+> z=addColColor(z,c(1,3),color="platinum")
+> z
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th style="border-left: 0px solid black;background-color: #FFFFFF;border-top: 2px solid gray;border-bottom: 1px solid gray;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Sepal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;color: #E5E4E2;">Sepal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Petal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Petal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Species</th>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; color: #E5E4E2; ">1</td>
+<td align="right" style="border-left: 0px solid black;">5.10</td>
+<td align="right" style="border-left: 0px solid black;color: #E5E4E2;">3.50</td>
+<td align="right" style="border-left: 0px solid black;">1.40</td>
+<td align="right" style="border-left: 0px solid black;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;color: #E5E4E2; ">2</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;color: #E5E4E2; ">3</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">3.20</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.30</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;color: #E5E4E2; ">4</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">3.10</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.50</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;color: #E5E4E2; ">5</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">3.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;color: #E5E4E2; ">6</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">3.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.40</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td colspan="6" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("addFrontColor")
+> ### * addFrontColor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: addFrontColor
+> ### Title: Add column colors of an object of ztable
+> ### Aliases: addFrontColor
+> 
+> ### ** Examples
+> 
+> z=ztable(head(iris))
+> z=addFrontColor(z,rows=2:4,cols=c(2,4,6),color=c("red","green","blue"))
+> z
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th style="border-left: 0px solid black;background-color: #FFFFFF;border-top: 2px solid gray;border-bottom: 1px solid gray;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Sepal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Sepal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Petal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Petal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Species</th>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; ">1</td>
+<td align="right" style="border-left: 0px solid black;color: #FF0000;">5.10</td>
+<td align="right" style="border-left: 0px solid black;">3.50</td>
+<td align="right" style="border-left: 0px solid black;color: #00FF00;">1.40</td>
+<td align="right" style="border-left: 0px solid black;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;color: #0000FF;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">2</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #FF0000;">4.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #00FF00;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;color: #0000FF;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">3</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #FF0000;">4.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.20</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #00FF00;">1.30</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;color: #0000FF;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">4</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.10</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.50</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">5</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">6</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.40</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td colspan="6" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("addRowColor")
+> ### * addRowColor
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: addRowColor
+> ### Title: Add row colors of an object of ztable
+> ### Aliases: addRowColor
+> 
+> ### ** Examples
+> 
+> z=ztable(head(iris))
+> z=addRowColor(z,c(1,3),color="platinum")
+> z
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th style="border-left: 0px solid black;background-color: #FFFFFF;border-top: 2px solid gray;border-bottom: 1px solid gray;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;color: #E5E4E2;">Sepal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;color: #E5E4E2;">Sepal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;color: #E5E4E2;">Petal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;color: #E5E4E2;">Petal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;color: #E5E4E2;">Species</th>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; ">1</td>
+<td align="right" style="border-left: 0px solid black;">5.10</td>
+<td align="right" style="border-left: 0px solid black;">3.50</td>
+<td align="right" style="border-left: 0px solid black;">1.40</td>
+<td align="right" style="border-left: 0px solid black;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;color: #E5E4E2; ">2</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">4.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;color: #E5E4E2;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;color: #E5E4E2;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">3</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.20</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.30</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">4</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.10</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.50</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">5</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">6</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.40</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td colspan="6" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("color2hex")
+> ### * color2hex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: color2hex
+> ### Title: Convert a named color into a hexadecimal color with rgb value
+> ### Aliases: color2hex
+> 
+> ### ** Examples
+> 
+> color2hex("green")
+[1] "#00ff00"
+> color2hex("red")
+[1] "#FF0000"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("makeHeatmap")
+> ### * makeHeatmap
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: makeHeatmap
+> ### Title: Add gradient background color to ztable
+> ### Aliases: makeHeatmap
+> 
+> ### ** Examples
+> 
+> require(magrittr)
+Loading required package: magrittr
+> ztable(head(mtcars)) %>% makeHeatmap()
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th style="border-left: 0px solid black;background-color: #FFFFFF;border-top: 2px solid gray;border-bottom: 1px solid gray;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">mpg</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">cyl</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">disp</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">hp</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">drat</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">wt</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">qsec</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">vs</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">am</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">gear</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">carb</th>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; ">Mazda RX4</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">21.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">6.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FB6A4A;color: #FFFFFF;">160.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FCBBA1;">110.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">3.90</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">2.62</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">16.46</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">0.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">1.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFF5F0;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;background-color: #FFF5F0;">4.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">Mazda RX4 Wag</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">21.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB6A4A;color: #FFFFFF;">160.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCBBA1;">110.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">2.88</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">17.02</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFF5F0;">4.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">Datsun 710</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FEE0D2;">22.80</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCBBA1;">108.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCBBA1;">93.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.85</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">2.32</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">18.61</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">Hornet 4 Drive</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">21.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CB181D;color: #FFFFFF;">258.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCBBA1;">110.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.08</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.21</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">19.44</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">Hornet Sportabout</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">18.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">8.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #67000D;color: #FFFFFF;">360.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB6A4A;color: #FFFFFF;">175.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.15</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.44</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">17.02</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFF5F0;">2.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">Valiant</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">18.10</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #EF3B2C;color: #FFFFFF;">225.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCBBA1;">105.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">2.76</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.46</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">20.22</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFF5F0;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFF5F0;">1.00</td>
+</tr>
+<tr>
+<td colspan="12" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> ## Not run: 
+> ##D ztable(head(mtcars)) %>% makeHeatmap(palette="YlOrRd",cols=c(1,4,6),margin=2)
+> ##D ztable(head(mtcars)) %>% makeHeatmap(rows=c(1,3,5),margin=1)
+> ##D require(moonBook)
+> ##D x=table(acs$smoking,acs$Dx)
+> ##D ztable(x) %>% makeHeatmap
+> ##D ztable(x) %>% makeHeatmap(palette="Blues")
+> ##D ztable(x) %>% makeHeatmap(mycolor=gradientColor(low="yellow",mid="orange",high="red"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:magrittr’
+
+> nameEx("palette2colors")
+> ### * palette2colors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: palette2colors
+> ### Title: Extract hexadecimal colors from a color palette
+> ### Aliases: palette2colors
+> 
+> ### ** Examples
+> 
+> require(RColorBrewer)
+Loading required package: RColorBrewer
+> require(magrittr)
+Loading required package: magrittr
+> palette2colors("Reds")
+[1] "#FFF5F0" "#FEE0D2" "#FCBBA1" "#FC9272" "#FB6A4A" "#EF3B2C" "#CB181D"
+[8] "#A50F15" "#67000D"
+> ztable(head(mtcars,10)) %>%
++      addColColor(cols=1:12,bg=palette2colors("Set3"))
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th style="border-left: 0px solid black;background-color: #8DD3C7;border-top: 2px solid gray;border-bottom: 1px solid gray;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #FFFFB3;">mpg</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #BEBADA;">cyl</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #FB8072;">disp</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #80B1D3;">hp</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #FDB462;">drat</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #B3DE69;">wt</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #FCCDE5;">qsec</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #D9D9D9;">vs</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #BC80BD;">am</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #CCEBC5;">gear</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;background-color: #FFED6F;">carb</th>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; background-color: #8DD3C7; ">Mazda RX4</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FFFFB3;">21.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #BEBADA;">6.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FB8072;">160.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #80B1D3;">110.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FDB462;">3.90</td>
+<td align="right" style="border-left: 0px solid black;background-color: #B3DE69;">2.62</td>
+<td align="right" style="border-left: 0px solid black;background-color: #FCCDE5;">16.46</td>
+<td align="right" style="border-left: 0px solid black;background-color: #D9D9D9;">0.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #BC80BD;">1.00</td>
+<td align="right" style="border-left: 0px solid black;background-color: #CCEBC5;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;background-color: #FFED6F;">4.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Mazda RX4 Wag</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">21.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">160.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">110.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">2.88</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">17.02</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">4.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Datsun 710</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">22.80</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">108.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">93.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.85</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">2.32</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">18.61</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">1.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Hornet 4 Drive</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">21.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">258.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">110.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.08</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.21</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">19.44</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">1.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Hornet Sportabout</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">18.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">8.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">360.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">175.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.15</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.44</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">17.02</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">2.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Valiant</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">18.10</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">225.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">105.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">2.76</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.46</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">20.22</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">1.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Duster 360</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">14.30</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">8.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">360.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">245.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.21</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.57</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">15.84</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">4.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Merc 240D</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">24.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">146.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">62.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.69</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.19</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">20.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">2.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Merc 230</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">22.80</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">140.80</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">95.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.92</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.15</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">22.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">2.00</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;background-color: #8DD3C7; ">Merc 280</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FFFFB3;">19.20</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BEBADA;">6.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FB8072;">167.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #80B1D3;">123.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FDB462;">3.92</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #B3DE69;">3.44</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #FCCDE5;">18.30</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #D9D9D9;">1.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #BC80BD;">0.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;background-color: #CCEBC5;">4.00</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;background-color: #FFED6F;">4.00</td>
+</tr>
+<tr>
+<td colspan="12" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:magrittr’, ‘package:RColorBrewer’
+
+> nameEx("parallelTables")
+> ### * parallelTables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: parallelTables
+> ### Title: Place two or more ztables or figures side by side in Latex or
+> ###   HTML format
+> ### Aliases: parallelTables
+> 
+> ### ** Examples
+> 
+> require(ztable)
+> z=ztable(head(mtcars[1:3]),tabular=TRUE)
+> parallelTables(c(0.4,0.3),list(z,z))
+\begin{table}[!htb]
+\begin{minipage}{0.4\linewidth}
+\centering
+\definecolor{black}{rgb}{0.0, 0.0, 0.0} 
+\begin{normalsize}
+\color{black}
+\begin{tabular}{rrrr}
+\hline
+&mpg&cyl&disp\\ 
+\hline
+Mazda RX4&21.00&6.00&160.00\\ 
+Mazda RX4 Wag&21.00&6.00&160.00\\ 
+Datsun 710&22.80&4.00&108.00\\ 
+Hornet 4 Drive&21.40&6.00&258.00\\ 
+Hornet Sportabout&18.70&8.00&360.00\\ 
+Valiant&18.10&6.00&225.00\\ 
+\hline
+\end{tabular}
+\end{normalsize}
+\color{black}
+\end{minipage}
+\begin{minipage}{0.3\linewidth}
+\centering
+\definecolor{black}{rgb}{0.0, 0.0, 0.0} 
+\begin{normalsize}
+\color{black}
+\begin{tabular}{rrrr}
+\hline
+&mpg&cyl&disp\\ 
+\hline
+Mazda RX4&21.00&6.00&160.00\\ 
+Mazda RX4 Wag&21.00&6.00&160.00\\ 
+Datsun 710&22.80&4.00&108.00\\ 
+Hornet 4 Drive&21.40&6.00&258.00\\ 
+Hornet Sportabout&18.70&8.00&360.00\\ 
+Valiant&18.10&6.00&225.00\\ 
+\hline
+\end{tabular}
+\end{normalsize}
+\color{black}
+\end{minipage}
+\end{table}> parallelTables(c(0.5,0.5),list(z,z))
+\begin{table}[!htb]
+\begin{minipage}{0.5\linewidth}
+\centering
+\definecolor{black}{rgb}{0.0, 0.0, 0.0} 
+\begin{normalsize}
+\color{black}
+\begin{tabular}{rrrr}
+\hline
+&mpg&cyl&disp\\ 
+\hline
+Mazda RX4&21.00&6.00&160.00\\ 
+Mazda RX4 Wag&21.00&6.00&160.00\\ 
+Datsun 710&22.80&4.00&108.00\\ 
+Hornet 4 Drive&21.40&6.00&258.00\\ 
+Hornet Sportabout&18.70&8.00&360.00\\ 
+Valiant&18.10&6.00&225.00\\ 
+\hline
+\end{tabular}
+\end{normalsize}
+\color{black}
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+\centering
+\definecolor{black}{rgb}{0.0, 0.0, 0.0} 
+\begin{normalsize}
+\color{black}
+\begin{tabular}{rrrr}
+\hline
+&mpg&cyl&disp\\ 
+\hline
+Mazda RX4&21.00&6.00&160.00\\ 
+Mazda RX4 Wag&21.00&6.00&160.00\\ 
+Datsun 710&22.80&4.00&108.00\\ 
+Hornet 4 Drive&21.40&6.00&258.00\\ 
+Hornet Sportabout&18.70&8.00&360.00\\ 
+Valiant&18.10&6.00&225.00\\ 
+\hline
+\end{tabular}
+\end{normalsize}
+\color{black}
+\end{minipage}
+\end{table}> parallelTables(c(0.5,0.5),list(z,z,type="html"))
+
+Lengths of width and tables are different
+length of width=2,length of tables=3> z1=ztable(head(iris[1:3]),turn=TRUE,angle=10,zebra=1)
+> z2=ztable(head(iris[1:3]),turn=TRUE,angle=-10,zebra=2)
+> parallelTables(c(0.5,0.5),list(z1,z2))
+\begin{table}[!htb]
+\begin{minipage}{0.5\linewidth}
+\centering
+\definecolor{peach-orange}{rgb}{1.0, 0.8, 0.6} 
+\definecolor{black}{rgb}{0.0, 0.0, 0.0} 
+\begin{turn}{10}
+\begin{normalsize}
+\color{black}
+\begin{tabular}{rrrr}
+\hline
+&Sepal.Length&Sepal.Width&Petal.Length\\ 
+\hline
+\cellcolor{peach-orange}1&\cellcolor{peach-orange}5.10&\cellcolor{peach-orange}3.50&\cellcolor{peach-orange}1.40\\ 
+2&4.90&3.00&1.40\\ 
+\cellcolor{peach-orange}3&\cellcolor{peach-orange}4.70&\cellcolor{peach-orange}3.20&\cellcolor{peach-orange}1.30\\ 
+4&4.60&3.10&1.50\\ 
+\cellcolor{peach-orange}5&\cellcolor{peach-orange}5.00&\cellcolor{peach-orange}3.60&\cellcolor{peach-orange}1.40\\ 
+6&5.40&3.90&1.70\\ 
+\hline
+\end{tabular}
+\end{normalsize}
+\end{turn}
+\color{black}
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+\centering
+\definecolor{peach-orange}{rgb}{1.0, 0.8, 0.6} 
+\definecolor{black}{rgb}{0.0, 0.0, 0.0} 
+\begin{turn}{-10}
+\begin{normalsize}
+\color{black}
+\begin{tabular}{rrrr}
+\hline
+&Sepal.Length&Sepal.Width&Petal.Length\\ 
+\hline
+1&5.10&3.50&1.40\\ 
+\cellcolor{peach-orange}2&\cellcolor{peach-orange}4.90&\cellcolor{peach-orange}3.00&\cellcolor{peach-orange}1.40\\ 
+3&4.70&3.20&1.30\\ 
+\cellcolor{peach-orange}4&\cellcolor{peach-orange}4.60&\cellcolor{peach-orange}3.10&\cellcolor{peach-orange}1.50\\ 
+5&5.00&3.60&1.40\\ 
+\cellcolor{peach-orange}6&\cellcolor{peach-orange}5.40&\cellcolor{peach-orange}3.90&\cellcolor{peach-orange}1.70\\ 
+\hline
+\end{tabular}
+\end{normalsize}
+\end{turn}
+\color{black}
+\end{minipage}
+\end{table}> 
+> 
+> 
+> cleanEx()
+> nameEx("totalLeft")
+> ### * totalLeft
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: totalLeft
+> ### Title: Arrange total column to the left
+> ### Aliases: totalLeft
+> 
+> ### ** Examples
+> 
+> require(moonBook)
+Loading required package: moonBook
+> require(ztable)
+> require(magrittr)
+Loading required package: magrittr
+> mytable(sex~.,data=acs,show.total=TRUE) %>% ztable() %>% totalLeft()
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;"></th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;">Total</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;">Female</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;">Male</th>
+<th <th rowspan="2" align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">p</th>
+</tr>
+<tr>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;"></th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=857)</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=287)</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=570)</th>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;">age </td>
+<td align="left" style="border-left: 0px solid black;">63.3 ± 11.7</td>
+<td align="center" style="border-left: 0px solid black;">68.7 ± 10.7</td>
+<td align="center" style="border-left: 0px solid black;">60.6 ± 11.2</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">cardiogenicShock   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.136</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">805 (93.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">275 (95.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">530 (93.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">52 ( 6.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">12 ( 4.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">40 ( 7.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">entry    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.035</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Femoral   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">312 (36.4%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">119 (41.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">193 (33.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Radial    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">545 (63.6%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">168 (58.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">377 (66.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">Dx  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.012</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; NSTEMI    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">153 (17.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">50 (17.4%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">103 (18.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; STEMI</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">304 (35.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">84 (29.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">220 (38.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Unstable Angina</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">400 (46.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">153 (53.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">247 (43.3%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">EF  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">55.8 ±  9.6</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">56.3 ± 10.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">55.6 ±  9.4</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.387</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">height   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">163.2 ±  9.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">153.8 ±  6.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">167.9 ±  6.1</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">weight   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">64.8 ± 11.4</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">57.2 ±  9.3</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">68.7 ± 10.3</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">BMI </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">24.3 ±  3.3</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">24.2 ±  3.6</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">24.3 ±  3.2</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.611</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">obesity  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.580</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">567 (66.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">194 (67.6%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">373 (65.4%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">290 (33.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">93 (32.4%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">197 (34.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">TC  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">185.2 ± 47.8</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">188.9 ± 51.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">183.3 ± 45.9</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.124</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">LDLC</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">116.6 ± 41.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">117.8 ± 41.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">116.0 ± 41.1</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.561</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">HDLC</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">38.2 ± 11.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">39.0 ± 11.5</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">37.8 ± 10.9</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.145</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">TG  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">125.2 ± 90.9</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">119.9 ± 76.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">127.9 ± 97.3</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.195</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">DM  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.077</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">553 (64.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">173 (60.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">380 (66.7%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">304 (35.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">114 (39.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">190 (33.3%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">HBP </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">356 (41.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">83 (28.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">273 (47.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">501 (58.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">204 (71.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">297 (52.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">smoking  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Ex-smoker </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">204 (23.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">49 (17.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">155 (27.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Never</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">332 (38.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">209 (72.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">123 (21.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Smoker    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">321 (37.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">29 (10.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">292 (51.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td colspan="5" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> ## Not run: 
+> ##D mytable(sex+Dx~.,data=acs,show.total=TRUE) %>% ztable %>% totalLeft
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:magrittr’, ‘package:moonBook’
+
+> nameEx("ztable.cbind.mytable")
+> ### * ztable.cbind.mytable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ztable.cbind.mytable
+> ### Title: Make ztable from object cbind.mytable
+> ### Aliases: ztable.cbind.mytable
+> 
+> ### ** Examples
+> 
+> require(moonBook)
+Loading required package: moonBook
+> res=mytable(sex+DM~.,data=acs)
+> z=ztable(res)
+> z
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;">Descriptive Statistics Stratified by 'SEX' and 'DM'</caption><tr>
+<td colspan=" 1 " align="center" style="font-weight: normal;border-top: 2px solid gray; border-bottom: hidden; border-left: 0px solid black;"></td>
+<td style="border-top: 2px solid gray;border-bottom: hidden">&nbsp;</td>
+<td colspan=" 3 " align="center" style="font-weight: normal;border-top: 2px solid gray; border-bottom: 1px solid gray; border-left: 0px solid black;">Male</td>
+<td style="border-top: 2px solid gray;border-bottom: hidden">&nbsp;</td>
+<td colspan=" 3 " align="center" style="font-weight: normal;border-top: 2px solid gray; border-bottom: 1px solid gray; border-left: 0px solid black;border-right:0px solid black;">Female</td>
+</tr>
+<tr>
+<th <th rowspan="2" align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;"></th>
+<th style="border-bottom: hidden;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;">No</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;">Yes</th>
+<th <th rowspan="2" align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">p</th>
+<th style="border-bottom: hidden;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;">No</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;">Yes</th>
+<th <th rowspan="2" align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;">p</th>
+</tr>
+<tr>
+<th style="border-bottom: 1px solid gray;">&nbsp;</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=380)</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=190)</th>
+<th style="border-bottom: 1px solid gray;">&nbsp;</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=173)</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=114)</th>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;">age </td>
+<td style=""></td>
+<td align="left" style="border-left: 0px solid black;">60.9 ± 11.5</td>
+<td align="center" style="border-left: 0px solid black;">60.1 ± 10.6</td>
+<td align="right" style="border-left: 0px solid black;">0.472</td>
+<td style=""></td>
+<td align="right" style="border-left: 0px solid black;">69.3 ± 11.4</td>
+<td align="center" style="border-left: 0px solid black;">67.8 ±  9.7</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;">0.257</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">cardiogenicShock   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.685</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.296</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">355 (93.4%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">175 (92.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">168 (97.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">107 (93.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">25 ( 6.6%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">15 ( 7.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5 ( 2.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">7 ( 6.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">entry    </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.552</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.665</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Femoral   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">125 (32.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">68 (35.8%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">74 (42.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">45 (39.5%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Radial    </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">255 (67.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">122 (64.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">99 (57.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">69 (60.5%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">Dx  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.219</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.240</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; NSTEMI    </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">71 (18.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">32 (16.8%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">25 (14.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">25 (21.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; STEMI</td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">154 (40.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">66 (34.7%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">54 (31.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">30 (26.3%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Unstable Angina</td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">155 (40.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">92 (48.4%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">94 (54.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">59 (51.8%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">EF  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">56.5 ±  8.3</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">53.9 ± 11.0</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.007</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">56.0 ± 10.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">56.6 ± 10.0</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.655</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">height   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">168.1 ±  5.8</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">167.5 ±  6.7</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.386</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">153.9 ±  6.5</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">153.6 ±  5.8</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.707</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">weight   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">68.1 ± 10.4</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">69.8 ± 10.2</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.070</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">56.5 ±  8.7</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">58.4 ± 10.0</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.106</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">BMI </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">24.0 ±  3.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">24.9 ±  3.5</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.005</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">23.8 ±  3.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">24.8 ±  4.0</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.046</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">obesity  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.027</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.359</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">261 (68.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">112 (58.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">121 (69.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">73 (64.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">119 (31.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">78 (41.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">52 (30.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">41 (36.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">TC  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">184.1 ± 46.7</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">181.8 ± 44.5</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.572</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">186.0 ± 43.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">193.3 ± 60.8</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.274</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">LDLC</td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">117.9 ± 41.8</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">112.1 ± 39.4</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.115</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">116.3 ± 35.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">119.8 ± 48.6</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.519</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">HDLC</td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">38.4 ± 11.4</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">36.8 ±  9.6</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.083</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">39.2 ± 10.9</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">38.8 ± 12.2</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.821</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">TG  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">115.2 ± 72.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">153.4 ± 130.7</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">< 0.001</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">114.2 ± 82.4</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">128.4 ± 65.5</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.112</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">HBP </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">< 0.001</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.356</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">205 (53.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">68 (35.8%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">54 (31.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">29 (25.4%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">175 (46.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">122 (64.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">119 (68.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">85 (74.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">smoking  </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.386</td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.093</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Ex-smoker </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">101 (26.6%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">54 (28.4%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">34 (19.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">15 (13.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Never</td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">77 (20.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">46 (24.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">118 (68.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">91 (79.8%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Smoker    </td>
+<td style="border-top: hidden;"></td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">202 (53.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">90 (47.4%)</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td style="border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">21 (12.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">8 ( 7.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td colspan="9" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:moonBook’
+
+> nameEx("ztable.mytable")
+> ### * ztable.mytable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ztable.mytable
+> ### Title: Make ztable from object mytable
+> ### Aliases: ztable.mytable
+> 
+> ### ** Examples
+> 
+> require(moonBook)
+Loading required package: moonBook
+> res=mytable(sex~.,data=acs)
+> z=ztable(res)
+> z
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;"></th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;">Female</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: hidden;border-top: 2px solid gray;">Male</th>
+<th <th rowspan="2" align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">p</th>
+</tr>
+<tr>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;"></th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=287)</th>
+<th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;">(N=570)</th>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;">age </td>
+<td align="left" style="border-left: 0px solid black;">68.7 ± 10.7</td>
+<td align="center" style="border-left: 0px solid black;">60.6 ± 11.2</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">cardiogenicShock   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.136</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">275 (95.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">530 (93.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">12 ( 4.2%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">40 ( 7.0%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">entry    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.035</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Femoral   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">119 (41.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">193 (33.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Radial    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">168 (58.5%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">377 (66.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">Dx  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.012</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; NSTEMI    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">50 (17.4%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">103 (18.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; STEMI</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">84 (29.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">220 (38.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Unstable Angina</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">153 (53.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">247 (43.3%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">EF  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">56.3 ± 10.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">55.6 ±  9.4</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.387</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">height   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">153.8 ±  6.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">167.9 ±  6.1</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">weight   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">57.2 ±  9.3</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">68.7 ± 10.3</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">BMI </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">24.2 ±  3.6</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">24.3 ±  3.2</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.611</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">obesity  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.580</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">194 (67.6%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">373 (65.4%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">93 (32.4%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">197 (34.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">TC  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">188.9 ± 51.1</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">183.3 ± 45.9</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.124</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">LDLC</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">117.8 ± 41.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">116.0 ± 41.1</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.561</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">HDLC</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">39.0 ± 11.5</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">37.8 ± 10.9</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.145</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">TG  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">119.9 ± 76.2</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">127.9 ± 97.3</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.195</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">DM  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">0.077</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">173 (60.3%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">380 (66.7%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">114 (39.7%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">190 (33.3%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">HBP </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; No   </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">83 (28.9%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">273 (47.9%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Yes  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">204 (71.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">297 (52.1%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">smoking  </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;"></td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">< 0.001</td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Ex-smoker </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">49 (17.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">155 (27.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Never</td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">209 (72.8%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">123 (21.6%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;"> &nbsp;&nbsp;&nbsp; Smoker    </td>
+<td align="left" style="border-left: 0px solid black;border-top: hidden;">29 (10.1%)</td>
+<td align="center" style="border-left: 0px solid black;border-top: hidden;">292 (51.2%)</td>
+<td align="right" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;"></td>
+</tr>
+<tr>
+<td colspan="4" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:moonBook’
+
+> nameEx("ztable2flextable")
+> ### * ztable2flextable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ztable2flextable
+> ### Title: Convert an object of ztable into an object of flextable
+> ### Aliases: ztable2flextable
+> 
+> ### ** Examples
+> 
+> z=ztable(head(mtcars))
+> ztable2flextable(z)
+a flextable object.
+col_keys: `rowname`, `mpg`, `cyl`, `disp`, `hp`, `drat`, `wt`, `qsec`, `vs`, `am`, `gear`, `carb` 
+header has 1 row(s) 
+body has 6 row(s) 
+original dataset sample: 
+                            rowname   mpg  cyl   disp     hp drat   wt  qsec
+Mazda RX4                 Mazda RX4 21.00 6.00 160.00 110.00 3.90 2.62 16.46
+Mazda RX4 Wag         Mazda RX4 Wag 21.00 6.00 160.00 110.00 3.90 2.88 17.02
+Datsun 710               Datsun 710 22.80 4.00 108.00  93.00 3.85 2.32 18.61
+Hornet 4 Drive       Hornet 4 Drive 21.40 6.00 258.00 110.00 3.08 3.21 19.44
+Hornet Sportabout Hornet Sportabout 18.70 8.00 360.00 175.00 3.15 3.44 17.02
+                    vs   am gear carb
+Mazda RX4         0.00 1.00 4.00 4.00
+Mazda RX4 Wag     0.00 1.00 4.00 4.00
+Datsun 710        1.00 1.00 4.00 1.00
+Hornet 4 Drive    1.00 0.00 3.00 1.00
+Hornet Sportabout 0.00 0.00 3.00 2.00
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ztable_sub")
+> ### * ztable_sub
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ztable_sub
+> ### Title: Exporting "data.frame" to an object of class "ztable"
+> ### Aliases: ztable_sub
+> 
+> ### ** Examples
+> 
+> require(ztable)
+> x=head(iris)
+> ztable(x)
+<head><style>
+        table {
+              font-family: times ;
+color:  black ;
+text-align: right;}
+        th {
+              padding: 1px 1px 5px 5px;
+	        }
+        td {
+             padding: 1px 1px 5px 5px; }
+      </style></head><table align="center" style="border-collapse: collapse; caption-side:top; font-size:11pt;"><caption style="text-align:center;"></caption><tr>
+<th style="border-left: 0px solid black;background-color: #FFFFFF;border-top: 2px solid gray;border-bottom: 1px solid gray;">&nbsp;</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Sepal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Sepal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Petal.Length</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Petal.Width</th>
+<th <th align="center" style="font-weight: normal;border-left: 0px solid black;border-right:0px solid black;border-bottom: 1px solid gray;border-top: 2px solid gray;">Species</th>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; ">1</td>
+<td align="right" style="border-left: 0px solid black;">5.10</td>
+<td align="right" style="border-left: 0px solid black;">3.50</td>
+<td align="right" style="border-left: 0px solid black;">1.40</td>
+<td align="right" style="border-left: 0px solid black;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">2</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">3</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.20</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.30</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">4</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">4.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.10</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.50</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">5</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.00</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.60</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.20</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td  style="border-left: 0px solid black; border-top: hidden;">6</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">5.40</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">3.90</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">1.70</td>
+<td align="right" style="border-left: 0px solid black;border-top: hidden;">0.40</td>
+<td align="left" style="border-left: 0px solid black;border-right:0px solid black;border-top: hidden;">setosa</td>
+</tr>
+<tr>
+<td colspan="6" align="left" style="font-size:9pt ;border-top: 1px solid black; border-bottom: hidden;"></td>
+</tr>
+</table>
+> ## Not run: 
+> ##D ztable(x,size=3,caption="Table 1. ztable Test")
+> ##D ztable(x,size=7,caption="Table 1. ztable Test",caption.position="l")
+> ##D ztable(x,size=7,caption="Table 1. ztable Test",caption.placement="bottom",
+> ##D       caption.position="l")
+> ##D fit=lm(mpg~.,data=mtcars)
+> ##D ztable(fit)
+> ##D data(USArrests)
+> ##D pr1 <- prcomp(USArrests)
+> ##D ztable(pr1)
+> ##D ztable(summary(pr1))
+> ##D require(survival)
+> ##D data(colon)
+> ##D attach(colon)
+> ##D out <- glm(status ~ rx+obstruct+adhere+nodes+extent, data=colon, family=binomial)
+> ##D ztable(out)
+> ##D colon$TS = Surv(time,status==1)
+> ##D out1=coxph(TS~rx+obstruct+adhere+differ+extent+surg+node4,data=colon)
+> ##D ztable(out1)
+> ##D ztable(head(mtcars),zebra=1)
+> ##D ztable(head(mtcars),zebra=1,zebra.type=2)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.147 0.078 1.446 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

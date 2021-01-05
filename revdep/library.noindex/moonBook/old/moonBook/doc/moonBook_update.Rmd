@@ -1,0 +1,136 @@
+---
+title: "Update in R package moonBook"
+author: "Keon-Woong Moon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{moonBook_update}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = NA,
+  message =FALSE
+)
+```
+
+## Function "mytable"
+
+Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline charateristics common in medical research papers. 
+
+## Basic Usage
+
+If you are unfamiliar to package moonBook and mytable function, please see the R package `moonBook` vignette at: https://CRAN.R-project.org/package=moonBook/vignettes/moonBook.html
+
+
+## Explore a data.frame
+
+You can use `mytable` function to explore a data.frame. 
+
+```{r,comment=NA}
+require(moonBook)
+require(ztable)
+require(magrittr)
+options(ztable.type="html")
+
+mytable(acs)
+```
+
+You can use formula without grouping variable(s).
+
+```{r,comment=NA}
+mytable(~age+sex,data=acs)
+```
+
+
+## Compress an object of class mytable
+
+You can `compress` mytable. If rows dealing with categorical variables have two unique values, it can be printed in a single row rather than three rows.
+
+```{r}
+mytable(Dx~sex,data=acs)
+```
+
+```{r}
+mytable(Dx~sex,data=acs) %>% compress
+```
+
+The default representative group is the second group. If you want the first group to being representative group, 
+please use the `no` argument.
+
+
+```{r}
+mytable(Dx~sex,data=acs) %>% compress(no=1)
+```
+
+Sometimes it is more simple to omit the represntative group name. You can do this by set the add.label argument FALSE.
+
+```{r}
+mytable(Dx~cardiogenicShock+DM+obesity+HBP,data=acs) %>% compress
+```
+
+```{r}
+mytable(Dx~cardiogenicShock+DM+obesity+HBP,data=acs) %>% compress(add.label=FALSE)
+```
+
+You can print mytable object in 'html5' or 'LaTex' format with ztable.  
+
+```{r,results='asis'}
+mytable(Dx~cardiogenicShock+DM+obesity+HBP,data=acs) %>% compress(add.label=FALSE) %>% ztable
+```
+
+
+## Delete Rows of an object of class mytable
+
+You can delete rows of an obect of class mytable.
+
+```{r}
+mytable(sex~Dx,data=acs)
+```
+
+If you want to delete the second row, use the deleteRows() function.
+```{r}
+mytable(sex~Dx,data=acs) %>% deleteRows(2)
+```
+
+You can delete rows of an object of class cbind.mytable.
+
+```{r}
+mytable(sex+HBP~age+Dx,data=acs) %>% deleteRows(3)
+```
+
+## Methods for categorical variables
+
+You can select method for categorical variables with `catMethod` argument. Possible values are :
+
+- 0 : Perform chisq.test first. If warning present, perform fisher test
+- 1 : Perform chisq.test without continuity correction
+- 2 : Perform chisq.test with continuity correction
+- 3 : Perform fisher.test
+- 4 : perform prop.trend test
+
+You can see which tests are used if you set `show.all` argument of mytable TRUE.
+
+```{r}
+mytable(obesity~HBP,data=acs,catMethod=1,show.all=TRUE)
+```
+
+
+## For formatted numbers: addComma()
+
+Sometimes, you want to display formatted numbers. For example, `1234.5` can be printed as `1,234.5`.
+You can do this using addComma() function
+
+```{r}
+data(diamonds,package="ggplot2")
+mytable(diamonds) %>% addComma
+```
+
+Also you can print this in 'html5' or 'LaTex' format with ztable.  
+
+```{r,results='asis'}
+mytable(cut~.,data=diamonds) %>% addComma %>% ztable
+```
