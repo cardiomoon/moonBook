@@ -104,8 +104,11 @@ extractHR=function(x,digits=2){
 #' colon$TS=Surv(time,status==1)
 #' out=mycph(TS~.,data=colon)
 #' out
+#' HRplot(out)
+#' \dontrun{
 #' HRplot(out,type=1,pch=2,col=c("blue","red"))
 #' HRplot(out,type=2,show.CI=TRUE,pch=2,cex=2,main="Hazard ratios of all individual variables")
+#' }
 #'
 HRplot=function(out,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
                 sig.level=1,cex=1.2,lwd=2,pch=18,col=NULL,...){

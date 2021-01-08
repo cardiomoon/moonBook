@@ -37,7 +37,9 @@ mytable(am+cyl~.,data=mtcars)
 out=mytable(sex~.,data=acs)
 out
 summary(out)
+\dontrun{
 require(ztable)
 ztable(out)
+}
 mytable(acs)
 }

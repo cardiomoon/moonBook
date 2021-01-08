@@ -36,10 +36,12 @@ Compress an object of class mytable or cbind.mytable
 
 \examples{
 require(stringr)
-require(ztable)
 require(magrittr)
 mytable(acs) \%>\% compress
 mytable(Dx~.,data=acs) \%>\% compress
+\dontrun{
+require(ztable)
 mytable(Dx~.,data=acs) \%>\% compress \%>\% ztable
 mytable(Dx+sex~.,data=acs) \%>\% compress
+}
 }

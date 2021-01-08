@@ -186,8 +186,10 @@ num_summary <-function(x){
 #' out=mytable(sex~.,data=acs)
 #' out
 #' summary(out)
+#' \dontrun{
 #' require(ztable)
 #' ztable(out)
+#' }
 mytable=function(x,...)  UseMethod("mytable")
 
 

@@ -1,4 +1,7 @@
-This is an update of the package 'moonBook'
+This is an update of the package 'moonBook'. I have fixed all existing problems at 
+https://cran.r-project.org/web/checks/check_results_moonBook.html. Also I have fixed additional issues
+for the *last* version released on CRAN: M1mac <https://www.stats.ox.ac.uk/pub/bdr/M1mac/moonBook.out>
+
 
 ## Test environments
 * local OS X install, R 4.0.3

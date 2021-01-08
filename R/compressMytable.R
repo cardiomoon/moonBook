@@ -5,12 +5,14 @@
 #'@export
 #'@examples
 #'require(stringr)
-#'require(ztable)
 #'require(magrittr)
 #'mytable(acs) %>% compress
 #'mytable(Dx~.,data=acs) %>% compress
+#'\dontrun{
+#'require(ztable)
 #'mytable(Dx~.,data=acs) %>% compress %>% ztable
 #'mytable(Dx+sex~.,data=acs) %>% compress
+#'}
 compress=function(x,no=2,add.label=TRUE)  UseMethod("compress")
 
 
