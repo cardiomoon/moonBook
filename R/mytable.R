@@ -136,6 +136,7 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
         }
         options(ow)
     }
+     if(is.nan(p[1])) p[1]=1
     p
 }
 
