@@ -19,7 +19,12 @@ my.t.test=function(y,x){
         #browser()
         out=lm(x~y)
         if(sum(result)<=5000) {
-            out3=shapiro.test(resid(out))
+            if(length(unique(resid(out)))==1){
+               out3=1
+            } else{
+               out3=shapiro.test(resid(out))
+            }
+
         } else {
             out3=nortest::ad.test(resid(out))
         }
@@ -91,9 +96,9 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
     if(dim(temp)[2]==1){
         p=c(NA,NA,NA)
         attr(p,"method")=""
-    } else if(dim(temp)[1]==1){
-        p=c(NA,NA,NA)
-        attr(p,"method")=""
+    # } else if(dim(temp)[1]==1){
+    #     p=c(NA,NA,NA)
+    #     attr(p,"method")=""
     } else{
         p=c(NA,NA,NA)
         ow=options("warn")
@@ -124,7 +129,7 @@ my.chisq.test=function(x,y,mydata,catMethod=2)
         if(sum(temp)< 100 & dim(temp)[1]>1){
             p[2]=fisher.test(temp)$p.value
         }
-        if(nrow(temp)>2) {
+        if(nrow(temp)!=2) {
             p[3]=NA
         } else {
             p[3]=prop.trend.test(temp[2,],colSums(temp))$p.value
@@ -325,7 +330,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
 
     for(i in 1:length(x)) {
 
-        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total)
+        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=data)
 
         if(length(out)!=4) {
             error=c(error,x[i])
@@ -385,9 +390,10 @@ validColname=function(pattern,x) {
 #' @param method an integer
 #' @param catMethod an integer
 #' @param show.total a logical value
+#' @param origData a data.frame
 #' @importFrom stats na.omit
 #' @export
-mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,show.total=FALSE){
+mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,show.total=FALSE,origData){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
     # data=iris2
     # y="Species"
@@ -401,8 +407,12 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
     result1=addmargins(result,2)
     N=sum(result)
     var_name=x
-    xlev=dim(result)[1]
-      # xlev
+    # xlev=dim(result)[1]
+    xlev=length(unique(origData[[x]]))
+    # cat("xlev=",xlev,"\n")
+    # str(data)
+    # str(origData)
+
     var_class=ifelse(is.numeric(mydata$x),"continuous","categorical")
     if(xlev<=max.ylev) {
         factorx=factor(mydata$x)
@@ -454,6 +464,9 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
                 subgroup=paste0(min(mydata$x),"-",max(mydata$x))
             } else{
                subgroup=paste0("unique values:",xlev)
+            #    cat("xlev=",xlev,"\n")
+            #    str(data)
+            #    str(origData)
             }
             p=NA
         }
@@ -978,10 +991,14 @@ summary.cbind.mytable=function(object,...) {
 #'             parameter. If true, only exact column name permitted.Default value is FALSE.
 #' @param show.total A logical value indicating whether or not show total group value.
 #'                 Default value is FALSE.
+#' @param origData A data.frame contains data for analysis
 #' @export
 #' @return An object of class "cbind.mytable"
 mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
-                  max.ylev=5,maxCatLevel=20,digits=2,method=1,catMethod=2,show.all=FALSE,exact=FALSE,show.total=FALSE){
+                  max.ylev=5,maxCatLevel=20,digits=2,method=1,catMethod=2,
+                  show.all=FALSE,exact=FALSE,show.total=FALSE,origData=NULL){
+
+    if(is.null(origData)) origData=data
     call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
     f=formula
@@ -1025,7 +1042,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
             s=paste(validy1,validy2,sep="+")
             s=paste(s,res[2],sep="~")
             result=mytable2(as.formula(s),data,use.labels,use.column.label,
-                            max.ylev,maxCatLevel,digits,method=method,catMethod=catMethod,show.all,exact,show.total)
+                            max.ylev,maxCatLevel,digits,method=method,catMethod=catMethod,show.all,exact,show.total,origData=origData)
             return(result)
         }
     }
@@ -1052,7 +1069,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                         method=method,show.all=show.all)
             x=labels(myt)
             for(i in 1:length(x)) {
-                out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total)
+                out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=origData)
                 label=getLabel(data,x[i],use.column.label)
                 result[[label]]=out
 
@@ -1073,12 +1090,12 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
         x=labels(myt)
 
         for(j in 1:length(x)) {
-            if((length(unique(mydata[[x[j]]]))<=max.ylev) & (!is.factor(mydata[[x[j]]]))){
+            if((length(unique(origData[[x[j]]]))<=max.ylev) & (!is.factor(mydata[[x[j]]]))){
                 #cat("x[j]=",x[j],"\n")
                 data[[x[j]]]=factor(data[[x[j]]])
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
-            out=mytable_sub2(validy2,x[j],mydata,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total)
+            out=mytable_sub2(validy2,x[j],mydata,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=origData)
 
             label=getLabel(data,x[j],use.column.label)
             result[[label]]=out

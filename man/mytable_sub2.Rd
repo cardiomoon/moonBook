@@ -12,7 +12,8 @@ mytable_sub2(
   maxCatLevel = 20,
   method = 1,
   catMethod = 2,
-  show.total = FALSE
+  show.total = FALSE,
+  origData
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ mytable_sub2(
 \item{catMethod}{an integer}
 
 \item{show.total}{a logical value}
+
+\item{origData}{a data.frame}
 }
 \description{
 Internal mytable functions

@@ -16,7 +16,8 @@ mytable2(
   catMethod = 2,
   show.all = FALSE,
   exact = FALSE,
-  show.total = FALSE
+  show.total = FALSE,
+  origData = NULL
 )
 }
 \arguments{
@@ -70,6 +71,8 @@ parameter. If true, only exact column name permitted.Default value is FALSE.}
 
 \item{show.total}{A logical value indicating whether or not show total group value.
 Default value is FALSE.}
+
+\item{origData}{A data.frame contains data for analysis}
 }
 \value{
 An object of class "cbind.mytable"
