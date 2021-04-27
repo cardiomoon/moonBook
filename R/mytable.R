@@ -399,7 +399,7 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
     # data=iris2
     # y="Species"
     # x="Sepal.Length"
-    # use.column.label=TRUE;max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
+     # use.column.label=TRUE;max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
     mydata=try(data.frame(y=data[[y]],x=data[[x]]))
 
     if(class(mydata)!="data.frame") return(-1)
@@ -409,7 +409,7 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
     N=sum(result)
     var_name=x
     # xlev=dim(result)[1]
-    xlev=length(unique(origData[[x]]))
+    xlev=length(setdiff(unique(origData[[x]]),NA))
     # cat("xlev=",xlev,"\n")
     # str(data)
     # str(origData)
