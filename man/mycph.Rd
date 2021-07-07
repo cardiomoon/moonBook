@@ -25,7 +25,7 @@ Perform coxph of individual expecting variables
 }
 \examples{
 require(survival)
-data(colon)
+data(cancer)
 attach(colon)
 colon$TS=Surv(time,status==1)
 out=mycph(TS~.,data=colon)

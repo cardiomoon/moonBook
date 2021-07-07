@@ -11,52 +11,61 @@
 #'         the p values.
 #' @examples
 #' require(survival)
-#' data(colon)
+#' data(cancer)
 #' attach(colon)
 #' colon$TS=Surv(time,status==1)
 #' out=mycph(TS~.,data=colon)
 #' out
 #' HRplot(out,type=2,show.CI=TRUE,main="Hazard ratios of all individual variables")
 mycph=function(formula,data,digits=2){
-    call=paste(deparse(formula),", ","data= ",substitute(data),sep="")
+    temp=paste0(deparse(formula),collapse="")
+    call = paste(temp, ", ", "data= ", substitute(data),
+                 sep = "")
     cat("\n mycph : perform coxph of individual expecting variables\n")
-    cat("\n Call:",call,"\n\n")
-    f=formula
-    myt=terms(f,data=data)
-    y=as.character(f[[2]])
-    if(class(data[[y]])!="Surv") {
+    cat("\n Call:", call, "\n\n")
+    f = formula
+    suppressWarnings(myt <- terms(f, data = data))
+    y = as.character(f[[2]])
+    if((length(y)>1) & (y[1]=="Surv")) {
+        temp=paste0("Surv(data$",y[2],",data$",y[[3]],")")
+        data$TimeStatus=eval(parse(text=temp))
+        y="TimeStatus"
+    }
+    if (class(data[[y]]) != "Surv") {
         cat(y, "is not an object of class Surv")
         return(invisible())
     }
-    myvar=attr(myt,"term.labels")
-    count=length(myvar)
-    var<-HR<-lcl<-ucl<-p.value<-c()
-    for(i in 1:count) {
-        s=paste(y,myvar[i],sep="~")
-        suppressWarnings(out<-summary(survival::coxph(as.formula(s),data)))
-        if(any(is.infinite(out$conf.int))){
-            cat(dimnames(out$conf.int)[[1]]," was excluded : infinite\n")
+    myvar = attr(myt, "term.labels")
+    count = length(myvar)
+    var <- HR <- lcl <- ucl <- p.value <- c()
+    for (i in 1:count) {
+        s = paste(y, myvar[i], sep = "~")
+        suppressWarnings(out <- summary(survival::coxph(as.formula(s),
+                                                        data)))
+        if (any(is.infinite(out$conf.int))) {
+            cat(dimnames(out$conf.int)[[1]], " was excluded : infinite\n")
             next
         }
-        if(any(is.nan(out$coef))){
-            cat(dimnames(out$conf.int)[[1]]," was excluded : NaN\n")
+        if (any(is.nan(out$coef))) {
+            cat(dimnames(out$conf.int)[[1]], " was excluded : NaN\n")
             next
         }
-        if(any(is.na(out$coef))){
-            cat(dimnames(out$conf.int)[[1]]," was excluded : NA\n")
+        if (any(is.na(out$coef))) {
+            cat(dimnames(out$conf.int)[[1]], " was excluded : NA\n")
             next
         }
-        var=c(var,dimnames(out$conf.int)[[1]])
-        HR=c(HR,out$coef[,2])
-        lcl=c(lcl,out$conf.int[,3])
-        ucl=c(ucl,out$conf.int[,4])
-        p.value=c(p.value,out$coef[,5])
+        var = c(var, dimnames(out$conf.int)[[1]])
+        HR = c(HR, out$coef[, 2])
+        lcl = c(lcl, out$conf.int[, 3])
+        ucl = c(ucl, out$conf.int[, 4])
+        p.value = c(p.value, out$coef[, 5])
     }
-    if(length(HR)<1) return(invisible())
-    result=round(data.frame(HR,lcl,ucl),digits)
-    rownames(result)=var
-    result=cbind(result,round(p.value,max(3,digits)))
-    colnames(result)[4]="p"
+    if (length(HR) < 1)
+        return(invisible())
+    result = round(data.frame(HR, lcl, ucl), digits)
+    rownames(result) = var
+    result = cbind(result, round(p.value, max(3, digits)))
+    colnames(result)[4] = "p"
     result
 }
 
