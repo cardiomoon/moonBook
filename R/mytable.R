@@ -49,7 +49,7 @@ my.t.test=function(y,x){
         }
 
     } else{
-        out3=lm(x~y)
+        out3=lm(x~factor(y))
         if(sum(result)<=5000) out4=shapiro.test(resid(out3))
         else out4=nortest::ad.test(resid(out3))
         out5=kruskal.test(as.numeric(x),factor(y))
