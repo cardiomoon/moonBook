@@ -34,16 +34,19 @@ mytable.data.frame=function(x,...){
 #' @export
 mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
 
-     # x=acs[2];use.labels=TRUE;use.column.label=TRUE;max.ylev=5;maxCatLevel=20;
-     # digits=1;method=3;show.all=TRUE
+      # x=acs[2];use.labels=TRUE;use.column.label=TRUE;max.ylev=5;maxCatLevel=20;
+      # digits=1;method=3;show.all=TRUE
 
     name=c()
     no=c()
+    missing=c()
+    rate=c()
     out1=c()
     out2=c()
     out3=c()
     p=c()
     class=c()
+    total=nrow(x)
     # str(x)
 
     plusminus="\u00b1"
@@ -86,6 +89,9 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
             form=paste0("%0.",digits,"f")
             name=c(name,xname)
             no=c(no,length(y)-sum(is.na(y)))
+            temp1=total-length(y)+sum(is.na(y))
+            missing=c(missing,temp1)
+            rate=c(rate,paste0("(",sprintf("%4.1f",temp1*100/total),"%)"))
             if(statmethod==1) {
 
                 out1=c(out1,sprintf(form,temp[1]))
@@ -102,6 +108,9 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
 
             name=c(name,xname)
             no=c(no,length(y)-sum(is.na(y)))
+            temp1=total-length(y)+sum(is.na(y))
+            missing=c(missing,temp1)
+            rate=c(rate,paste0("(",sprintf("%4.1f",temp1*100/total),"%)"))
 
             if(length(unique(y))>maxCatLevel){
                 if("Date" %in% class(y)){
@@ -133,6 +142,8 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
             for(j in 1:nrow(res)){
                 name=c(name,paste0("  - ",rownames(res)[j]))
                 no=c(no,"")
+                missing=c(missing,"")
+                rate=c(rate,"")
                 out1=c(out1,res$Freq[j])
                 out2=c(out2,"")
                 out3=c(out3,res$Ratio[j])
@@ -147,14 +158,15 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
     }
     stats=paste(out1,out2,out3)
 
-    result=data.frame(name=name,N=no,stats=stats,class=class,p=p,stringsAsFactors = FALSE)
+    result=data.frame(name=name,stats=stats,N=no,missing=missing,rate=rate,class=class,stringsAsFactors = FALSE)
 
     fmt=paste0("%-",max(nchar(result$name)),"s")
     result$name=sprintf(fmt,result$name)
-    if(show.all==FALSE) {
-        result=result[-ncol(result)]
-    }
+    # if(show.all==FALSE) {
+    #     result=result[-ncol(result)]
+    # }
     class(result)=c("mytable.df","data.frame")
+    attr(result,"method")=method
     result
 
 }
@@ -162,24 +174,41 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
 #' Print an object of mytable.df
 #' @param x An object of class mytable.df
 #' @param ... Further arguments
+#' @importFrom stringr str_pad
 #' @export
 print.mytable.df=function(x,...){
 
     result<-x
     x1=x[-which(colnames(x)=="class")]
-    length=apply(x1,2,function(y){max(nchar(as.character(y)),na.rm=TRUE)})
+    length=apply(x1,2,function(y){max(nchar(as.character(y)),na.rm=TRUE)+1})
+    length
     fmt=paste0("%",length+1,"s")
     fmt
-    string=paste(sprintf(fmt[1],result$name),sprintf(fmt[2],result$N),sprintf(fmt[3],result$stats))
-    if(!is.null(result$p)) string=paste(string,result$p)
-    string=paste(string,"\n")
-    len=sum(length)+5
+    string1=paste0(sprintf(fmt[1],result$name),sprintf(fmt[2],result$stats))
+    string1=stringr::str_pad(string1,max(nchar(string1)))
+    string1
+    string2=paste0(sprintf(fmt[3],result$N),
+                 sprintf(fmt[4],result$missing),sprintf(fmt[5],result$rate))
+
+    #if(!is.null(result$p)) string=paste(string,result$p)
+    string=paste0(string1,string2,"\n")
+    string
+    len=sum(length)+6
     cat("\n")
     cat(centerprint("Descriptive Statistics",width=len))
     cat("\n")
     cat(reprint("-",len),"\n")
-    cat(paste(reprint(" ",length[1]+1),centerprint("N",width=length[2]+1),
-              centerprint("Total",width=length[3]+1)))
+    method=attr(x,"method")
+    plusminus="\u00b1"
+    if(method==1) {
+        stats=paste0("Mean ",plusminus," SD or %")
+    } else if(method==2){
+        stats="Median[IQR] or %"
+    } else{
+        stats="Statistics"
+    }
+    cat(paste0(reprint(" ",length[1]-2),centerprint(stats,width=length[2]+2),
+              centerprint("N",width=length[3]+2),centerprint("Missing (%)",width=length[4]+length[5])))
     if(!is.null(result$p)) cat("  p ")
     cat("\n")
     cat(reprint("-",len),"\n")
