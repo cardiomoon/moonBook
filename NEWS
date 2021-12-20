@@ -1,3 +1,10 @@
+moonBook 0.2.9
+==============
+(2021-Dec-20)
+
+* new argument 'missing' in mytable function for missing data analysis
+
+
 moonBook 0.2.8
 ==============
 (2021-Sep-4)

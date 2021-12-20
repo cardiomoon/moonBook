@@ -252,6 +252,8 @@ mytable.formula=function(x,...) {
 #'             parameter. If true, only exact column name permitted.Default value is FALSE.
 #' @param show.total A logical value indicating whether or not show total group value.
 #'                 Default value is FALSE.
+#' @param missing A logical value indicating whether or not perform missing data analysis.
+#'                 Default value is FALSE.
 #' @return An object of class "mytable".
 #'      'print' returns a table for descriptive statistics.
 #'      'summary' returns a table with all statistical values.
@@ -260,7 +262,7 @@ mytable.formula=function(x,...) {
 #' @export
 mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
                      max.ylev=5,maxCatLevel=20,digits=1,method=1,catMethod=2,
-                     show.all=FALSE,exact=FALSE,show.total=FALSE){
+                     show.all=FALSE,exact=FALSE,show.total=FALSE,missing=FALSE){
     # x=Sex~.
     # data=acs;use.labels=TRUE;use.column.label=TRUE
     # max.ylev=5;maxCatLevel=20;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
@@ -300,6 +302,26 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
             result=mytable(as.formula(s),data,use.labels,use.column.label,
                            max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
 
+            attr(result,"missing")=TRUE
+            return(result)
+        }
+    }
+    if(missing==TRUE){
+        if(sum(is.na(data[[y]]))>0){
+        data[[paste0(y,"Missing")]]=ifelse(is.na(data[[y]]),"Missing","Not missing")
+        data[[paste0(y,"Missing")]]=factor(data[[paste0(y,"Missing")]],levels=c("Not missing","Missing"))
+        s=paste0(paste0(y,"Missing"),"~",res[2])
+        data[[y]]<-NULL
+
+        result=mytable(as.formula(s),data,use.labels,use.column.label,
+                       max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+        attr(result,"missing")=TRUE
+        return(result)
+        } else{
+            cat(paste0("There is no missing data in column '",y,"'\n"))
+            s=paste0("~",res[2])
+            result=mytable(as.formula(s),data,use.labels,use.column.label,
+                           max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
             return(result)
         }
     }
@@ -763,8 +785,13 @@ print.mytable=function(x,...) {
     linelength=result$linelength
 
     cat("\n")
+    if(!is.null(attr(x,"missing"))){
+        cat(centerprint(paste0("Missing data analysis: '",sub("Missing","",y),"'"),
+                        width=linelength))
+    } else{
     cat(centerprint(paste("Descriptive Statistics by '",y,"'",sep=""),
                     width=linelength))
+    }
     cat("\n")
     hline=reprint("_",linelength)  #head line
     tline=reprint("-",linelength)  # tail line

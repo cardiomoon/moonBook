@@ -16,7 +16,8 @@ mytable_sub(
   catMethod = 2,
   show.all = FALSE,
   exact = FALSE,
-  show.total = FALSE
+  show.total = FALSE,
+  missing = FALSE
 )
 }
 \arguments{
@@ -70,6 +71,9 @@ values have to be shown in table. Default value is FALSE.}
 parameter. If true, only exact column name permitted.Default value is FALSE.}
 
 \item{show.total}{A logical value indicating whether or not show total group value.
+Default value is FALSE.}
+
+\item{missing}{A logical value indicating whether or not perform missing data analysis.
 Default value is FALSE.}
 }
 \value{
