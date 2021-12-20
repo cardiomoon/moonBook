@@ -20,7 +20,8 @@ Imports:
     sjmisc,
     stringr,
     magrittr,
-    ztable
+    ztable,
+    crayon
 Suggests:
     testthat,
     knitr,

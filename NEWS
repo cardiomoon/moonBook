@@ -3,7 +3,7 @@ moonBook 0.2.9
 (2021-Dec-20)
 
 * new argument 'missing' in mytable function for missing data analysis
-
+* mytable() print red character in R console when p < 0.05
 
 moonBook 0.2.8
 ==============

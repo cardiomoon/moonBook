@@ -771,7 +771,7 @@ obj2linecount=function(myobj){
 #'
 #' @param x An object of class "mytable", a result of a call to \code{\link{mytable}}
 #' @param ... further arguments passed to or from other methods.
-#'
+#' @importFrom crayon red
 #' @export
 print.mytable=function(x,...) {
 
@@ -805,9 +805,18 @@ print.mytable=function(x,...) {
     }
     cat("\n")
     cat(tline,"\n")
+
+
     for(i in 1:dim(out1)[1]){
         for(j in 1:(length(cn))) {
+            if(is.na(as.numeric(out1[i,"p"]))){
+                cat(sapply(out1[i,j],centerprint,width=col.length[j]+1))
+            } else if(as.numeric(out1[i,"p"])<0.05){
+                cat(red(sapply(out1[i,j],centerprint,width=col.length[j]+1)))
+            } else{
             cat(sapply(out1[i,j],centerprint,width=col.length[j]+1))
+            }
+
         }
         cat("\n")
     }
@@ -926,14 +935,28 @@ print.cbind.mytable=function(x,...) {
     for(i in 1:dim(result[[1]]$out1)[1]){
         for(k in 1:tcount){
             if(k==1) {
-                for(j in 1:(length(result[[1]]$cn)))
+                for(j in 1:(length(result[[1]]$cn))){
+                    temp=as.numeric(result[[k]]$out1[i,"p"])
+                    if(!is.na(temp) &(temp<0.05)){
+                        cat(red(sapply(result[[k]]$out1[i,j],centerprint,
+                                   width=result[[k]]$col.length[j]+1)))
+                    } else {
                     cat(sapply(result[[k]]$out1[i,j],centerprint,
                                width=result[[k]]$col.length[j]+1))
+                    }
+                }
             }
             else {
-                for(j in 2:(length(result[[1]]$cn)))
+                for(j in 2:(length(result[[1]]$cn))){
+                    temp=as.numeric(result[[k]]$out1[i,"p"])
+                    if(!is.na(temp) &(temp<0.05)){
+                       cat(red(sapply(result[[k]]$out1[i,j],centerprint,
+                                   width=result[[k]]$col.length[j]+1)))
+                    } else{
                     cat(sapply(result[[k]]$out1[i,j],centerprint,
                                width=result[[k]]$col.length[j]+1))
+                    }
+                }
             }
         }
         cat("\n")
