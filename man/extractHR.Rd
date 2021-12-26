@@ -19,3 +19,9 @@ a data.frame consist of hazard ratio and 95% confidence intervals and
 \description{
 Extract hazard ratio from a data.frame
 }
+\examples{
+require(survival)
+data(cancer)
+fit=coxph(Surv(time,status)~age+sex+obstruct+perfor,data=colon)
+extractHR(fit)
+}

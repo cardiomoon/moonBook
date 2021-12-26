@@ -6,17 +6,46 @@
 #'               significant digits to be used. Default value is 2.
 #' @param method Method to compute confidence interval. Choices are one of c("default","LRT").
 #' @importFrom stats confint confint.default coef
+#' @examples
+#' data(cancer,package="survival")
+#' x=glm(status~rx+sex+age+obstruct+nodes,data=colon,family="binomial")
+#' extractOR(x)
 #' @export
 #' @return A data.frame consist of odds ratios and 95% confidence interval and
 #'         p values
 extractOR=function(x,digits=2,method="default"){
-    if(method=="default") suppressMessages(a<-confint.default(x))
-    else suppressMessages(a<-confint(x))
-    result=data.frame(exp(coef(x)),exp(a))
-    result=round(result,digits)
-    result=cbind(result,round(summary(x)$coefficient[,4],4))
-    #result=na.omit(result)
-    colnames(result)=c("OR","lcl","ucl","p")
+    if("glmerMod" %in% class(x)) {
+        a <- confint(x)
+        OR=exp(summary(x)$coefficient[,1])
+        result=data.frame(OR=OR,exp(a[-1,]),p=summary(x)$coefficient[,4])
+        names(result)=c("OR","lcl","ucl","p")
+        result
+    } else {
+        if (method == "likelihood") {
+            suppressMessages(a <- confint(x))
+        } else {
+            a <- confint.default(x)
+        }
+
+        if (length(x$coef) == 1) {
+            result = c(exp(coef(x)), exp(a))
+            result = round(result, digits)
+            result = c(result, round(summary(x)$coefficient[, 4],
+                                     4))
+            temp = names(result)[1]
+            res = data.frame(result)
+            result = t(res)
+            result = data.frame(result)
+            rownames(result)[1] = temp
+        }
+        else {
+            result = data.frame(exp(coef(x)), exp(a))
+            result = round(result, digits)
+            result = cbind(result, round(summary(x)$coefficient[,
+                                                                4], 4))
+        }
+        colnames(result) = c("OR", "lcl", "ucl", "p")
+    }
     result
 }
 

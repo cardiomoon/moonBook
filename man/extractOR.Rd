@@ -21,3 +21,8 @@ A data.frame consist of odds ratios and 95% confidence interval and
 \description{
 Extract the odds ratios from a S3 object of glm
 }
+\examples{
+data(cancer,package="survival")
+x=glm(status~rx+sex+age+obstruct+nodes,data=colon,family="binomial")
+extractOR(x)
+}

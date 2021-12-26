@@ -77,13 +77,20 @@ mycph=function(formula,data,digits=2){
 #' @export
 #' @return a data.frame consist of hazard ratio and 95% confidence intervals and
 #'         the p values.
-#'
+#'@examples
+#' require(survival)
+#' data(cancer)
+#' fit=coxph(Surv(time,status)~age+sex+obstruct+perfor,data=colon)
+#' extractHR(fit)
 extractHR=function(x,digits=2){
-    digits=2
-    out=summary(x)
-    res=data.frame(round(out$conf.int[,-2],digits))
-    res=cbind(res,round(out$coef[,5],max(3,digits)))
-    colnames(res)=c("HR","lcl","ucl","p")
+    out = summary(x)
+    a = out$conf.int
+    b = out$coef
+    res = data.frame(a[, 1], a[, 3], a[, 4])
+    res = round(res, 2)
+    res = cbind(res, round(b[, 5], max(3, digits)))
+    colnames(res) = c("HR", "lcl", "ucl", "p")
+    rownames(res) = rownames(a)
     res
 }
 
