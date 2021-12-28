@@ -197,7 +197,7 @@ print.mytable.df=function(x,...){
     cat("\n")
     cat(centerprint("Descriptive Statistics",width=len))
     cat("\n")
-    cat(reprint("-",len),"\n")
+    cat(reprint("\u2014",len),"\n")
     method=attr(x,"method")
     plusminus="\u00b1"
     if(method==1) {
@@ -211,8 +211,8 @@ print.mytable.df=function(x,...){
               centerprint("N",width=length[3]+2),centerprint("Missing (%)",width=length[4]+length[5])))
     if(!is.null(result$p)) cat("  p ")
     cat("\n")
-    cat(reprint("-",len),"\n")
+    cat(reprint("\u2014",len),"\n")
     for(i in 1:length(string)) cat(string[i])
-    cat(reprint("-",len),"\n")
+    cat(reprint("\u2014",len),"\n")
 }
 

@@ -793,8 +793,8 @@ print.mytable=function(x,...) {
                     width=linelength))
     }
     cat("\n")
-    hline=reprint("_",linelength)  #head line
-    tline=reprint("-",linelength)  # tail line
+    hline=reprint("\u2014",linelength)  #head line
+    tline=reprint("\u2014",linelength)  # tail line
     cat(hline,"\n")
     for(j in 1:(length(cn))) {
         cat(centerprint(cn[j],width=col.length[j]+1))
@@ -899,8 +899,8 @@ print.cbind.mytable=function(x,...) {
     #for(i in 2:tcount) temp=paste(temp," and '",group[i],"'",sep="")
     cat(centerprint(temp,width=linelength))
     cat("\n")
-    hline=reprint("_",linelength)  #head line
-    tline=reprint("-",linelength)  # tail line
+    hline=reprint("\u2014",linelength)  #head line
+    tline=reprint("\u2014",linelength)  # tail line
     cat(hline,"\n")
     cat(centerprint("",width=result[[1]]$col.length[1]+2))
     for(i in 1:tcount){
@@ -911,7 +911,7 @@ print.cbind.mytable=function(x,...) {
     }
     cat("\n")
     cat(centerprint("",width=result[[1]]$col.length[1]+2))
-    for(i in 1:tcount) cat(reprint("-",result[[i]]$linelength-result[[i]]$col.length[1]-2),"")
+    for(i in 1:tcount) cat(reprint("\u2014",result[[i]]$linelength-result[[i]]$col.length[1]-2),"")
     cat("\n")
     cat(centerprint(result[[1]]$cn[1],width=result[[1]]$col.length[1]+1))
     for(i in 1:tcount) {
