@@ -83,18 +83,27 @@ mycph=function(formula,data,digits=2){
 #' fit=coxph(Surv(time,status)~age+sex+obstruct+perfor,data=colon)
 #' extractHR(fit)
 extractHR=function(x,digits=2){
-    out = summary(x)
-    a = out$conf.int
-    b = out$coef
-    if(nrow(a)!=nrow(b)){
-        b=b[1:nrow(a),]
-    }
-    res = data.frame(a[, 1], a[, 3], a[, 4])
-    res = round(res, 2)
-    res = cbind(res, round(b[, 5], max(3, digits)))
-    colnames(res) = c("HR", "lcl", "ucl", "p")
-    rownames(res) = rownames(a)
-    res
+
+        out = summary(x)
+        a = out$conf.int
+        b = out$coef
+        a=data.frame(a)
+        a$id=rownames(a)
+        b=data.frame(b)
+        b$id=rownames(b)
+
+        if(nrow(a)!=nrow(b)){
+            temp=setdiff(b$id,a$id)
+            b=b[b$id!=temp,]
+        }
+        b$id=NULL
+        res = data.frame(a[, 1], a[, 3], a[, 4])
+        res = round(res, 2)
+        res = cbind(res, round(b[, ncol(b)], max(3, digits)))
+        colnames(res) = c("HR", "lcl", "ucl", "p")
+        rownames(res) = rownames(a)
+        res
+
 }
 
 #' Draw a hazard ratio plot
