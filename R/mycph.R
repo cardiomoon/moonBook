@@ -86,6 +86,9 @@ extractHR=function(x,digits=2){
     out = summary(x)
     a = out$conf.int
     b = out$coef
+    if(nrow(a)!=nrow(b)){
+        b=b[1:nrow(a),]
+    }
     res = data.frame(a[, 1], a[, 3], a[, 4])
     res = round(res, 2)
     res = cbind(res, round(b[, 5], max(3, digits)))
