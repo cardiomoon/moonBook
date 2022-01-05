@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## Function "mytable"
 
-Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline charateristics common in medical research papers. 
+Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline characteristics common in medical research papers. 
 
 ## Basic Usage
 
@@ -66,7 +66,7 @@ please use the `no` argument.
 mytable(Dx~sex,data=acs) %>% compress(no=1)
 ```
 
-Sometimes it is more simple to omit the represntative group name. You can do this by set the add.label argument FALSE.
+Sometimes it is more simple to omit the representative group name. You can do this by set the add.label argument FALSE.
 
 ```{r}
 mytable(Dx~cardiogenicShock+DM+obesity+HBP,data=acs) %>% compress
@@ -85,7 +85,7 @@ mytable(Dx~cardiogenicShock+DM+obesity+HBP,data=acs) %>% compress(add.label=FALS
 
 ## Delete Rows of an object of class mytable
 
-You can delete rows of an obect of class mytable.
+You can delete rows of an object of class mytable.
 
 ```{r}
 mytable(sex~Dx,data=acs)

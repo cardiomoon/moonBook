@@ -220,10 +220,10 @@ mytable.formula=function(x,...) {
 #' @param use.labels Logical. Whether or not use labels.
 #' @param use.column.label Logical. Whether or not use column labels.
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
-#'                 variable ('y'). If a colummn have unique values less than max.ylev
+#'                 variable ('y'). If a column have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
-#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
-#'                  If a colummn have unique values more than maxCatLevel, categorical summarization
+#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorical variable.
+#'                  If a column have unique values more than maxCatLevel, categorical summarization
 #'                  will not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.
@@ -1010,10 +1010,10 @@ summary.cbind.mytable=function(object,...) {
 #' @param use.labels Logical. Whether or not use labels.
 #' @param use.column.label Logical. Whether or not use column labels.
 #' @param max.ylev An integer indicating the maximum number of levels of grouping
-#'                 variable ('y'). If a colummn have unique values less than max.ylev
+#'                 variable ('y'). If a column have unique values less than max.ylev
 #'                 it is treated as a categorical variable. Default value is 5.
-#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorial variable.
-#'                  If a colummn have unique values more than maxCatLevel, categorical summarization
+#' @param maxCatLevel An integer indicating the maximum number of unique levels of categorical variable.
+#'                  If a column have unique values more than maxCatLevel, categorical summarization
 #'                  will not be performed.
 #' @param digits An integer indicating the number of decimal places (round) or
 #'               significant digits to be used. Default value is 1.

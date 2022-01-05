@@ -12,7 +12,7 @@ vignette: >
 
 ## Function "mytable"
 
-Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline charateristics common in medical research papers. 
+Function "mytable"" produce table for descriptive analysis easily. It is most useful to make table to describe baseline characteristics common in medical research papers. 
 
 ## Basic Usage
 
@@ -64,7 +64,7 @@ _________________________________________________________________
 ----------------------------------------------------------------- 
 ```
 
-The first argument of function `mytable` is an object of class `formula`. Left side of ~ must contain the name of one grouping variable or two grouping variables in an additive way(e.g. sex+group~), and the right side of ~ must have variables in an additive way. `.` is allowed on the right side of formula which means all variables in the data.frame specified by the 2nd argument `data`. The sample data 'acs' containing demographic data and laboratory data of 857 pateints with acute coronary syndrome(ACS). For more information about the data acs, type ?acs in your R console.  
+The first argument of function `mytable` is an object of class `formula`. Left side of ~ must contain the name of one grouping variable or two grouping variables in an additive way(e.g. sex+group~), and the right side of ~ must have variables in an additive way. `.` is allowed on the right side of formula which means all variables in the data.frame specified by the 2nd argument `data`. The sample data 'acs' containing demographic data and laboratory data of 857 patients with acute coronary syndrome(ACS). For more information about the data acs, type ?acs in your R console.  
 
 
 ```r
@@ -149,7 +149,7 @@ By default continuous variables are analyzed as normal-distributed and are descr
 - 2: forces analysis as continuous non-normal
 - 3: performs a Shapiro-Wilks test to decide between normal or non-normal
 
-When continuous variables are analyzed as non-normal, they are described with median and interquantile range.
+When continuous variables are analyzed as non-normal, they are described with median and interquartile range.
 
 
 ```r
@@ -169,7 +169,7 @@ _____________________________________________________
 ----------------------------------------------------- 
 ```
 
-Because the `method` argument is selected as 3, a Shapiro-Wilk test normality test is used to decide if the variable is normal or non-normal distributed. Note that `height` and `BMI` was described as mean $\pm$ sd, whereas the weight was described as median and interquatile range. 
+Because the `method` argument is selected as 3, a Shapiro-Wilk test normality test is used to decide if the variable is normal or non-normal distributed. Note that `height` and `BMI` was described as mean $\pm$ sd, whereas the weight was described as median and interquartile range. 
 
 ## choice of variable : categorical or continuous variable - my way
 
@@ -234,7 +234,7 @@ __________________________________
 
 ## Combining tables
 
-If you wanted to make two separate tables and combine into one table, **`mytable` is the function of choice**. For example, if you wanted to build seperate table for female and male patients stratified by presence or absence of DM and combine it, 
+If you wanted to make two separate tables and combine into one table, **`mytable` is the function of choice**. For example, if you wanted to build separate table for female and male patients stratified by presence or absence of DM and combine it, 
 
 
 ```r

@@ -23,11 +23,11 @@ mytable_df(
 \item{use.column.label}{Logical. Whether or not use column labels.}
 
 \item{max.ylev}{An integer indicating the maximum number of levels of grouping
-variable. If a colummn have unique values less than max.ylev
+variable. If a column have unique values less than max.ylev
 it is treated as a categorical variable. Default value is 5.}
 
-\item{maxCatLevel}{An integer indicating the maximum number of unique levels of categorial variable.
-If a colummn have unique values more than maxCatLevel, categorical summarization
+\item{maxCatLevel}{An integer indicating the maximum number of unique levels of categorical variable.
+If a column have unique values more than maxCatLevel, categorical summarization
 will not be performed.}
 
 \item{digits}{An integer indicating the number of decimal places (round) or
