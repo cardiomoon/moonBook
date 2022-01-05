@@ -20,13 +20,13 @@ Imports:
     sjmisc,
     stringr,
     magrittr,
-    ztable,
     crayon
 Suggests:
     testthat,
     knitr,
     ggplot2,
     sjlabelled,
+    ztable,
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
