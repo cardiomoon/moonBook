@@ -4,3 +4,4 @@
 ^figure$
 ^revdep*
 ^CRAN-RELEASE$
+^CRAN-SUBMISSION$
