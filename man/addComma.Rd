@@ -29,17 +29,17 @@ Change numbers into formatted numbers
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{mytable}: S3 method for class mytable
+\item \code{addComma(mytable)}: S3 method for class mytable
 
-\item \code{mytable.df}: S3 method for class mytable.df
+\item \code{addComma(mytable.df)}: S3 method for class mytable.df
 
-\item \code{cbind.mytable}: S3 method for class cbind.mytable
+\item \code{addComma(cbind.mytable)}: S3 method for class cbind.mytable
 
-\item \code{data.frame}: S3 method for class data.frame
+\item \code{addComma(data.frame)}: S3 method for class data.frame
 
-\item \code{character}: S3 method for class character
+\item \code{addComma(character)}: S3 method for class character
+
 }}
-
 \examples{
 \dontrun{
 require(stringr)

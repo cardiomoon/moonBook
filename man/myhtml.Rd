@@ -27,13 +27,13 @@ Export to html file for class "mytable" or "cbind.mytable" of "data.frame"
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: 
+\item \code{myhtml(default)}: 
 
-\item \code{mytable}: 
+\item \code{myhtml(mytable)}: 
 
-\item \code{cbind.mytable}: 
+\item \code{myhtml(cbind.mytable)}: 
+
 }}
-
 \examples{
 require(moonBook)
 res=mytable(sex~age+Dx,data=acs)

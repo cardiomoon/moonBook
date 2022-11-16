@@ -60,13 +60,13 @@ Exporting "cbind.mytable","mytable" to LaTeX format
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Exporting "cbind.mytable","mytable" to LaTeX format
+\item \code{mylatex(default)}: Exporting "cbind.mytable","mytable" to LaTeX format
 
-\item \code{mytable}: Exporting "cbind.mytable","mytable" to LaTeX format
+\item \code{mylatex(mytable)}: Exporting "cbind.mytable","mytable" to LaTeX format
 
-\item \code{cbind.mytable}: Exporting "cbind.mytable","mytable" to LaTeX format
+\item \code{mylatex(cbind.mytable)}: Exporting "cbind.mytable","mytable" to LaTeX format
+
 }}
-
 \examples{
 require(moonBook)
 out=mytable(sex~.,data=acs)

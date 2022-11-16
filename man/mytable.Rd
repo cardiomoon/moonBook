@@ -24,11 +24,11 @@ methods were used(t-test, ANOVA,Kruskal-Wallis, chisq, Fisher,...)
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: S3 method for formula
+\item \code{mytable(formula)}: S3 method for formula
 
-\item \code{data.frame}: S3 method for data.frame
+\item \code{mytable(data.frame)}: S3 method for data.frame
+
 }}
-
 \examples{
 mytable(acs)
 mytable(~age+sex,data=acs)

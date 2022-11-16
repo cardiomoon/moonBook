@@ -27,13 +27,13 @@ Compress an object of class mytable or cbind.mytable
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{mytable}: S3 method for class mytable
+\item \code{compress(mytable)}: S3 method for class mytable
 
-\item \code{cbind.mytable}: S3 method for class cbind.mytable
+\item \code{compress(cbind.mytable)}: S3 method for class cbind.mytable
 
-\item \code{data.frame}: S3 method for class data.frame
+\item \code{compress(data.frame)}: S3 method for class data.frame
+
 }}
-
 \examples{
 require(stringr)
 require(magrittr)

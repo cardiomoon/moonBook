@@ -30,7 +30,7 @@ my.t.test=function(y,x){
         }
         out1=try(var.test(x~y))
 
-        if(class(out1)!="htest") {
+        if(!inherits(out1,"htest")) {
             p=c(NA,NA,NA)
         } else{
             options(warn=-1)
@@ -424,7 +424,7 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
      # use.column.label=TRUE;max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
     mydata=try(data.frame(y=data[[y]],x=data[[x]]))
 
-    if(class(mydata)!="data.frame") return(-1)
+    if(!inherits(mydata,"data.frame")) return(-1)
     result=table(mydata$x,mydata$y)
 
     result1=addmargins(result,2)
@@ -904,7 +904,7 @@ print.cbind.mytable=function(x,...) {
     cat(hline,"\n")
     cat(centerprint("",width=result[[1]]$col.length[1]+2))
     for(i in 1:tcount){
-        if(class(tnames[i])=="factor") temp=levels(tnames)[tnames[i]]
+        if(inherits(tnames[i],"factor")) temp=levels(tnames)[tnames[i]]
         else temp=tnames[i]
         #browser()
         cat(centerprint(temp,width=result[[i]]$linelength-result[[i]]$col.length[1]+1))

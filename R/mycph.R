@@ -31,7 +31,7 @@ mycph=function(formula,data,digits=2){
         data$TimeStatus=eval(parse(text=temp))
         y="TimeStatus"
     }
-    if (class(data[[y]]) != "Surv") {
+    if (!inherits(data[[y]],"Surv")) {
         cat(y, "is not an object of class Surv")
         return(invisible())
     }
@@ -140,7 +140,7 @@ extractHR=function(x,digits=2){
 #'
 HRplot=function(out,type=1,xlab="",ylab="",show.OR=TRUE,show.CI=FALSE,
                 sig.level=1,cex=1.2,lwd=2,pch=18,col=NULL,...){
-    if(class(out)=="coxph") res=extractHR(out)
+    if(inherits(out,"coxph")) res=extractHR(out)
     else res=out
     exclude=unname(which(apply(res,1,function(x) any(is.nan(x))|any(x>10^5))))
     if(length(exclude)>0) res=res[-exclude,]

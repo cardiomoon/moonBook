@@ -31,12 +31,31 @@ mycsv=function(x,row.names=FALSE,...) UseMethod("mycsv")
 #' res=mytable(sex~age+DM,data=acs)
 #' mycsv(res,file="test.csv")
 #' mycsv(summary(res),file="testsummary.csv")
-#' mycsv=function(x,row.names=FALSE) UseMethod("mycsv")
 #' }
 mycsv.mytable=function(x,row.names=FALSE,...) {
     out=mytable2df(x)
     write.csv(out,row.names=row.names,...)
 }
+
+#' Export to csv file for class "mytable.df"
+#'
+#' @param x An object of class "mytable.df" a result of a call to \code{\link{mytable}}
+#' @param row.names either a logical value indicating whether the row names of x
+#'                  are to be written along with x, or a character vector of
+#'                  row names to be written.
+#' @param ... further arguments passed to or from other methods.
+#' @importFrom utils write.csv
+#' @export
+#' @examples
+#' \dontrun{
+#' require(moonBook)
+#' res=mytable(acs)
+#' mycsv(res,file="test.csv")
+#' }
+mycsv.mytable.df=function(x,row.names=FALSE,...) {
+    write.csv(x,row.names=row.names,...)
+}
+
 
 #' Export to csv file for class "cbind.mytable"
 #'
