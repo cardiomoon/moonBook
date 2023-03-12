@@ -17,7 +17,8 @@ mytable_sub(
   show.all = FALSE,
   exact = FALSE,
   show.total = FALSE,
-  missing = FALSE
+  missing = FALSE,
+  clean_names = FALSE
 )
 }
 \arguments{
@@ -74,6 +75,9 @@ parameter. If true, only exact column name permitted.Default value is FALSE.}
 Default value is FALSE.}
 
 \item{missing}{A logical value indicating whether or not perform missing data analysis.
+Default value is FALSE.}
+
+\item{clean_names}{A logical value indicating whether or not clean names of data using janitor::make_clean_names.
 Default value is FALSE.}
 }
 \value{

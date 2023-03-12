@@ -254,19 +254,24 @@ mytable.formula=function(x,...) {
 #'                 Default value is FALSE.
 #' @param missing A logical value indicating whether or not perform missing data analysis.
 #'                 Default value is FALSE.
+#' @param clean_names A logical value indicating whether or not clean names of data using janitor::make_clean_names.
+#'                 Default value is FALSE.
 #' @return An object of class "mytable".
 #'      'print' returns a table for descriptive statistics.
 #'      'summary' returns a table with all statistical values.
 #'
 #' @importFrom stats addmargins
+#' @importFrom janitor make_clean_names
 #' @export
 mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
                      max.ylev=5,maxCatLevel=20,digits=1,method=1,catMethod=2,
-                     show.all=FALSE,exact=FALSE,show.total=FALSE,missing=FALSE){
+                     show.all=FALSE,exact=FALSE,show.total=FALSE,missing=FALSE,
+                     clean_names=FALSE){
     # x=Sex~.
     # data=acs;use.labels=TRUE;use.column.label=TRUE
     # max.ylev=5;maxCatLevel=20;digits=1;method=1;show.all=FALSE;exact=FALSE;show.total=FALSE
 
+    if(clean_names) names(data)=make_clean_names(names(data))
     call=paste(deparse(x),", ","data= ",substitute(data),sep="")
     # cat("\n Call:",call,"\n\n")
     f=x
@@ -349,8 +354,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
     x=labels(myt)
     error=c()
 
-
-
+    result2=list()
     for(i in 1:length(x)) {
 
         out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=data)
@@ -360,9 +364,9 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
             next
         }
         label=getLabel(data,x[i],use.column.label)
-        result[[label]]=out
+        result2[[label]]=out
     }
-    #str(result)
+    result[["data"]]=result2
     out=printmytable2(result,digits)
     class(out)=c("mytable")
     attr(out,"error")=error
@@ -401,6 +405,32 @@ validColname=function(pattern,x) {
 }
 
 
+#' Make complete table
+#' @param x character A name of column
+#' @param y character Another name of column
+#' @param data A data.frame with some limited data
+#' @param origData A data.frame with full data
+#' @export
+#' @return a table
+completeTable=function(y,x,data,origData){
+     # y="sex"
+     # x="Dx"
+     # origData=acs
+     # data=acs[acs$Dx!="STEMI",]
+
+    t1=table(data[[x]],data[[y]])
+    t2=table(origData[[x]],origData[[y]])
+    for(i in 1:nrow(t2)){
+        temp=rownames(t2)[i]
+        if(temp %in% rownames(t1)){
+            t2[i,]=t1[rownames(t1)==temp,]
+        } else{
+            t2[i,]=rep(0,ncol(t2))
+        }
+    }
+    t2
+}
+
 #' Internal mytable functions
 #'
 #' Internal mytable functions
@@ -422,11 +452,14 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
     # y="Species"
     # x="Sepal.Length"
      # use.column.label=TRUE;max.ylev=5;maxCatLevel=20;method=1;show.total=FALSE
+    #y="DM";x="Rutherford";data=mydata
     mydata=try(data.frame(y=data[[y]],x=data[[x]]))
 
     if(!inherits(mydata,"data.frame")) return(-1)
-    result=table(mydata$x,mydata$y)
-
+    #result=table(mydata$x,mydata$y)
+    result=completeTable(y=y,x=x,data=data,origData=origData)
+    # cat("x=",x,",y=",y,"\n")
+    # str(result)
     result1=addmargins(result,2)
     N=sum(result)
     var_name=x
@@ -446,7 +479,8 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
         subgroup=list()
         ## for descriptives
         if(xlev<=maxCatLevel){
-        for(i in 1:xlev){
+            for(i in 1:nrow(result)){
+          #for(i in 1:xlev){
             if(show.total){
 
                 count=result1[i,]
@@ -553,29 +587,29 @@ printmytable2=function(obj,digits=1){
     fmt=sprintf("%s%df","%4.",digits)
     fmt
     #str(obj)
-    for(i in 7:length(obj)){
-        varnames=c(varnames,names(obj)[i])
+    for(i in 1:length(obj$data)){
+        varnames=c(varnames,names(obj$data)[i])
         subnames=c(subnames,"")
-        cl=c(cl,obj[[i]][1])
-        N=c(N,obj[[i]][2])
+        cl=c(cl,obj$data[[i]][1])
+        N=c(N,obj$data[[i]][2])
         add=matrix(,ncol=obj$length)
 
         # if numeric
-        if(obj[[i]]$class=="continuous"){
+        if(obj$data[[i]]$class=="continuous"){
             for(j in 1:obj$length){
-                if(is.na(obj[[i]]$out[[j]][[1]])) temp1="    -"
-                else temp1=paste(sprintf(fmt,obj[[i]]$out[[j]][[1]]),plusminus,
-                            sprintf(fmt,obj[[i]]$out[[j]][[2]]),sep=" ")
-                if(is.na(obj[[i]]$out[[j]][[6]][3])) temp2="    -"
-                else temp2=paste(sprintf(fmt,obj[[i]]$out[[j]][[6]][3])," [",
-                            sprintf(fmt,obj[[i]]$out[[j]][[6]][2]),";",
-                            sprintf(fmt,obj[[i]]$out[[j]][[6]][4]),"]",sep="")
+                if(is.na(obj$data[[i]]$out[[j]][[1]])) temp1="    -"
+                else temp1=paste(sprintf(fmt,obj$data[[i]]$out[[j]][[1]]),plusminus,
+                            sprintf(fmt,obj$data[[i]]$out[[j]][[2]]),sep=" ")
+                if(is.na(obj$data[[i]]$out[[j]][[6]][3])) temp2="    -"
+                else temp2=paste(sprintf(fmt,obj$data[[i]]$out[[j]][[6]][3])," [",
+                            sprintf(fmt,obj$data[[i]]$out[[j]][[6]][2]),";",
+                            sprintf(fmt,obj$data[[i]]$out[[j]][[6]][4]),"]",sep="")
                 if(obj$method==1) temp=temp1
                 else if(obj$method==2) temp=temp2
                 else if(obj$method==3) {
-                    if(is.na(obj[[i]]$p[1])){
+                    if(is.na(obj$data[[i]]$p[1])){
                         temp=temp2
-                    } else if(obj[[i]]$p[1]<=0.05) {
+                    } else if(obj$data[[i]]$p[1]<=0.05) {
                         temp=temp2
                     } else {
                         temp=temp1
@@ -586,32 +620,32 @@ printmytable2=function(obj,digits=1){
             }
             if(all(is.na(desc))) desc=add
             else desc=rbind(desc,add)
-            p1=c(p1,obj[[i]]$p[1])
-            p2=c(p2,obj[[i]]$p[2])
-            p3=c(p3,obj[[i]]$p[3])
+            p1=c(p1,obj$data[[i]]$p[1])
+            p2=c(p2,obj$data[[i]]$p[2])
+            p3=c(p3,obj$data[[i]]$p[3])
             if(obj$method==1) {
-                p4=c(p4,obj[[i]]$p[2])
+                p4=c(p4,obj$data[[i]]$p[2])
                 ptest=c(ptest,"normal")
             }
             else if(obj$method==2) {
-                p4=c(p4,obj[[i]]$p[3])
+                p4=c(p4,obj$data[[i]]$p[3])
                 ptest=c(ptest,"non-normal")
             }
             else if(obj$method==3) {
-                if(is.na(obj[[i]]$p[1])) {
-                    p4=c(p4,obj[[i]]$p[3])
+                if(is.na(obj$data[[i]]$p[1])) {
+                    p4=c(p4,obj$data[[i]]$p[3])
                     ptest=c(ptest,"non-normal")
-                } else if(obj[[i]]$p[1]<=0.05) {
-                    p4=c(p4,obj[[i]]$p[3])
+                } else if(obj$data[[i]]$p[1]<=0.05) {
+                    p4=c(p4,obj$data[[i]]$p[3])
                     ptest=c(ptest,"non-normal")
                 } else{
-                    p4=c(p4,obj[[i]]$p[2])
+                    p4=c(p4,obj$data[[i]]$p[2])
                     ptest=c(ptest,"normal")
                 }
             }
         }
         # if factor
-        else if(obj[[i]]$class=="categorical"){          ##if(obj[[i]]$class=="categorical")
+        else if(obj$data[[i]]$class=="categorical"){          ##if(obj[[i]]$class=="categorical")
             add=matrix(,ncol=obj$length)
             for(j in 1:obj$length){
                    add[1,j]=""
@@ -619,14 +653,14 @@ printmytable2=function(obj,digits=1){
             if(all(is.na(desc))) desc=add
             else desc=rbind(desc,add)
 
-            p1=c(p1,obj[[i]]$p[1])
-            p2=c(p2,obj[[i]]$p[2])
-            p3=c(p3,length(obj[[i]]$subgroup))
+            p1=c(p1,obj$data[[i]]$p[1])
+            p2=c(p2,obj$data[[i]]$p[2])
+            p3=c(p3,length(obj$data[[i]]$subgroup))
             #p3=c(p3,NA)
-            p4=c(p4,obj[[i]]$p[1])
-            ptest=c(ptest,attr(obj[[i]]$p,"method"))
-            for(k in 1:length(obj[[i]]$subgroup)){
-                temp=names(obj[[i]]$subgroup)[k]
+            p4=c(p4,obj$data[[i]]$p[1])
+            ptest=c(ptest,attr(obj$data[[i]]$p,"method"))
+            for(k in 1:length(obj$data[[i]]$subgroup)){
+                temp=names(obj$data[[i]]$subgroup)[k]
                 varnames=c(varnames,"")
                 subnames=c(subnames,temp)
                 cl=c(cl,"")
@@ -638,10 +672,10 @@ printmytable2=function(obj,digits=1){
                 ptest=c(ptest,"")
                 add=matrix(,ncol=obj$length)
                 for(j in 1:obj$length){
-                    if(is.na(obj[[i]]$subgroup[[k]]$count[j])) temp="   -"
-                    else if(obj[[i]]$subgroup[[k]]$count[j]==0) temp=" 0 ( 0.0%)"
-                    else temp=paste(obj[[i]]$subgroup[[k]]$count[j]," (",
-                               sprintf(fmt,obj[[i]]$subgroup[[k]]$ratio[j]),"%)",sep="")
+                    if(is.na(obj$data[[i]]$subgroup[[k]]$count[j])) temp="   -"
+                    else if(obj$data[[i]]$subgroup[[k]]$count[j]==0) temp=" 0 ( 0.0%)"
+                    else temp=paste(obj$data[[i]]$subgroup[[k]]$count[j]," (",
+                               sprintf(fmt,obj$data[[i]]$subgroup[[k]]$ratio[j]),"%)",sep="")
                     add[1,j]=temp
                 }
                 if(all(is.na(desc))) desc=add
@@ -650,7 +684,7 @@ printmytable2=function(obj,digits=1){
         }
         else{   ##if(obj[[i]]$class=="categorical2")
             for(j in 1:obj$length){
-                add[1,j]=obj[[i]]$subgroup
+                add[1,j]=obj$data[[i]]$subgroup
             }
             if(all(is.na(desc))) desc=add
             else desc=rbind(desc,add)
@@ -1105,31 +1139,13 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
         data<-addLabelDf(data)
     }
     uniquey=unique(data[[validy1]])
+    uniquey=setdiff(uniquey,NA)
     ycount=length(uniquey)
     out1=list()
+
     for(i in 1:ycount){
         mydata=data[data[[validy1]]==uniquey[i],]
 
-        if(FALSE){  #mytable
-            t=table(data[[y1]])
-            if(show.total){
-                t=addmargins(t)
-                names(t)[length(t)]="Total"
-            }
-            result=list(y=y1,length=length(t),names=names(t),count=unname(t),
-                        method=method,show.all=show.all)
-            x=labels(myt)
-            for(i in 1:length(x)) {
-                out=mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=origData)
-                label=getLabel(data,x[i],use.column.label)
-                result[[label]]=out
-
-            }
-            out=printmytable2(result,digits)
-            class(out)=c("mytable")
-            out
-
-        }
 
         t=table(mydata[[validy2]])
         if(show.total){
@@ -1140,19 +1156,22 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                     method=method,show.all=show.all)
         x=labels(myt)
 
+        result2=list()
         for(j in 1:length(x)) {
             if((length(unique(origData[[x[j]]]))<=max.ylev) & (!is.factor(mydata[[x[j]]]))){
                 #cat("x[j]=",x[j],"\n")
                 data[[x[j]]]=factor(data[[x[j]]])
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
+
             out=mytable_sub2(validy2,x[j],mydata,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=origData)
 
             label=getLabel(data,x[j],use.column.label)
-            result[[label]]=out
+            result2[[label]]=out
 
             #cat("y[2]=",y[2],",x[j]=",x[j],"\n")
         }
+        result[["data"]]=result2
         out=printmytable2(result,digits)
         class(out)=c("mytable")
         out1[[i]]=out
@@ -1169,6 +1188,8 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                               caption=uniquey,y=y)
     else if(ycount==6) final=cbind(out1[[1]],out1[[2]],out1[[3]],out1[[4]],out1[[5]],
                               out1[[6]],caption=uniquey,y=y)
+    else if(ycount==7) final=cbind(out1[[1]],out1[[2]],out1[[3]],out1[[4]],out1[[5]],
+                                   out1[[6]],out1[[7]],caption=uniquey,y=y)
     else {cat("maximum possible ylevel is six"); return(invisible())}
     final
 }
