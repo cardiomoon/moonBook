@@ -12,6 +12,7 @@ mytable_df(
   maxCatLevel = 20,
   digits = 1,
   method = 1,
+  useSE = FALSE,
   show.all = FALSE
 )
 }
@@ -42,6 +43,8 @@ Possible values in methods are
            normal or non-normal}
 }
 Default value is 1.}
+
+\item{useSE}{logical If true, use standard error instead of standard deviation}
 
 \item{show.all}{A logical value indicating whether or not all statistical
 values have to be shown in table. Default value is FALSE.}

@@ -27,12 +27,13 @@ mytable.data.frame=function(x,...){
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.
+#' @param useSE logical If true, use standard error instead of standard deviation
 #' @param show.all A logical value indicating whether or not all statistical
 #'                 values have to be shown in table. Default value is FALSE.
 #' @return An object of class "mytable.df".
 #'      'print' returns a table for descriptive statistics.
 #' @export
-mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLevel=20,digits=1,method=1,show.all=FALSE) {
+mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLevel=20,digits=1,method=1,useSE=FALSE,show.all=FALSE) {
 
       # x=acs[2];use.labels=TRUE;use.column.label=TRUE;max.ylev=5;maxCatLevel=20;
       # digits=1;method=3;show.all=TRUE
@@ -47,6 +48,8 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
     p=c()
     class=c()
     total=nrow(x)
+    use.SE=0
+    if(useSE) use.SE=1
     # str(x)
 
     plusminus="\u00b1"
@@ -96,11 +99,11 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
 
                 out1=c(out1,sprintf(form,temp[1]))
                 out2=c(out2,plusminus)
-                out3=c(out3,sprintf(form,temp[2]))
+                out3=c(out3,sprintf(form,temp[2+use.SE]))
             } else {
-                out1=c(out1,sprintf(form,temp[3]))
+                out1=c(out1,sprintf(form,temp[4]))
                 out2=c(out2,"")
-                res=paste0("[",sprintf(form,temp[7]),";",sprintf(form,temp[9]),"]")
+                res=paste0("[",sprintf(form,temp[8]),";",sprintf(form,temp[10]),"]")
                 out3=c(out3,res)
             }
             class=c(class,"continuous")
@@ -167,6 +170,7 @@ mytable_df=function(x,use.labels=TRUE,use.column.label=TRUE,max.ylev=5,maxCatLev
     # }
     class(result)=c("mytable.df","data.frame")
     attr(result,"method")=method
+    attr(result,"useSE")=useSE
     result
 
 }
@@ -199,9 +203,10 @@ print.mytable.df=function(x,...){
     cat("\n")
     cat(reprint("\u2014",len),"\n")
     method=attr(x,"method")
+    useSE=attr(x,"useSE")
     plusminus="\u00b1"
     if(method==1) {
-        stats=paste0("Mean ",plusminus," SD or %")
+        stats=paste0("Mean ",plusminus,ifelse(useSE," SE or %"," SD or %"))
     } else if(method==2){
         stats="Median[IQR] or %"
     } else{

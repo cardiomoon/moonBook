@@ -157,6 +157,18 @@ cat.test=function(x,mode=1,...){
   result
 }
 
+
+#' calculate stendard error
+#' @param x a numeric vector
+#' @param na.rm logical
+#' @export
+#' @examples
+#' x=c(179,160,136,227,123,23,45,67,1,234)
+#' std.error(x)
+std.error=function(x,na.rm=FALSE){
+    sd(x,na.rm=na.rm)/sqrt(length(x))
+}
+
 #' Internal mytable functions
 #'
 #' Internal mytable functions
@@ -166,9 +178,9 @@ cat.test=function(x,mode=1,...){
 #' @export
 num_summary <-function(x){
     if(all(is.na(x))){
-       result=list(NA,NA,NA,NA,NA,list(NA,NA,NA,NA,NA))
+       result=list(NA,NA,NA,NA,NA,NA,list(NA,NA,NA,NA,NA))
     } else{
-      funs=c(mean,sd,median,mad,IQR,fivenum)
+      funs=c(mean,sd,std.error,median,mad,IQR,fivenum)
       result=lapply(funs,function(f) f(x,na.rm=TRUE))
     }
     result
@@ -236,6 +248,7 @@ mytable.formula=function(x,...) {
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.
+#' @param useSE logical If true, use standard error instead of standard deviation
 #' @param catMethod An integer indicating methods for categorical variables.
 #'               Possible values in methods are
 #'               \describe{
@@ -264,7 +277,7 @@ mytable.formula=function(x,...) {
 #' @importFrom janitor make_clean_names
 #' @export
 mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
-                     max.ylev=5,maxCatLevel=20,digits=1,method=1,catMethod=2,
+                     max.ylev=5,maxCatLevel=20,digits=1,method=1,useSE=FALSE,catMethod=2,
                      show.all=FALSE,exact=FALSE,show.total=FALSE,missing=FALSE,
                      clean_names=FALSE){
     # x=Sex~.
@@ -288,7 +301,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
     # if(y!="") y=unlist(strsplit(y,"+",fixed=TRUE))
     if(length(y)>1) {
         result=mytable2(x,data,use.labels,use.column.label,
-                        max.ylev,maxCatLevel,digits,method=method,catMethod=catMethod,show.all,exact=exact,show.total=show.total)
+                        max.ylev,maxCatLevel,digits,method=method,useSE=useSE,catMethod=catMethod,show.all,exact=exact,show.total=show.total)
         return(result)
     }
     if(y!=""){
@@ -305,7 +318,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
             s=paste(y1,res[2],sep="~")
 
             result=mytable(as.formula(s),data,use.labels,use.column.label,
-                           max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+                           max.ylev,maxCatLevel,digits,method,useSE=useSE,show.all,exact=exact,show.total=show.total)
 
             attr(result,"missing")=TRUE
             return(result)
@@ -319,14 +332,14 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
         data[[y]]<-NULL
 
         result=mytable(as.formula(s),data,use.labels,use.column.label,
-                       max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+                       max.ylev,maxCatLevel,digits,method,useSE=useSE,show.all,exact=exact,show.total=show.total)
         attr(result,"missing")=TRUE
         return(result)
         } else{
             cat(paste0("There is no missing data in column '",y,"'\n"))
             s=paste0("~",res[2])
             result=mytable(as.formula(s),data,use.labels,use.column.label,
-                           max.ylev,maxCatLevel,digits,method,show.all,exact=exact,show.total=show.total)
+                           max.ylev,maxCatLevel,digits,method,useSE=useSE,show.all,exact=exact,show.total=show.total)
             return(result)
         }
     }
@@ -357,7 +370,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
     result2=list()
     for(i in 1:length(x)) {
 
-        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=data)
+        out<-mytable_sub2(y1,x[i],data,max.ylev,maxCatLevel,method=method,useSE=useSE,catMethod=catMethod,show.total=show.total,origData=data)
 
         if(length(out)!=4) {
             error=c(error,x[i])
@@ -367,9 +380,10 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
         result2[[label]]=out
     }
     result[["data"]]=result2
-    out=printmytable2(result,digits)
+    out=printmytable2(result,digits,useSE=useSE)
     class(out)=c("mytable")
     attr(out,"error")=error
+    attr(out,"useSE")=useSE
     out
     } else{
         dataname=as.character(substitute(data))
@@ -441,12 +455,13 @@ completeTable=function(y,x,data,origData){
 #' @param max.ylev an integer
 #' @param maxCatLevel an integer
 #' @param method an integer
+#' @param useSE logical
 #' @param catMethod an integer
 #' @param show.total a logical value
 #' @param origData a data.frame
 #' @importFrom stats na.omit
 #' @export
-mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,show.total=FALSE,origData){
+mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,useSE=FALSE,catMethod=2,show.total=FALSE,origData){
     #mydata=na.omit(data.frame(y=data[[y]],x=data[[x]]))
     # data=iris2
     # y="Species"
@@ -569,8 +584,9 @@ mytable_sub2=function(y,x,data,max.ylev=5,maxCatLevel=20,method=1,catMethod=2,sh
 #' These are not to be called by the user
 #' @param obj an object
 #' @param digits an integer
+#' @param useSE logical
 #' @export
-printmytable2=function(obj,digits=1){
+printmytable2=function(obj,digits=1,useSE=FALSE){
     # obj<-result;digits=1
     # str(obj)
     plusminus="\u00b1"
@@ -580,6 +596,7 @@ printmytable2=function(obj,digits=1){
     subnames=c()
     p1=p2=p3=p4=c()
     ptest=c()
+    use.SE=0
     desc=matrix(,ncol=obj$length)
 
     colnames(desc)=obj$names
@@ -595,15 +612,16 @@ printmytable2=function(obj,digits=1){
         add=matrix(,ncol=obj$length)
 
         # if numeric
+        if(useSE) use.SE=1
         if(obj$data[[i]]$class=="continuous"){
             for(j in 1:obj$length){
                 if(is.na(obj$data[[i]]$out[[j]][[1]])) temp1="    -"
                 else temp1=paste(sprintf(fmt,obj$data[[i]]$out[[j]][[1]]),plusminus,
-                            sprintf(fmt,obj$data[[i]]$out[[j]][[2]]),sep=" ")
-                if(is.na(obj$data[[i]]$out[[j]][[6]][3])) temp2="    -"
-                else temp2=paste(sprintf(fmt,obj$data[[i]]$out[[j]][[6]][3])," [",
-                            sprintf(fmt,obj$data[[i]]$out[[j]][[6]][2]),";",
-                            sprintf(fmt,obj$data[[i]]$out[[j]][[6]][4]),"]",sep="")
+                            sprintf(fmt,obj$data[[i]]$out[[j]][[2+use.SE]]),sep=" ")
+                if(is.na(obj$data[[i]]$out[[j]][[7]][3])) temp2="    -"
+                else temp2=paste(sprintf(fmt,obj$data[[i]]$out[[j]][[7]][3])," [",
+                            sprintf(fmt,obj$data[[i]]$out[[j]][[7]][2]),";",
+                            sprintf(fmt,obj$data[[i]]$out[[j]][[7]][4]),"]",sep="")
                 if(obj$method==1) temp=temp1
                 else if(obj$method==2) temp=temp2
                 else if(obj$method==3) {
@@ -855,6 +873,18 @@ print.mytable=function(x,...) {
         cat("\n")
     }
     cat(tline,"\n")
+    plusminus="\u00b1"
+    cat("Data summarized as: ")
+    if(x$method==1) {
+        if(attr(x,"useSE")) {
+            cat("Mean",plusminus,"SE or %")
+        } else{
+            cat("Mean",plusminus,"SD or %")
+        }
+    } else if(x$method==2){
+        cat("Median[IQR] or %")
+    }
+    cat("\n")
 }
 
 #' cbind function for class "mytable"
@@ -998,6 +1028,18 @@ print.cbind.mytable=function(x,...) {
 
 
     cat(tline,"\n")
+    plusminus="\u00b1"
+    cat("Data summarized as: ")
+    if(x[[1]]$method==1) {
+        if(attr(x,"useSE")) {
+            cat("Mean",plusminus,"SE or %")
+        } else{
+            cat("Mean",plusminus,"SD or %")
+        }
+    } else if(x[[1]]$method==2){
+        cat("Median[IQR] or %")
+    }
+    cat("\n")
 }
 
 #' Summarizing function for class "mytable"
@@ -1060,6 +1102,7 @@ summary.cbind.mytable=function(object,...) {
 #'                          normal or non-normal}
 #'               }
 #'               Default value is 1.
+#' @param useSE logical If true, use standard error instead of standard deviation
 #' @param catMethod An integer indicating methods for categorical variables.
 #'               Possible values in methods are
 #'               \describe{
@@ -1080,7 +1123,7 @@ summary.cbind.mytable=function(object,...) {
 #' @export
 #' @return An object of class "cbind.mytable"
 mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
-                  max.ylev=5,maxCatLevel=20,digits=2,method=1,catMethod=2,
+                  max.ylev=5,maxCatLevel=20,digits=2,method=1,useSE=FALSE,catMethod=2,
                   show.all=FALSE,exact=FALSE,show.total=FALSE,origData=NULL){
 
     if(is.null(origData)) origData=data
@@ -1127,7 +1170,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
             s=paste(validy1,validy2,sep="+")
             s=paste(s,res[2],sep="~")
             result=mytable2(as.formula(s),data,use.labels,use.column.label,
-                            max.ylev,maxCatLevel,digits,method=method,catMethod=catMethod,show.all,exact,show.total,origData=origData)
+                            max.ylev,maxCatLevel,digits,method=method,useSE=useSE,catMethod=catMethod,show.all,exact,show.total,origData=origData)
             return(result)
         }
     }
@@ -1164,7 +1207,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
                 mydata=data[data[[validy1]]==uniquey[i],]
             }
 
-            out=mytable_sub2(validy2,x[j],mydata,max.ylev,maxCatLevel,method=method,catMethod=catMethod,show.total=show.total,origData=origData)
+            out=mytable_sub2(validy2,x[j],mydata,max.ylev,maxCatLevel,method=method,useSE=useSE,catMethod=catMethod,show.total=show.total,origData=origData)
 
             label=getLabel(data,x[j],use.column.label)
             result2[[label]]=out
@@ -1172,7 +1215,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
             #cat("y[2]=",y[2],",x[j]=",x[j],"\n")
         }
         result[["data"]]=result2
-        out=printmytable2(result,digits)
+        out=printmytable2(result,digits,useSE=useSE)
         class(out)=c("mytable")
         out1[[i]]=out
 
@@ -1191,6 +1234,7 @@ mytable2=function(formula,data,use.labels=TRUE,use.column.label=TRUE,
     else if(ycount==7) final=cbind(out1[[1]],out1[[2]],out1[[3]],out1[[4]],out1[[5]],
                                    out1[[6]],out1[[7]],caption=uniquey,y=y)
     else {cat("maximum possible ylevel is six"); return(invisible())}
+    attr(final,"useSE")=useSE
     final
 }
 

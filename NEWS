@@ -1,4 +1,10 @@
-moonBook 0.3.3
+# moonBook 0.3.4
+==============
+(2023-Nov-28)
+
+* new argument 'useSE' in mytable function to use standard error instead of standard deviation
+
+# moonBook 0.3.3
 ==============
 (2023-Mar-12)
 
@@ -6,26 +12,26 @@ moonBook 0.3.3
 * bug-fixed
 
 
-moonBook 0.3.2
+# moonBook 0.3.2
 ==============
 (2022-Nov-16)
 
 * add function mycsv.mytable.df
 
-moonBook 0.3.1
+# moonBook 0.3.1
 ==============
 (2021-Dec-29)
 
 * bugs fix in function extractOR and extractHR
 
 
-moonBook 0.3.0
+# moonBook 0.3.0
 ==============
 (2021-Dec-26)
 
 * bugs fix in function extractOR and extractHR
 
-moonBook 0.2.9
+# moonBook 0.2.9
 ==============
 (2021-Dec-20)
 
@@ -33,46 +39,46 @@ moonBook 0.2.9
 * mytable() print red character in R console when p < 0.05
 
 
-moonBook 0.2.8
+# moonBook 0.2.8
 ==============
 (2021-Sep-4)
 
 * Bug fixed :
 
 
-moonBook 0.2.7
+# moonBook 0.2.7
 ==============
 (2021-July-7)
 
 * Bug fixed :
 
 
-moonBook 0.2.6
+# moonBook 0.2.6
 ==============
 (2021-Apr-27)
 
 * Bug fixed :
 
-moonBook 0.2.5
+# moonBook 0.2.5
 ==============
 (2021-Jan-5)
 
 * Bug fixed :
 
-moonBook 0.2.4
+# moonBook 0.2.4
 ==============
 (2021-Jan-5)
 
 * Bug fixed
 
-moonBook 0.2.3
+# moonBook 0.2.3
 ==============
 (2018-July-21)
 
 * Bug fixed
 
 
-moonBook 0.2.2
+# moonBook 0.2.2
 ==============
 (2018-June-18)
 
@@ -80,7 +86,7 @@ moonBook 0.2.2
 
 * new argument 'mapping' added to function addLabelDf()
 
-moonBook 0.2.1
+# moonBook 0.2.1
 ==============
 (2018-May-30)
 
@@ -88,7 +94,7 @@ moonBook 0.2.1
 
 * New function deleteRows() added
 
-moonBook 0.2.0
+# moonBook 0.2.0
 ==============
 (2018-May-26)
 
@@ -96,7 +102,7 @@ moonBook 0.2.0
 
 * New vignette "moonBook_update" added
 
-moonBook 0.1.9
+# moonBook 0.1.9
 ==============
 (2018-May-16)
 
@@ -104,21 +110,21 @@ moonBook 0.1.9
 
 * mytable() functions can handle column label and value labels
 
-moonBook 0.1.8
+# moonBook 0.1.8
 ===============
 (2018-Apr-25)
 
 * Bug fixed
 
 
-moonBook 0.1.7
+# moonBook 0.1.7
 ==============
 (2016-Nov-23)
 
 * Bug fixed in function mytable()
 
 
-moonBook 0.1.6
+# moonBook 0.1.6
 ==============
 (2016-Nov-11)
 
@@ -127,7 +133,7 @@ moonBook 0.1.6
 * default method for compute confidence interval for glm model changed from confint to confint.default
 
 
-moonBook 0.1.4
+# moonBook 0.1.4
 ==============
 (2015-Jul-07)
 
@@ -136,7 +142,7 @@ moonBook 0.1.4
 * "mytable" function can show the total value when show.total parameter is TRUE.
 
 
-moonBook 0.1.3
+# moonBook 0.1.3
 ==============
 (2015-Feb-14)
 
@@ -144,7 +150,7 @@ moonBook 0.1.3
 
 * "myhtml" function makes a better-looking table
 
-moonBook 0.1.2
+# moonBook 0.1.2
 ==============
 (2014-Dec-7)
 
@@ -153,7 +159,7 @@ moonBook 0.1.2
 * more option to function "mylatex" to adjust caption placement and position
 
 
-moonBook 0.1.1
+# moonBook 0.1.1
 ==============
 (2014-Dec-5)
 
@@ -165,7 +171,7 @@ moonBook 0.1.1
 
 
 
-moonBook 0.1.0
+# moonBook 0.1.0
 ==============
 
 * new function "ORplot" which draw odds ratio plot with an object of class glm

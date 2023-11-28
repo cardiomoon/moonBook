@@ -4,12 +4,14 @@
 \alias{printmytable2}
 \title{Internal mytable functions}
 \usage{
-printmytable2(obj, digits = 1)
+printmytable2(obj, digits = 1, useSE = FALSE)
 }
 \arguments{
 \item{obj}{an object}
 
 \item{digits}{an integer}
+
+\item{useSE}{logical}
 }
 \description{
 Internal mytable functions

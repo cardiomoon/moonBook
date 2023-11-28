@@ -11,6 +11,7 @@ mytable_sub2(
   max.ylev = 5,
   maxCatLevel = 20,
   method = 1,
+  useSE = FALSE,
   catMethod = 2,
   show.total = FALSE,
   origData
@@ -28,6 +29,8 @@ mytable_sub2(
 \item{maxCatLevel}{an integer}
 
 \item{method}{an integer}
+
+\item{useSE}{logical}
 
 \item{catMethod}{an integer}
 

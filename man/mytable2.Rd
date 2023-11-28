@@ -13,6 +13,7 @@ mytable2(
   maxCatLevel = 20,
   digits = 2,
   method = 1,
+  useSE = FALSE,
   catMethod = 2,
   show.all = FALSE,
   exact = FALSE,
@@ -51,6 +52,8 @@ Possible values in methods are
            normal or non-normal}
 }
 Default value is 1.}
+
+\item{useSE}{logical If true, use standard error instead of standard deviation}
 
 \item{catMethod}{An integer indicating methods for categorical variables.
 Possible values in methods are
