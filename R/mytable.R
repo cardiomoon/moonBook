@@ -391,6 +391,7 @@ mytable_sub=function(x,data,use.labels=TRUE,use.column.label=TRUE,
         assign(dataname,data[attr(myt,"term.labels")])
         out=eval(parse(text=paste0("mytable_df(",dataname,
                                    ",max.ylev=",max.ylev,",digits=",digits,",method=",method,
+                                   ",useSE=",useSE,
                                    ",show.all=",show.all,")")))
         out
     }
